@@ -21,20 +21,33 @@
    (-> ctx
        (merge #:base{:title settings/app-name
                      :lang "en-US"
-                     :icon "/img/glider.png"
+                     :icon "/img/g.png"
                      :description (str settings/app-name " Description")
-                     :image "https://clojure.org/images/clojure-logo-120b.png"})
+                     :image "/img/g.png"})
        (update :base/head (fn [head]
                             (concat [[:link {:rel "stylesheet" :href (static-path "/css/main.css")}]
                                      [:script {:src (static-path "/js/main.js")}]
                                      [:script {:src "https://unpkg.com/htmx.org@1.9.12"}]
                                      [:script {:src "https://unpkg.com/htmx.org@1.9.12/dist/ext/ws.js"}]
                                      [:script {:src "https://unpkg.com/hyperscript.org@0.9.8"}]
+                                     [:script {:src "https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" :defer "defer"}]
                                      (when recaptcha
                                        [:script {:src "https://www.google.com/recaptcha/api.js"
                                                  :async "async" :defer "defer"}])]
                                     head))))
    body))
+
+(defn static-page [ctx & body]
+  (base
+   ctx
+   [:.pattern.h-screen 
+    body]))
+
+(defn form-page [ctx & body]
+  (base
+   ctx
+   [:.pattern.h-screen 
+    body]))
 
 (defn page [ctx & body]
   (base
