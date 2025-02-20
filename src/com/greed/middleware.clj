@@ -2,7 +2,8 @@
   (:require [com.biffweb :as biff]
             [muuntaja.middleware :as muuntaja]
             [ring.middleware.anti-forgery :as csrf]
-            [ring.middleware.defaults :as rd]))
+            [ring.middleware.defaults :as rd]
+            [com.greed.validation :as v]))
 
 (defn wrap-redirect-signed-in [handler]
   (fn [{:keys [session] :as ctx}]
@@ -17,6 +18,13 @@
       (handler ctx)
       {:status 303
        :headers {"location" "/signin?error=not-signed-in"}})))
+
+(defn wrap-authenticate [handler]
+  (fn [ctx] 
+    (if (v/authenticate! ctx)
+      (handler ctx)
+      {:status 303
+       :headers {"location" "/"}})))
 
 ;; Stick this function somewhere in your middleware stack below if you want to
 ;; inspect what things look like before/after certain middleware fns run.

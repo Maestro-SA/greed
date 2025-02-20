@@ -1,11 +1,31 @@
-(ns com.greed.components.shared)
+(ns com.greed.components.shared
+  (:require [com.greed.data.helpers :as d.helpers]))
 
-(defn input [& {:keys [type label]}]
+(defn input [& {:keys [id type label]}]
   [:div
    {:class "w-full mt-4"}
    [:input
     {:class "block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300",
+     :id id
+     :name id,
      :type type,
-     :name type,
      :autocomplete type,
      :placeholder label}]])
+
+(defn settings-input [ctx & {:keys [id type label]}]
+  (let [{:keys [session]} ctx
+        user-id (:uid session)
+        user (d.helpers/get-user ctx user-id)
+        placeholder (keyword (str "user/" id))]
+   [:div
+    [:label
+     {:class "text-gray-700",
+      :for type}
+     label]
+    [:input
+     {:class "block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring",
+      :id id,
+      :name id
+      :type type
+      :autocomplete type,
+      :placeholder (placeholder user)}]]))

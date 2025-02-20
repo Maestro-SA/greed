@@ -5,6 +5,7 @@
             [com.biffweb :as biff]
             [ring.middleware.anti-forgery :as csrf]
             [ring.util.response :as ring-response]
+            [com.greed.components.headers :as headers]
             [rum.core :as rum]))
 
 (defn static-path [path]
@@ -31,35 +32,27 @@
                                      [:script {:src "https://unpkg.com/htmx.org@1.9.12/dist/ext/ws.js"}]
                                      [:script {:src "https://unpkg.com/hyperscript.org@0.9.8"}]
                                      [:script {:src "https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" :defer "defer"}]
+                                     [:link {:href "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" :rel "stylesheet"}]
                                      (when recaptcha
                                        [:script {:src "https://www.google.com/recaptcha/api.js"
                                                  :async "async" :defer "defer"}])]
                                     head))))
    body))
 
-(defn static-page [ctx & body]
-  (base
-   ctx
-   [:.pattern.h-screen 
-    body]))
-
-(defn form-page [ctx & body]
-  (base
-   ctx
-   [:.pattern.h-screen 
-    body]))
-
 (defn page [ctx & body]
   (base
    ctx
-   [:.flex-grow]
-   [:.p-3.mx-auto.max-w-screen-sm.w-full
-    (when (bound? #'csrf/*anti-forgery-token*)
-      {:hx-headers (cheshire/generate-string
-                    {:x-csrf-token csrf/*anti-forgery-token*})})
-    body]
-   [:.flex-grow]
-   [:.flex-grow]))
+   [:.pattern.h-screen 
+    body]))
+
+(defn app [ctx & body]
+  (base
+   ctx
+   [:.flex
+    [:.flex-none 
+     (headers/app ctx)]
+    [:.flex-grow.p-4
+     body]]))
 
 (defn on-error [{:keys [status ex] :as ctx}]
   {:status status

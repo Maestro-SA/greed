@@ -1,8 +1,7 @@
 (ns com.greed.components.headers
-  (:require [com.greed.components.navs :as navs]
-            [com.greed.components.cards :as cards]))
+  (:require [com.greed.components.navs :as navs]))
 
-(defn home [& content] 
+(defn pages [& content] 
   [:header
    {:class "bg-white"}
    [:div
@@ -10,10 +9,8 @@
     (navs/nav)
     content]])
 
-(defn pages [& content]
+(defn app [ctx]
   [:header
    {:class "bg-white"}
-   [:div
-    {:class "container px-6 mx-auto"}
-    (navs/nav)
-    content]])
+   [:div 
+    (navs/sidebar ctx)]])

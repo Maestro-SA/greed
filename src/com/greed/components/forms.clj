@@ -35,12 +35,12 @@
      {:class "mt-1 text-center text-gray-500"}
      "Login or create account"]
     (biff/form
-     {:action "auth/signin"
+     {:action "authenticate/signin"
       :id "signin"
       :hidden {:on-error "/"}}
      (biff/recaptcha-callback "submitSignin" "signin")
-     (shared/input :type "email" :label "Email Address")
-     (shared/input :type "password" :label "Password")
+     (shared/input :id "email" :type "email" :label "Email Address")
+     (shared/input :id "password" :type "password" :label "Password")
      [:div
       {:class "flex items-center justify-between mt-4"}
       [:a
@@ -84,14 +84,14 @@
      {:class "mt-1 text-center text-gray-500"}
      "Login or create account"]
     (biff/form
-     {:action "auth/signup"
+     {:action "authenticate/signup"
       :id "signup"
       :hidden {:on-error "/"}}
      (biff/recaptcha-callback "submitSignup" "signup")
-     (shared/input :type "fullname" :label "Full Name")
-     (shared/input :type "username" :label "Username")
-     (shared/input :type "email" :label "Email Address")
-     (shared/input :type "password" :label "Password")
+     (shared/input :id "firstname" :type "text" :label "First Name")
+     (shared/input :id "lastname" :type "text" :label "Last Name")
+     (shared/input :id "email" :type "email" :label "Email Address")
+     (shared/input :id "password" :type "password" :label "Password")
      [:div
       {:class "flex items-center justify-between mt-4"}
       [:a
@@ -116,3 +116,22 @@
      {:href "/signin",
       :class "mx-2 text-sm font-bold text-blue-500 hover:underline"}
      "Sign in"]]])
+
+(defn app-settings [ctx]
+  [:section
+   {:class "container p-6 mx-auto bg-white rounded-md shadow-md"}
+   [:h2
+    {:class "text-lg font-semibold text-gray-700 capitalize"}
+    "Account settings"]
+   [:form
+    [:div
+     {:class "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2"}
+     (shared/settings-input ctx :id "firstname" :type "text" :label "First Name")
+     (shared/settings-input ctx :id "lastname" :type "text" :label "Last Name")
+     (shared/settings-input ctx :id "email" :type "text" :label "Email")
+     (shared/settings-input ctx :id "password" :type "password" :label "Password")]
+    [:div
+     {:class "flex justify-end mt-6"}
+     [:button
+      {:class "px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"}
+      "Save"]]]])

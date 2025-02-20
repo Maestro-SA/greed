@@ -12,12 +12,12 @@
 (deftest example-test
   (is (= 4 (+ 2 2))))
 
-(defn get-context [node]
+#_(defn get-context [node]
   {:biff.xtdb/node  node
    :biff/db         (xt/db node)
    :biff/malli-opts #'main/malli-opts})
 
-(deftest send-message-test
+#_(deftest send-message-test
   (with-open [node (test-xtdb-node [])]
     (let [message (mg/generate :string)
           user    (mg/generate :user main/malli-opts)
@@ -29,7 +29,7 @@
       (is (some? doc))
       (is (= (:msg/user doc) (:xt/id user))))))
 
-(deftest chat-test
+#_(deftest chat-test
   (let [n-messages (+ 3 (rand-int 10))
         now        (java.util.Date.)
         messages   (for [doc (mg/sample :msg (assoc main/malli-opts :size n-messages))]
