@@ -7,7 +7,16 @@
           [:user/firstname            :string]
           [:user/lastname             :string]
           [:user/email                :string] 
-          [:user/password             :string]]})
+          [:user/password             :string]]
+
+   :profile/id :uuid
+   :profile [:map {:closed true}
+             [:xt/id                  :profile/id]
+             [:profile/user-id        :user/id]
+             [:profile/bank           :string]
+             [:profile/income         :string]
+             [:profile/expense        :string]
+             [:profile/savings        :string]]})
 
 (def module
   {:schema schema})

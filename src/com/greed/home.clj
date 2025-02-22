@@ -47,4 +47,5 @@
             ["/signup"             {:get signup-page}]
             ["/authenticate" {:middleware [mid/wrap-authenticate]}
              ["/signin" {:post signin-success-page}]
-             ["/signup" {:post signup-success-page}]]]})
+             ["/signup" {:post signup-success-page}]]
+            ["/logout" {:get mid/logout}]]})

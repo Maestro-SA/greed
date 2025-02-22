@@ -12,6 +12,7 @@
         "recaptcha" (str "You failed the recaptcha test. Try again, "
                          "and make sure you aren't blocking scripts from Google.")
         "invalid-email" "Invalid email. Try again with a different address."
+        "invalid-credentials" "Invalid credentials. Try again."
         "send-failed" (str "We weren't able to send an email to that address. "
                            "If the problem persists, try another address.")
         "There was an error.")]]))
@@ -39,8 +40,8 @@
       :id "signin"
       :hidden {:on-error "/"}}
      (biff/recaptcha-callback "submitSignin" "signin")
-     (shared/input :id "email" :type "email" :label "Email Address")
-     (shared/input :id "password" :type "password" :label "Password")
+     (shared/input :id "email" :type "email" :label "Email Address" :required? true)
+     (shared/input :id "password" :type "password" :label "Password" :required? true)
      [:div
       {:class "flex items-center justify-between mt-4"}
       [:a
@@ -88,10 +89,10 @@
       :id "signup"
       :hidden {:on-error "/"}}
      (biff/recaptcha-callback "submitSignup" "signup")
-     (shared/input :id "firstname" :type "text" :label "First Name")
-     (shared/input :id "lastname" :type "text" :label "Last Name")
-     (shared/input :id "email" :type "email" :label "Email Address")
-     (shared/input :id "password" :type "password" :label "Password")
+     (shared/input :id "firstname" :type "text" :label "First Name" :required? true)
+     (shared/input :id "lastname" :type "text" :label "Last Name" :required? true)
+     (shared/input :id "email" :type "email" :label "Email Address" :required? true)
+     (shared/input :id "password" :type "password" :label "Password" :required? true)
      [:div
       {:class "flex items-center justify-between mt-4"}
       [:a
@@ -126,10 +127,30 @@
    [:form
     [:div
      {:class "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2"}
-     (shared/settings-input ctx :id "firstname" :type "text" :label "First Name")
-     (shared/settings-input ctx :id "lastname" :type "text" :label "Last Name")
-     (shared/settings-input ctx :id "email" :type "text" :label "Email")
-     (shared/settings-input ctx :id "password" :type "password" :label "Password")]
+     (shared/app-input ctx :id "firstname" :type "text" :label "First Name")
+     (shared/app-input ctx :id "lastname" :type "text" :label "Last Name")
+     (shared/app-input ctx :id "email" :type "text" :label "Email")
+     (shared/app-input ctx :id "password" :type "password" :label "Password")]
+    [:div
+     {:class "flex justify-end mt-6"}
+     [:button
+      {:class "px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"}
+      "Save"]]]])
+
+(defn profile [ctx]
+  [:section
+   {:class "container p-6 mx-auto bg-white rounded-md shadow-md"}
+   [:h2
+    {:class "text-lg font-semibold text-gray-700 capitalize"}
+    "Profile"]
+   [:form
+    [:div
+     {:class "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2"}
+     (shared/app-select ctx :id "bank" :label "Bank")
+     (shared/app-select ctx :id "card-type" :label "Card Type" :options ["Visa" "Mastercard"])
+     (shared/app-input ctx :id "income" :type "number" :label "Income")
+     (shared/app-input ctx :id "expenses" :type "number" :label "Expenses")
+     (shared/app-input ctx :id "savings" :type "number" :label "Savings")]
     [:div
      {:class "flex justify-end mt-6"}
      [:button

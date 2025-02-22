@@ -23,7 +23,14 @@
    [:div
     (forms/app-settings ctx)]))
 
+(defn profile [{:keys [session biff/db] :as ctx}]
+  (ui/app
+   ctx
+   [:div
+    (forms/profile ctx)]))
+
 (def module
   {:routes ["/app" {:middleware [mid/wrap-signed-in]}
             ["" {:get app}]
-            ["/settings" {:get settings}]]})
+            ["/settings" {:get settings}]
+            ["/profile" {:get profile}]]})

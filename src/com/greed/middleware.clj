@@ -20,11 +20,19 @@
        :headers {"location" "/signin?error=not-signed-in"}})))
 
 (defn wrap-authenticate [handler]
-  (fn [ctx] 
-    (if (v/authenticate! ctx)
-      (handler ctx)
-      {:status 303
-       :headers {"location" "/"}})))
+  (fn [{:keys [uri] :as ctx}]
+    (let [error-location (if (= "/authenticate/signup" uri)
+                           "/signup?error=invalid-email"
+                           "/signin?error=invalid-credentials")]
+      (if (v/authenticate! ctx)
+        (handler ctx)
+        {:status 303
+         :headers {"location" error-location}}))))
+
+(defn logout [{:keys [session]}]
+  {:status 303
+   :headers {"location" "/"}
+   :session (dissoc session :uid)})
 
 ;; Stick this function somewhere in your middleware stack below if you want to
 ;; inspect what things look like before/after certain middleware fns run.

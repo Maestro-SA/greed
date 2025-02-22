@@ -50,17 +50,19 @@
         [:span {:class "mx-4 font-medium"} "Dashboard"]]
        [:hr {:class "my-6 border-gray-200"}]
        [:a
-        {:class
-         "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+        {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
          :href "/app/settings"}
         (svgs/search)
         [:span {:class "mx-4 font-medium"} "Settings"]]]
-      [:a
-       {:href "#", :class "flex items-center px-4 -mx-2"}
-       [:img
-        {:class "object-cover mx-2 rounded-full h-9 w-9",
-         :src "/img/avatar.jpg",
-         :alt "avatar"}]
-       [:span
-        {:class "mx-2 font-medium text-gray-800"}
-        (str firstname " " lastname)]]]]))
+      [:div
+         {:class "flex items-center justify-between mt-6"}
+       [:a
+        {:href "/app/profile",
+         :class "flex item-center justify-between px-2"}
+        [:span
+         {:class "font-medium text-sm text-gray-800 px-2 py-1 border-b-2 border-black hover:border-2 hover:rounded-md transition duration-300"}
+         (str firstname " " lastname)]]
+       [:a
+        {:href "/logout"
+         :class "flex items-center px-2 py-1 border-2 border-black rounded-md hover:bg-black hover:text-white"}
+        (svgs/logout)]]]]))
