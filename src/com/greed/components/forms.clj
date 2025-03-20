@@ -130,8 +130,7 @@
     {:class "text-lg font-semibold text-gray-700 capitalize"}
     "Account"]
    (biff/form
-     {:hx-post "/app/save-user"
-      :hx-swap "outerHTML"}
+     {:action "/app/save-user"}
      [:div
       {:class "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2"}
       (shared/app-input ctx :id "firstname" :type "text" :label "First Name" :required? true)
@@ -152,8 +151,7 @@
     {:class "text-lg font-semibold text-gray-700 capitalize"}
     "Profile"]
    (biff/form
-     {:hx-post "/app/save-profile"
-      :hx-swap "outerHTML"}
+     {:action "/app/save-profile"}
      [:div
       {:class "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2"}
       (shared/app-select ctx :id "bank" :label "Bank" :options bank-options :required? true)

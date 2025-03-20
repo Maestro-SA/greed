@@ -4,44 +4,58 @@
 
 (defn revenue []
   [:div
-   {:class "min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5"}
+   {:class "flex items-center justify-center px-5 py-5"}
    [:div
-    {:class "bg-gray-800 text-gray-500 rounded shadow-xl py-5 px-5 w-full sm:w-2/3 md:w-1/2 lg:w-1/3",
-     :x-data "{cardOpen:false,cardData:cardData()}",
-     :x-init "$watch('cardOpen', value => value?(cardData.countUp($refs.total,0,11602,null,0.8),cardData.sessions.forEach((el,i) => cardData.countUp($refs[`device${i}`],0,cardData.sessions[i].size,null,1.6))):null);setTimeout(()=>{cardOpen=true},100)"}
+    {:class "bg-white text-gray-800 rounded-xl shadow-xl py-5 px-5 w-full ",
+     :x-data "{chartData:chartData()}",
+     :x-init "chartData.fetch()"}
     [:div
-     {:class "flex w-full"}
-     [:h3
-      {:class "text-lg font-semibold leading-tight flex-1"}
-      "TOTAL SESSIONS"]
+     {:class "flex flex-wrap items-end"}
      [:div
-      {:class "relative h-5 leading-none"}
+      {:class "flex-1"}
+      [:h3 {:class "text-lg font-semibold leading-tight"} "Income"]]
+     [:div
+      {:class "relative",
+       "@click.away" "chartData.showDropdown=false"}
       [:button
-       {:class "text-xl text-gray-500 hover:text-gray-300 h-6 focus:outline-none",
-        "@click.prevent" "cardOpen=!cardOpen"}
-       [:i
-        {:class "mdi",
-         ::class "'mdi-chevron-'+(cardOpen?'up':'down')"}]]]]
-    [:div
-     {:class "relative overflow-hidden transition-all duration-500",
-      :x-ref "card",
-      :x-bind:style "`max-height:${cardOpen?$refs.card.scrollHeight:0}px; opacity:${cardOpen?1:0}`"}
-     [:div
+       {:class "text-xs hover:text-gray-600 h-6 focus:outline-none",
+        "@click" "chartData.showDropdown=!chartData.showDropdown"}
+       [:span
+        {:x-text "chartData.options[chartData.selectedOption].label"}]
+       [:i {:class "ml-1 mdi mdi-chevron-down"}]]
       [:div
-       {:class "pb-4 lg:pb-6"}
-       [:h4
-        {:class "text-2xl lg:text-3xl text-white font-semibold leading-tight inline-block",
-         :x-ref "total"}
-        "0"]]
-      [:div
-       {:class "pb-4 lg:pb-6"}
+       {:x-show "chartData.showDropdown",
+        :x-transition:leave-end "opacity-0 translate-y-4",
+        :x-transition:leave-start "opacity-100 translate-y-0",
+        :x-transition:enter "transition ease duration-300 transform",
+        :class "bg-gray-800 shadow-lg rounded text-sm absolute top-auto right-0 min-w-full w-32 z-30 mt-1 -mr-3",
+        :x-transition:enter-start "opacity-0 translate-y-2",
+        :x-transition:enter-end "opacity-100 translate-y-0",
+        :x-transition:leave "transition ease duration-300 transform"}
+       [:span
+        {:class "absolute top-0 right-0 w-3 h-3 bg-gray-700 transform rotate-45 -mt-1 mr-3"}]
        [:div
-        {:class "overflow-hidden rounded-full h-3 bg-gray-800 flex transition-all duration-500",
-         ::class "cardOpen?'w-full':'w-0'"}
-        [:template {:x-for "(item,index) in cardData.sessions"}]]]
-      [:div
-       {:class "flex -mx-4"}
-       [:template {:x-for "(item,index) in cardData.sessions"}]]]]]])
+        {:class "bg-gray-700 rounded w-full relative z-10 py-1"}
+        [:ul
+         {:class "list-reset text-xs"}
+         [:template {:x-for "(item,index) in chartData.options"}]]]]]]
+    [:div
+     {:class "flex flex-wrap items-end mb-5"}
+     [:h4
+      {:class "text-2xl lg:text-3xl text-black font-semibold leading-tight inline-block mr-2",
+       :x-text "'$'+(chartData.data?chartData.data[chartData.date].total.comma_formatter():0)"}
+      "0"]
+     [:span
+      {:class "inline-block",
+       ::class "chartData.data&&chartData.data[chartData.date].upDown<0?'text-red-500':'text-green-500'"}
+      [:span
+       {:x-text "chartData.data&&chartData.data[chartData.date].upDown<0?'▼':'▲'"}
+       "0"]
+      [:span
+       {:x-text "chartData.data?chartData.data[chartData.date].upDown:0"}
+       "0"]
+      "%"]]
+    [:div [:canvas {:id "chart", :class "w-full"}]]]])
 
 (defn chart []
   [:div

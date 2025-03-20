@@ -26,27 +26,34 @@
       :role "link"}
      author]]])
 
-(defn bank-card [& {:keys [bank card-type income expenses]
-                    :or {bank "Capitec"
-                         card-type "Visa",
-                         income 500,
-                         expenses 0}}]
-  (let [balance (- (Integer/parseInt income) (Integer/parseInt expenses))
+(defn bank-card [& {:keys [bank card-type income expenses]}]
+  (let [income (if (not (nil? income)) (Integer/parseInt income) 500)
+        expenses (if (not (nil? expenses)) (Integer/parseInt expenses) 0)
+        balance (- income expenses)
         card-type (case card-type
                     "Visa" (svgs/visa)
-                    "Mastercard" (svgs/mastercard))]
+                    "Mastercard" (svgs/mastercard)
+                    (svgs/visa))
+        card-colour (case bank
+                      "ABSA" "from-red-500 to-red-800"
+                      "Capitec" "from-gray-600 to-black"
+                      "Discovery Bank" "from-yellow-500 to-amber-800"
+                      "FNB" "from-teal-500 to-teal-800"
+                      "Nedbank" "from-emerald-500 to-green-800"
+                      "Standard Bank" "from-blue-500 to-blue-800"
+                      "from-gray-600 to-black")]
     [:div
      {:class "py-4 px-4"}
      [:div
       [:div
-       {:class "h-48 w-80 p-6 rounded-xl shadow-md bg-gradient-to-tl from-gray-600 to-black text-white"}
+       {:class (str "h-48 w-80 p-6 rounded-xl shadow-md text-white bg-gradient-to-tl " card-colour)}
        [:div
         {:class "h-full flex flex-col justify-between"}
         [:div
          {:class "flex items-start justify-between space-x-4"}
          [:div
           {:class "text-xl font-semibold tracking-tigh"}
-          bank]
+          (or bank "Bank")]
          [:div
           {:class "inline-flex flex-col items-center justify-center"}
           card-type]]
@@ -76,7 +83,7 @@
    [:div
     {:class "sm:grid sm:h-48 sm:grid-flow-row sm:gap-4 sm:grid-cols-3"}
     [:div
-     {:class "flex flex-col justify-center px-4 py-4 pattern  border border-gray-300 rounded-xl"}
+     {:class "flex flex-col justify-center px-4 py-4 pattern bg-white border border-gray-300 rounded-xl"}
      [:div
       [:div
        [:p
@@ -85,11 +92,11 @@
         (svgs/uptrend)]]
       [:p
        {:class "text-3xl font-semibold text-center text-black"}
-       income]
+       (or income 0)]
       [:p {:class "text-lg text-center text-green-800"}
        "Income"]]]
     [:div
-     {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern border border-gray-300 rounded-xl sm:mt-0"}
+     {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern bg-white border border-gray-300 rounded-xl sm:mt-0"}
      [:div
       [:div
        [:p
@@ -98,10 +105,10 @@
         (svgs/downtrend)]]
       [:p
        {:class "text-3xl font-semibold text-center text-black"}
-       expenses]
+       (or expenses 0)]
       [:p {:class "text-lg text-center text-red-800"} "Expenses"]]]
     [:div
-     {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern border border-gray-300 rounded-xl sm:mt-0"}
+     {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern bg-white border border-gray-300 rounded-xl sm:mt-0"}
      [:div
       [:div
        [:p
@@ -110,5 +117,5 @@
         (svgs/stable)]]
       [:p
        {:class "text-3xl font-semibold text-center text-black"}
-       savings]
+       (or savings 0)]
       [:p {:class "text-lg text-center text-gray-800"} "Savings"]]]]])

@@ -79,6 +79,7 @@
                         :xt/id profile-id
                         :profile/user-id user-id
                         :profile/bank (:bank params)
+                        :profile/card-type (:card-type params)
                         :profile/income (:income params)
                         :profile/expenses (:expenses params)
                         :profile/savings (:savings params)}])))))

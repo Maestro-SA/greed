@@ -16,16 +16,15 @@
 
 
 
-(defn app [{:keys [session biff/db] :as ctx}]
-  (let [{:keys [session params]} ctx
-        user-id (:uid session)
+(defn app [{:keys [session params] :as ctx}]
+  (let [user-id (:uid session)
         user (d.helpers/get-user ctx user-id)
         profile (d.helpers/get-profile ctx user-id)]
     (ui/app
      ctx
      [:div.container.mx-auto
-      (when (:update params) (alerts/info))
-      (headers/heading
+      (when (:update params) (alerts/info params))
+      (headers/home-heading
        :breadcrumbs ["Home"]
        :user user)
       [:div
@@ -41,8 +40,7 @@
          :income (:profile/income profile)
          :expenses (:profile/expenses profile)
          :savings (:profile/savings profile))]]
-      #_(charts/revenue)
-      (charts/chart)])))
+      (charts/revenue)])))
 
 (defn app-settings [{:keys [session biff/db] :as ctx}]
   (ui/app
@@ -57,7 +55,8 @@
 (defn profile [{:keys [session biff/db] :as ctx}]
   (ui/app
    ctx
-   [:div.space-y-4
+   [:div.container.mx-auto.space-y-4
+    (headers/pages-heading ["Account" "Settings"])
     (forms/account ctx)
     (forms/profile ctx)]))
 
@@ -69,7 +68,7 @@
 (defn calendar [{:keys [session biff/db] :as ctx}]
   (ui/app
    ctx
-   [:div
+   [:div.container.mx-auto
     (headers/pages-heading ["Calendar"])
     (calendars/calendar)]))
 

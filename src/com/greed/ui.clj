@@ -33,6 +33,7 @@
                                      [:script {:src "https://unpkg.com/hyperscript.org@0.9.8"}]
                                      [:script {:src "https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" :defer "defer"}]
                                      [:link {:href "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" :rel "stylesheet"}]
+                                     [:script {:src "https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"}]
                                      (when recaptcha
                                        [:script {:src "https://www.google.com/recaptcha/api.js"
                                                  :async "async" :defer "defer"}])]
@@ -48,10 +49,10 @@
 (defn app [ctx & body]
   (base
    ctx
-   [:.flex
-    [:.flex-none 
+   [:.flex.flex-col.h-screen
+    [:.flex-none.fixed.top-0.left-0.w-72
      (headers/app ctx)]
-    [:.flex-grow.p-4
+    [:.flex-grow.overflow-auto.p-4.ml-72.bg-gray-50
      body]]))
 
 (defn on-error [{:keys [status ex] :as ctx}]

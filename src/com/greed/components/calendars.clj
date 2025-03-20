@@ -1,10 +1,9 @@
-(ns com.greed.components.calendars
-  (:require [com.greed.time :as time]))
+(ns com.greed.components.calendars)
 
 
 (defn calendar []
   [:div
-   {:class "antialiased sans-serif bg-gray-100"}
+   {:class "antialiased sans-serif"}
    [:div
     {:x-data "app()",
      :x-init "initDate(); getNoOfDays();",
