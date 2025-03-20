@@ -14,8 +14,9 @@
              [:xt/id                  :profile/id]
              [:profile/user-id        :user/id]
              [:profile/bank           :string]
+             [:profile/card-type      :string]
              [:profile/income         :string]
-             [:profile/expense        :string]
+             [:profile/expenses       :string]
              [:profile/savings        :string]]})
 
 (def module

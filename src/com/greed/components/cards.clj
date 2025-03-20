@@ -28,16 +28,18 @@
 
 (defn bank-card [& {:keys [bank card-type income expenses]
                     :or {bank "Capitec"
-                         card-type (svgs/visa),
+                         card-type "Visa",
                          income 500,
                          expenses 0}}]
-  (let [balance (- income expenses)]
+  (let [balance (- (Integer/parseInt income) (Integer/parseInt expenses))
+        card-type (case card-type
+                    "Visa" (svgs/visa)
+                    "Mastercard" (svgs/mastercard))]
     [:div
-     {:class "container py-16 px-4"}
+     {:class "py-4 px-4"}
      [:div
-      {:class "flex flex-col space-y-8 w-full px-16 max-w-xl"}
       [:div
-       {:class "bg-gradient-to-tl from-gray-600 to-black text-white h-56 w-96 p-6 rounded-xl shadow-md"}
+       {:class "h-48 w-80 p-6 rounded-xl shadow-md bg-gradient-to-tl from-gray-600 to-black text-white"}
        [:div
         {:class "h-full flex flex-col justify-between"}
         [:div
@@ -64,3 +66,49 @@
          {:class ""}
          [:div {:class "text-xs font-semibold tracking-tight"} "balance"]
          [:div {:class "text-2xl font-semibold"} (str "R" balance)]]]]]]))
+
+(defn account-stats [& {:keys [income expenses savings]
+                        :or {income 500,
+                             expenses 0
+                             savings 200}}]
+  [:div
+   {:class "px-4 py-4"}
+   [:div
+    {:class "sm:grid sm:h-48 sm:grid-flow-row sm:gap-4 sm:grid-cols-3"}
+    [:div
+     {:class "flex flex-col justify-center px-4 py-4 pattern  border border-gray-300 rounded-xl"}
+     [:div
+      [:div
+       [:p
+        {:class "flex items-center justify-end text-green-500 text-md"}
+        [:span {:class "font-bold"} "6%"]
+        (svgs/uptrend)]]
+      [:p
+       {:class "text-3xl font-semibold text-center text-black"}
+       income]
+      [:p {:class "text-lg text-center text-green-800"}
+       "Income"]]]
+    [:div
+     {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern border border-gray-300 rounded-xl sm:mt-0"}
+     [:div
+      [:div
+       [:p
+        {:class "flex items-center justify-end text-red-500 text-md"}
+        [:span {:class "font-bold"} "6%"]
+        (svgs/downtrend)]]
+      [:p
+       {:class "text-3xl font-semibold text-center text-black"}
+       expenses]
+      [:p {:class "text-lg text-center text-red-800"} "Expenses"]]]
+    [:div
+     {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern border border-gray-300 rounded-xl sm:mt-0"}
+     [:div
+      [:div
+       [:p
+        {:class "flex items-center justify-end text-gray-500 text-md"}
+        [:span {:class "font-bold"} "0%"]
+        (svgs/stable)]]
+      [:p
+       {:class "text-3xl font-semibold text-center text-black"}
+       savings]
+      [:p {:class "text-lg text-center text-gray-800"} "Savings"]]]]])

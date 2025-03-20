@@ -2,6 +2,7 @@
   (:require [com.greed.data.helpers :as d.helpers]
             [com.greed.components.svgs :as svgs]))
 
+
 (defn nav []
   [:nav
    {:class "flex flex-col py-6 sm:flex-row sm:justify-between sm:items-center"}
@@ -11,14 +12,14 @@
      {:class "text-6xl font-giza font-semibold text-black md:text-8xl"}
      "greed."]]
    [:div
-    {:class "flex items-center mt-2 -mx-2 sm:mt-0"}
+    {:class "flex items-center space-x-2 -mx-2 mt-2 sm:mt-0"}
     [:a
      {:href "/signin",
-      :class "px-3 py-1 text-sm font-semibold text-black transition-colors duration-300 transform border-2 border-black rounded-md hover:bg-black hover:text-white"}
+      :class "px-3 py-1 text-sm font-semibold text-black transition-colors duration-300 transform border-2 border-black rounded-md hover:bg-gray-500"}
      "Sign In"]
     [:a
      {:href "/signup",
-      :class "px-3 py-2 mx-2 text-sm font-semibold text-white transition-colors duration-300 transform bg-black rounded-md hover:bg-gray-800"}
+      :class "px-3 py-1 text-sm font-semibold text-white transition-colors duration-300 transform border-2 border-black bg-black rounded-md hover:bg-gray-500 hover:text-black"}
      "Sign Up"]]])
 
 (defn sidebar [{:keys [session] :as ctx}]
@@ -48,11 +49,16 @@
          :href "/"}
         (svgs/dashboard)
         [:span {:class "mx-4 font-medium"} "Dashboard"]]
+       [:a
+        {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+         :href "/app/calendar"}
+        (svgs/calendar)
+        [:span {:class "mx-4 font-medium"} "Calendar"]]
        [:hr {:class "my-6 border-gray-200"}]
        [:a
         {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
          :href "/app/settings"}
-        (svgs/search)
+        (svgs/cog)
         [:span {:class "mx-4 font-medium"} "Settings"]]]
       [:div
          {:class "flex items-center justify-between mt-6"}

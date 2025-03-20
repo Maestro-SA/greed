@@ -21,3 +21,21 @@
       (if (= type :signin)
         "You are signed in!"
         "Your account was created!")]]]])
+
+(defn info [& {:keys [update]
+               :or {update nil}}]
+  (let [message (case (keyword update)
+                  :user-updated "Your user details have been successfully updated."
+                  :prifole-updated "Your profile details have been successfully updated."
+                  "There has been an update.")]
+    [:div
+     {:class "max-w-lg text-white bg-blue-800 rounded-xl mx-auto"}
+     [:div
+      {:class "container flex justify-between px-6 py-4 mx-auto"}
+      [:div
+       {:class "flex items-center space-x-4"}
+       (svgs/info)
+       [:span message]]
+      [:button
+       {:class "p-1 transition-colors duration-300 transform rounded-md hover:bg-opacity-25 hover:bg-gray-600 focus:outline-none"}
+       (svgs/close)]]]))

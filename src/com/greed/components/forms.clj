@@ -3,6 +3,11 @@
             [com.greed.components.shared :as shared]))
 
 
+(def bank-options ["ABSA" "Capitec" "Discovery Bank" "FNB" "Nedbank" "Standard Bank"])
+
+(def card-type-options ["Visa" "Mastercard"])
+
+
 (defn on-error [{:keys [params]}]
   (when-some [error (:error params)]
     [:<>
@@ -102,7 +107,7 @@
       [:button
        (merge (when site-key
                 {:data-sitekey site-key
-                 :data-callback "submitSignin"})
+                 :data-callback "submitSignup"})
               {:class "px-6 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-black rounded-lg hover:bg-white hover:text-black hover:ring hover:ring-black focus:outline-none focus:ring focus:ring-black"
                :type "submit"})
        "Sign up"]]
@@ -118,24 +123,27 @@
       :class "mx-2 text-sm font-bold text-blue-500 hover:underline"}
      "Sign in"]]])
 
-(defn app-settings [ctx]
+(defn account [ctx]
   [:section
    {:class "container p-6 mx-auto bg-white rounded-md shadow-md"}
    [:h2
     {:class "text-lg font-semibold text-gray-700 capitalize"}
-    "Account settings"]
-   [:form
-    [:div
-     {:class "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2"}
-     (shared/app-input ctx :id "firstname" :type "text" :label "First Name")
-     (shared/app-input ctx :id "lastname" :type "text" :label "Last Name")
-     (shared/app-input ctx :id "email" :type "text" :label "Email")
-     (shared/app-input ctx :id "password" :type "password" :label "Password")]
-    [:div
-     {:class "flex justify-end mt-6"}
-     [:button
-      {:class "px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"}
-      "Save"]]]])
+    "Account"]
+   (biff/form
+     {:hx-post "/app/save-user"
+      :hx-swap "outerHTML"}
+     [:div
+      {:class "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2"}
+      (shared/app-input ctx :id "firstname" :type "text" :label "First Name" :required? true)
+      (shared/app-input ctx :id "lastname" :type "text" :label "Last Name" :required? true)
+      (shared/app-input ctx :id "email" :type "text" :label "Email" :required? true)
+      (shared/app-input ctx :id "password" :type "password" :label "Password" :required? true)]
+     [:div
+      {:class "flex justify-end mt-6"}
+      [:button
+       {:class "px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+        :type "submit"}
+       "Save"]])])
 
 (defn profile [ctx]
   [:section
@@ -143,16 +151,19 @@
    [:h2
     {:class "text-lg font-semibold text-gray-700 capitalize"}
     "Profile"]
-   [:form
-    [:div
-     {:class "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2"}
-     (shared/app-select ctx :id "bank" :label "Bank")
-     (shared/app-select ctx :id "card-type" :label "Card Type" :options ["Visa" "Mastercard"])
-     (shared/app-input ctx :id "income" :type "number" :label "Income")
-     (shared/app-input ctx :id "expenses" :type "number" :label "Expenses")
-     (shared/app-input ctx :id "savings" :type "number" :label "Savings")]
-    [:div
-     {:class "flex justify-end mt-6"}
-     [:button
-      {:class "px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"}
-      "Save"]]]])
+   (biff/form
+     {:hx-post "/app/save-profile"
+      :hx-swap "outerHTML"}
+     [:div
+      {:class "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2"}
+      (shared/app-select ctx :id "bank" :label "Bank" :options bank-options :required? true)
+      (shared/app-select ctx :id "card-type" :label "Card Type" :options card-type-options :required? true)
+      (shared/app-input ctx :id "income" :type "number" :label "Income" :required? true)
+      (shared/app-input ctx :id "expenses" :type "number" :label "Expense" :required? true)
+      (shared/app-input ctx :id "savings" :type "number" :label "Savings" :required? true)]
+     [:div
+      {:class "flex justify-end mt-6"}
+      [:button
+       {:class "px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+        :type "submit"}
+       "Save"]])])

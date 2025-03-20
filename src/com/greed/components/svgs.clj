@@ -73,3 +73,101 @@
 
 (defn mastercard []
   [:img {:src "/img/mastercard.svg"}])
+
+(defn info []
+  [:svg
+   {:viewBox "0 0 40 40",
+    :class "w-6 h-6 fill-current"}
+   [:path
+    {:d "M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z"}]])
+
+(defn close []
+  [:svg
+   {:class "w-5 h-5",
+    :viewBox "0 0 24 24",
+    :fill "none",
+    :xmlns "http://www.w3.org/2000/svg"}
+   [:path
+    {:d "M6 18L18 6M6 6L18 18",
+     :stroke "currentColor",
+     :stroke-width "2",
+     :stroke-linecap "round",
+     :stroke-linejoin "round"}]])
+
+(defn cog []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :fill "none",
+    :viewBox "0 0 24 24",
+    :stroke-width "1.5",
+    :stroke "currentColor",
+    :class "size-6"}
+   [:path
+    {:stroke-linecap "round",
+     :stroke-linejoin "round",
+     :d "M4.5 12a7.5 7.5 0 0 0 15 0m-15 0a7.5 7.5 0 1 1 15 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077 1.41-.513m14.095-5.13 1.41-.513M5.106 17.785l1.15-.964m11.49-9.642 1.149-.964M7.501 19.795l.75-1.3m7.5-12.99.75-1.3m-6.063 16.658.26-1.477m2.605-14.772.26-1.477m0 17.726-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205 12 12m6.894 5.785-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495"}]])
+
+(defn calendar []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :fill "none",
+    :viewBox "0 0 24 24",
+    :stroke-width "1.5",
+    :stroke "currentColor",
+    :class "size-6"}
+   [:path
+    {:stroke-linecap "round",
+     :stroke-linejoin "round",
+     :d
+     "M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"}]])
+
+(defn uptrend []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :class "w-5 h-5 fill-current",
+    :viewBox "0 0 24 24"}
+   [:path
+    {:class "heroicon-ui",
+     :d
+     "M20 15a1 1 0 002 0V7a1 1 0 00-1-1h-8a1 1 0 000 2h5.59L13 13.59l-3.3-3.3a1 1 0 00-1.4 0l-6 6a1 1 0 001.4 1.42L9 12.4l3.3 3.3a1 1 0 001.4 0L20 9.4V15z"}]])
+
+(defn downtrend []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :class "w-5 h-5 fill-current",
+    :viewBox "0 0 24 24"}
+   [:path
+    {:class "heroicon-ui",
+     :d
+     "M20 9a1 1 0 012 0v8a1 1 0 01-1 1h-8a1 1 0 010-2h5.59L13 10.41l-3.3 3.3a1 1 0 01-1.4 0l-6-6a1 1 0 011.4-1.42L9 11.6l3.3-3.3a1 1 0 011.4 0l6.3 6.3V9z"}]])
+
+(defn stable []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :class "w-5 h-5 fill-current",
+    :viewBox "0 0 24 24"}
+   [:path
+    {:class "heroicon-ui",
+     :d "M17 11a1 1 0 010 2H7a1 1 0 010-2h10z"}]])
+
+(defn home []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :class "w-5 h-5",
+    :viewBox "0 0 20 20",
+    :fill "currentColor"}
+   [:path
+    {:d
+     "M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"}]])
+
+(defn ->next []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :class "w-5 h-5",
+    :viewBox "0 0 20 20",
+    :fill "currentColor"}
+   [:path
+    {:fill-rule "evenodd",
+     :d
+     "M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z",
+     :clip-rule "evenodd"}]])
