@@ -54,6 +54,11 @@
          :href "/app/calendar"}
         (svgs/calendar)
         [:span {:class "mx-4 font-medium"} "Calendar"]]
+       [:a
+        {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+         :href "/app/tools"}
+        (svgs/tools)
+        [:span {:class "mx-4 font-medium"} "Tools"]]
        [:hr {:class "my-6 border-gray-200"}]
        [:a
         {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",

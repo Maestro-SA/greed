@@ -1,6 +1,7 @@
 (ns com.greed.data.helpers
   (:require [com.biffweb :as biff :refer [q]]
-            [clojure.tools.logging :as logger]))
+            [clojure.tools.logging :as logger]
+            [com.greed.tools.helpers :as t]))
 
 
 (defn get-users [{:keys [biff/db]}]
@@ -69,9 +70,10 @@
                         :db/op :update
                         :profile/bank (:bank params)
                         :profile/card-type (:card-type params)
-                        :profile/income (:income params)
-                        :profile/expenses (:expenses params)
-                        :profile/savings (:savings params)}]))
+                        :profile/income (t/->int (:income params))
+                        :profile/expenses (t/->int (:expenses params))
+                        :profile/savings (t/->int (:savings params))
+                        :profile/age (t/->int (:age params))}]))
       (do
         (logger/info "Creating profile...")
         (biff/submit-tx ctx
@@ -80,6 +82,7 @@
                         :profile/user-id user-id
                         :profile/bank (:bank params)
                         :profile/card-type (:card-type params)
-                        :profile/income (:income params)
-                        :profile/expenses (:expenses params)
-                        :profile/savings (:savings params)}])))))
+                        :profile/income (t/->int (:income params))
+                        :profile/expenses (t/->int (:expenses params))
+                        :profile/savings (t/->int (:savings params))
+                        :profile/age (t/->int (:age params))}])))))

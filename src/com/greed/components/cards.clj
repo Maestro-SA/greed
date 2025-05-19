@@ -1,5 +1,8 @@
 (ns com.greed.components.cards
-  (:require [com.greed.components.svgs :as svgs]))
+  (:require [com.core :as c]
+            [com.greed.tools.tax :as tax]
+            [com.greed.tools.helpers :as h]
+            [com.greed.components.svgs :as svgs]))
 
 
 (defn testiminial [& {:keys [img title body author]}]
@@ -26,22 +29,35 @@
       :role "link"}
      author]]])
 
-(defn bank-card [& {:keys [bank card-type income expenses]}]
-  (let [income (if (not (nil? income)) (Integer/parseInt income) 500)
-        expenses (if (not (nil? expenses)) (Integer/parseInt expenses) 0)
-        balance (- income expenses)
-        card-type (case card-type
-                    "Visa" (svgs/visa)
-                    "Mastercard" (svgs/mastercard)
-                    (svgs/visa))
-        card-colour (case bank
-                      "ABSA" "from-red-500 to-red-800"
-                      "Capitec" "from-gray-600 to-black"
-                      "Discovery Bank" "from-yellow-500 to-amber-800"
-                      "FNB" "from-teal-500 to-teal-800"
-                      "Nedbank" "from-emerald-500 to-green-800"
-                      "Standard Bank" "from-blue-500 to-blue-800"
-                      "from-gray-600 to-black")]
+(defn get-card-type [card-type]
+  (case (h/->keyword card-type)
+                    :visa (svgs/visa)
+                    :mastercard (svgs/mastercard)
+                    (svgs/visa)))
+
+(defn get-card-colour [bank]
+  (let [card-colour-config (:banking/card-colours c/common-config)
+        bank (h/->keyword bank)]
+    (if (contains? card-colour-config bank)
+      (get card-colour-config bank)
+      (:default card-colour-config))))
+
+(defn bank-card [& {:keys [bank card-type income expenses age]}]
+  (let [income (or income 500)
+
+        age (or age 18)
+
+        annual-income (h/income->annual-income income)
+
+        {:keys [net-income]} (tax/calculate-income-tax annual-income age)
+
+        expenses (or expenses 150)
+
+        balance (- (h/annual-income->monthly-income net-income) expenses)
+
+        card-type (get-card-type card-type)
+
+        card-colour (get-card-colour bank)]
     [:div
      {:class "py-4 px-4"}
      [:div
@@ -72,50 +88,61 @@
         [:div
          {:class ""}
          [:div {:class "text-xs font-semibold tracking-tight"} "balance"]
-         [:div {:class "text-2xl font-semibold"} (str "R" balance)]]]]]]))
+         [:div {:class "text-2xl font-semibold"}
+          (h/amount->rands balance)]]]]]]))
 
-(defn account-stats [& {:keys [income expenses savings]
-                        :or {income 500,
-                             expenses 0
-                             savings 200}}]
-  [:div
-   {:class "px-4 py-4"}
-   [:div
-    {:class "sm:grid sm:h-48 sm:grid-flow-row sm:gap-4 sm:grid-cols-3"}
+(defn account-stats [& {:keys [income expenses savings age]}]
+  (let [income (or income 500)
+
+        age (or age 18)
+
+        annual-income (h/income->annual-income income)
+
+        {:keys [net-income]} (tax/calculate-income-tax annual-income age)
+
+        expenses (or expenses 150)
+
+        savings (or savings 100)]
     [:div
-     {:class "flex flex-col justify-center px-4 py-4 pattern bg-white border border-gray-300 rounded-xl"}
+     {:class "px-4 py-4"}
      [:div
+      {:class "sm:grid sm:h-48 sm:grid-flow-row sm:gap-4 sm:grid-cols-3"}
       [:div
-       [:p
-        {:class "flex items-center justify-end text-green-500 text-md"}
-        [:span {:class "font-bold"} "6%"]
-        (svgs/uptrend)]]
-      [:p
-       {:class "text-3xl font-semibold text-center text-black"}
-       (or income 0)]
-      [:p {:class "text-lg text-center text-green-800"}
-       "Income"]]]
-    [:div
-     {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern bg-white border border-gray-300 rounded-xl sm:mt-0"}
-     [:div
+       {:class "flex flex-col justify-center px-4 py-4 pattern bg-white border border-gray-300 rounded-xl"}
+       [:div
+        [:div
+         [:p
+          {:class "flex items-center justify-end text-green-500 text-md"}
+          [:span {:class "font-bold"} "6%"]
+          (svgs/uptrend)]]
+        [:p
+         {:class "text-3xl font-semibold text-center text-black"}
+         (-> net-income
+              h/annual-income->monthly-income
+              h/amount->rands)]
+        [:p {:class "text-lg text-center text-green-800"}
+         "Income"]]]
       [:div
-       [:p
-        {:class "flex items-center justify-end text-red-500 text-md"}
-        [:span {:class "font-bold"} "6%"]
-        (svgs/downtrend)]]
-      [:p
-       {:class "text-3xl font-semibold text-center text-black"}
-       (or expenses 0)]
-      [:p {:class "text-lg text-center text-red-800"} "Expenses"]]]
-    [:div
-     {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern bg-white border border-gray-300 rounded-xl sm:mt-0"}
-     [:div
+       {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern bg-white border border-gray-300 rounded-xl sm:mt-0"}
+       [:div
+        [:div
+         [:p
+          {:class "flex items-center justify-end text-red-500 text-md"}
+          [:span {:class "font-bold"} "6%"]
+          (svgs/downtrend)]]
+        [:p
+         {:class "text-3xl font-semibold text-center text-black"}
+         (h/amount->rands expenses)]
+        [:p {:class "text-lg text-center text-red-800"} "Expenses"]]]
       [:div
-       [:p
-        {:class "flex items-center justify-end text-gray-500 text-md"}
-        [:span {:class "font-bold"} "0%"]
-        (svgs/stable)]]
-      [:p
-       {:class "text-3xl font-semibold text-center text-black"}
-       (or savings 0)]
-      [:p {:class "text-lg text-center text-gray-800"} "Savings"]]]]])
+       {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern bg-white border border-gray-300 rounded-xl sm:mt-0"}
+       [:div
+        [:div
+         [:p
+          {:class "flex items-center justify-end text-gray-500 text-md"}
+          [:span {:class "font-bold"} "0%"]
+          (svgs/stable)]]
+        [:p
+         {:class "text-3xl font-semibold text-center text-black"}
+         (h/amount->rands savings)]
+        [:p {:class "text-lg text-center text-gray-800"} "Savings"]]]]]))

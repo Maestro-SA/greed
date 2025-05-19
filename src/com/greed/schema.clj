@@ -15,9 +15,10 @@
              [:profile/user-id        :user/id]
              [:profile/bank           :string]
              [:profile/card-type      :string]
-             [:profile/income         :string]
-             [:profile/expenses       :string]
-             [:profile/savings        :string]]})
+             [:profile/income         :int]
+             [:profile/expenses       :int]
+             [:profile/savings        :int]
+             [:profile/age            :int]]})
 
 (def module
   {:schema schema})

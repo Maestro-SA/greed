@@ -1,0 +1,20 @@
+{:error/recaptcha (str "You failed the recaptcha test. Try again, "
+                       "and make sure you aren't blocking scripts from Google.")
+ :error/invalid-email "Invalid email. Try again with a different address."
+ :error/invalid-credentials "Invalid credentials. Try again."
+ :error/send-failed (str "We weren't able to send an email to that address. "
+                         "If the problem persists, try another address.")
+ :error/default "There was an error."
+
+ :user/fields #{"firstname" "lastname" "email" "password"}
+ :profile/fields #{"bank" "income" "expenses" "savings" "age"}
+
+ :banking/banks ["ABSA" "Capitec" "Discovery Bank" "FNB" "Nedbank" "Standard Bank"]
+ :banking/card-types ["Visa" "Mastercard"]
+ :banking/card-colours {:absa "from-red-500 to-red-800"
+                        :capitec "from-gray-600 to-black"
+                        :discovery-bank "from-yellow-500 to-amber-800"
+                        :fnb "from-teal-500 to-teal-800"
+                        :nedbank "from-emerald-500 to-green-800"
+                        :standard-bank "from-blue-500 to-blue-800"
+                        :default "from-gray-600 to-black"}}

@@ -1,10 +1,10 @@
 (ns com.greed.middleware
-  (:require [com.biffweb :as biff]
+  (:require [com.biffweb :as biff :refer [q]]
             [muuntaja.middleware :as muuntaja]
             [ring.middleware.anti-forgery :as csrf]
             [ring.middleware.defaults :as rd]
             [com.greed.validation :as v]
-            [com.greed.data.helpers :as helpers]))
+            [com.greed.data.helpers :as d]))
 
 (defn wrap-redirect-signed-in [handler]
   (fn [{:keys [session] :as ctx}]
@@ -21,7 +21,7 @@
        :headers {"location" "/signin?error=not-signed-in"}})))
 
 (defn wrap-authenticate [handler]
-  (fn [{:keys [uri] :as ctx}]
+  (fn [{:keys [uri db] :as ctx}]
     (let [error-location (if (= "/authenticate/signup" uri)
                            "/signup?error=invalid-email"
                            "/signin?error=invalid-credentials")]

@@ -171,3 +171,93 @@
      :d
      "M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z",
      :clip-rule "evenodd"}]])
+
+(defn tools []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :fill "none",
+    :viewBox "0 0 24 24",
+    :stroke-width "1.5",
+    :stroke "currentColor",
+    :class "size-6"}
+   [:path
+    {:stroke-linecap "round",
+     :stroke-linejoin "round",
+     :d
+     "M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z"}]])
+
+(defn flame []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :class "w-8 h-8",
+    :fill "none",
+    :viewBox "0 0 24 24",
+    :stroke "currentColor"}
+   [:path
+    {:stroke-linecap "round",
+     :stroke-linejoin "round",
+     :stroke-width "2",
+     :d
+     "M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"}]
+   [:path
+    {:stroke-linecap "round",
+     :stroke-linejoin "round",
+     :stroke-width "2",
+     :d
+     "M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"}]])
+
+(defn suit-case []
+  [:svg
+   {:aria-label "suitcase icon",
+    :class "w-6 h-6 fill-current",
+    :viewBox "0 0 24 24",
+    :fill "none",
+    :xmlns "http://www.w3.org/2000/svg"}
+   [:path {:d "M14 11H10V13H14V11Z"}]
+   [:path
+    {:fill-rule "evenodd",
+     :clip-rule "evenodd",
+     :d
+     "M7 5V4C7 2.89545 7.89539 2 9 2H15C16.1046 2 17 2.89545 17 4V5H20C21.6569 5 23 6.34314 23 8V18C23 19.6569 21.6569 21 20 21H4C2.34314 21 1 19.6569 1 18V8C1 6.34314 2.34314 5 4 5H7ZM9 4H15V5H9V4ZM4 7C3.44775 7 3 7.44769 3 8V14H21V8C21 7.44769 20.5522 7 20 7H4ZM3 18V16H21V18C21 18.5523 20.5522 19 20 19H4C3.44775 19 3 18.5523 3 18Z"}]])
+
+(defn dollar []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :fill "none",
+    :viewBox "0 0 24 24",
+    :stroke-width "1.5",
+    :stroke "currentColor",
+    :class "size-6"}
+   [:path
+    {:stroke-linecap "round",
+     :stroke-linejoin "round",
+     :d
+     "M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"}]])
+
+(defn percent-badge []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :fill "none",
+    :viewBox "0 0 24 24",
+    :stroke-width "1.5",
+    :stroke "currentColor",
+    :class "size-6"}
+   [:path
+    {:stroke-linecap "round",
+     :stroke-linejoin "round",
+     :d
+     "m8.99 14.993 6-6m6 3.001c0 1.268-.63 2.39-1.593 3.069a3.746 3.746 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043 3.745 3.745 0 0 1-3.068 1.593c-1.268 0-2.39-.63-3.068-1.593a3.745 3.745 0 0 1-3.296-1.043 3.746 3.746 0 0 1-1.043-3.297 3.746 3.746 0 0 1-1.593-3.068c0-1.268.63-2.39 1.593-3.068a3.746 3.746 0 0 1 1.043-3.297 3.745 3.745 0 0 1 3.296-1.042 3.745 3.745 0 0 1 3.068-1.594c1.268 0 2.39.63 3.068 1.593a3.745 3.745 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.297 3.746 3.746 0 0 1 1.593 3.068ZM9.74 9.743h.008v.007H9.74v-.007Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 4.5h.008v.008h-.008v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"}]])
+
+(defn arrow-> []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :class "w-6 h-6",
+    :fill "none",
+    :viewBox "0 0 24 24",
+    :stroke "currentColor"}
+   [:path
+    {:stroke-linecap "round",
+     :stroke-linejoin "round",
+     :stroke-width "2",
+     :d
+     "M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"}]])

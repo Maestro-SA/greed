@@ -1,18 +1,16 @@
 (ns com.greed.components.shared
-  (:require [com.greed.data.helpers :as d.helpers]))
+  (:require [com.core :as c]
+            [com.greed.data.helpers :as d.helpers]))
 
-
-(def user-fields #{"firstname" "lastname" "email" "password"})
-
-(def profile-fields #{"bank" "income" "expenses" "savings"})
 
 (defn determine-placeholder [id user profile]
-  (cond
-    (contains? user-fields id)
-    ((keyword (str "user/" id)) user)
+  (let [config c/common-config]
+    (cond
+      (contains? (:user/fields config) id)
+      ((keyword (str "user/" id)) user)
 
-    (contains? profile-fields id)
-    ((keyword (str "profile/" id)) profile)))
+      (contains? (:profile/fields config) id)
+      ((keyword (str "profile/" id)) profile))))
 
 (defn input [& {:keys [id type label required?]
                 :or {required? false}}]
@@ -67,3 +65,19 @@
        :required required?}
       (for [option options]
         [:option option])]]))
+
+(defn modal-input [& {:keys [id type label required?]
+                      :or {required? false}}]
+  [:div
+   [:label
+    {:for type,
+     :class "text-sm text-gray-700"}
+    label]
+   [:label
+    {:class "block mt-3", :for type}
+    [:input
+     {:class "block w-full px-4 py-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
+      :type type,
+      :name id,
+      :id id,
+      :required required?}]]])
