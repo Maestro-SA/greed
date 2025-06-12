@@ -1,5 +1,5 @@
-(ns com.greed.pages.home
-  (:require [com.greed.components.cards :as cards]))
+(ns com.greed.ui.pages.home
+  (:require [com.greed.ui.components.cards :as cards]))
 
 (defn page []
   [:.container.mx-auto.px-10

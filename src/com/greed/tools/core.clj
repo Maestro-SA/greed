@@ -1,4 +1,4 @@
-(ns com.greed.tools.helpers
+(ns com.greed.tools.core
   (:require [clojure.string :as string]))
 
 

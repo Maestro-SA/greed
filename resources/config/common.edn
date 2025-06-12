@@ -7,7 +7,7 @@
  :error/default "There was an error."
 
  :user/fields #{"firstname" "lastname" "email" "password"}
- :profile/fields #{"bank" "income" "expenses" "savings" "age"}
+ :profile/fields #{"bank" "income" "expenses" "savings" "age" "payday"}
 
  :banking/banks ["ABSA" "Capitec" "Discovery Bank" "FNB" "Nedbank" "Standard Bank"]
  :banking/card-types ["Visa" "Mastercard"]

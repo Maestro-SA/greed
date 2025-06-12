@@ -1,7 +1,8 @@
-(ns com.greed.data.helpers
+(ns com.greed.data.core
   (:require [com.biffweb :as biff :refer [q]]
             [clojure.tools.logging :as logger]
-            [com.greed.tools.helpers :as t]))
+            [com.greed.tools.core :as tools]
+            [com.greed.data.validation :as validation]))
 
 
 (defn get-users [{:keys [biff/db]}]
@@ -60,7 +61,8 @@
   (let [user-id (get-user-id-from-session ctx)
         profile (get-profile ctx user-id)
         profile-id (or (:xt/id profile)
-                       (java.util.UUID/randomUUID))]
+                       (java.util.UUID/randomUUID))
+        valid-payday? (validation/valid-payday? (:payday params))]
     (if profile
       (do
         (logger/info "Updating profile...")
@@ -70,10 +72,13 @@
                         :db/op :update
                         :profile/bank (:bank params)
                         :profile/card-type (:card-type params)
-                        :profile/income (t/->int (:income params))
-                        :profile/expenses (t/->int (:expenses params))
-                        :profile/savings (t/->int (:savings params))
-                        :profile/age (t/->int (:age params))}]))
+                        :profile/income (tools/->int (:income params))
+                        :profile/expenses (tools/->int (:expenses params))
+                        :profile/savings (tools/->int (:savings params))
+                        :profile/age (tools/->int (:age params))
+                        :profile/payday (if valid-payday?
+                                          (tools/->int (:payday params))
+                                          1)}]))
       (do
         (logger/info "Creating profile...")
         (biff/submit-tx ctx
@@ -82,7 +87,10 @@
                         :profile/user-id user-id
                         :profile/bank (:bank params)
                         :profile/card-type (:card-type params)
-                        :profile/income (t/->int (:income params))
-                        :profile/expenses (t/->int (:expenses params))
-                        :profile/savings (t/->int (:savings params))
-                        :profile/age (t/->int (:age params))}])))))
+                        :profile/income (tools/->int (:income params))
+                        :profile/expenses (tools/->int (:expenses params))
+                        :profile/savings (tools/->int (:savings params))
+                        :profile/age (tools/->int (:age params))
+                        :profile/payday (if valid-payday?
+                                          (tools/->int (:payday params))
+                                          1)}])))))

@@ -1,17 +1,17 @@
-(ns com.greed.components.forms
+(ns com.greed.ui.components.forms
   (:require [com.biffweb :as biff]
             [com.core :as c]
-            [com.greed.tools.helpers :as h]
-            [com.greed.components.shared :as shared]))
+            [com.greed.tools.core :as tools]
+            [com.greed.ui.components.shared :as shared]))
 
 
 (defn on-error [{:keys [params]}]
-  (let [config (c/common-config)]
+  (let [config c/common-config]
     (when-some [error (:error params)]
       [:<>
        [:.h-1]
        [:.text-sm.text-red-600
-        (case (h/->keyword error)
+        (case (tools/->keyword error)
           :recaptcha (:error/recaptcha config)
           :invalid-email (:error/invalid-email config)
           :invalid-credentials (:error/invalid-credentials config)
@@ -157,7 +157,8 @@
        (shared/app-input ctx :id "income" :type "number" :label "Income" :required? true)
        (shared/app-input ctx :id "expenses" :type "number" :label "Expense" :required? true)
        (shared/app-input ctx :id "savings" :type "number" :label "Savings" :required? true)
-       (shared/app-input ctx :id "age" :type "number" :label "Age" :required? true)]
+       (shared/app-input ctx :id "age" :type "number" :label "Age" :required? true)
+       (shared/app-input ctx :id "payday" :type "number" :label "Pay day" :required? true)]
       [:div
        {:class "flex justify-end mt-6"}
        [:button

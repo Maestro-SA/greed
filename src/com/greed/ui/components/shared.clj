@@ -1,6 +1,6 @@
-(ns com.greed.components.shared
+(ns com.greed.ui.components.shared
   (:require [com.core :as c]
-            [com.greed.data.helpers :as d.helpers]))
+            [com.greed.data.core :as data]))
 
 
 (defn determine-placeholder [id user profile]
@@ -29,8 +29,8 @@
                         :or {required? false}}]
   (let [{:keys [session]} ctx
         user-id (:uid session)
-        user (d.helpers/get-user ctx user-id)
-        profile (d.helpers/get-profile ctx user-id)
+        user (data/get-user ctx user-id)
+        profile (data/get-profile ctx user-id)
         placeholder (determine-placeholder id user profile)]
    [:div
     [:label
@@ -50,7 +50,7 @@
                          :or {required? false}}]
   (let [{:keys [session]} ctx
         user-id (:uid session)
-        user (d.helpers/get-user ctx user-id)
+        user (data/get-user ctx user-id)
         placeholder (keyword (str "user/" id))]
     [:div
      [:label

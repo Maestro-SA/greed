@@ -18,7 +18,8 @@
              [:profile/income         :int]
              [:profile/expenses       :int]
              [:profile/savings        :int]
-             [:profile/age            :int]]})
+             [:profile/age            :int]
+             [:profile/payday         :int]]})
 
 (def module
   {:schema schema})

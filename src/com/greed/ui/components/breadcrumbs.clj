@@ -1,5 +1,5 @@
-(ns com.greed.components.breadcrumbs
-  (:require [com.greed.components.svgs :as svgs]))
+(ns com.greed.ui.components.breadcrumbs
+  (:require [com.greed.ui.components.svgs :as svgs]))
 
 
 (defn breadcumb [breadcrumbs]

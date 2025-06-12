@@ -3,8 +3,7 @@
             [muuntaja.middleware :as muuntaja]
             [ring.middleware.anti-forgery :as csrf]
             [ring.middleware.defaults :as rd]
-            [com.greed.validation :as v]
-            [com.greed.data.helpers :as d]))
+            [com.greed.authentication :as auth]))
 
 (defn wrap-redirect-signed-in [handler]
   (fn [{:keys [session] :as ctx}]
@@ -25,7 +24,7 @@
     (let [error-location (if (= "/authenticate/signup" uri)
                            "/signup?error=invalid-email"
                            "/signin?error=invalid-credentials")]
-      (if (v/authenticate! ctx)
+      (if (auth/authenticate! ctx)
         (handler ctx)
         {:status 303
          :headers {"location" error-location}}))))

@@ -1,14 +1,11 @@
 (ns com.greed.home
-  (:require [clj-http.client :as http]
+  (:require [com.biffweb :as biff :refer [q]]
             [com.greed.middleware :as mid]
-            [com.greed.components.headers :as headers]
-            [com.greed.pages.home :as p.home]
-            [com.greed.pages.signin :as p.signin]
-            [com.greed.pages.signup :as p.signup] 
-            [com.biffweb :as biff :refer [q]]
-            [com.greed.ui :as ui] 
-            [rum.core :as rum]
-            [xtdb.api :as xt]))
+            [com.greed.ui :as ui]
+            [com.greed.ui.pages.home :as p.home]
+            [com.greed.ui.pages.signin :as p.signin]
+            [com.greed.ui.pages.signup :as p.signup]
+            [com.greed.ui.components.headers :as headers]))
 
 (defn home-page [ctx]
   (ui/page

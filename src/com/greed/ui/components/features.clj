@@ -1,10 +1,10 @@
-(ns com.greed.components.features
+(ns com.greed.ui.components.features
   (:require [com.greed.ui :as ui]
             [com.greed.tools.tax :as tax]
-            [com.greed.tools.helpers :as h]
-            [com.greed.components.svgs :as svgs]
-            [com.greed.components.forms :as forms]
-            [com.greed.components.headers :as headers]))
+            [com.greed.tools.core :as tools]
+            [com.greed.ui.components.svgs :as svgs]
+            [com.greed.ui.components.forms :as forms]
+            [com.greed.ui.components.headers :as headers]))
 
 
 (defn tool [& {:keys [title description]
@@ -69,9 +69,9 @@
 
 (defn income-tax-feature [{:keys [params] :as ctx}]
   (let [{:keys [income age]} params
-        income (h/->int income)
-        age (h/->int age)
-        annual-income (h/income->annual-income income)
+        income (tools/->int income)
+        age (tools/->int age)
+        annual-income (tools/income->annual-income income)
         {:keys [net-income
                 effective-rate]} (tax/calculate-income-tax annual-income age)]
     (ui/app
@@ -97,16 +97,16 @@
          {:class "flex items-center mt-4 text-gray-700"}
          (svgs/suit-case)
          [:h1 {:class "px-2 text-sm"}
-          (h/amount->rands income) " (Gross income p/m)"]]
+          (tools/amount->rands income) " (Gross income p/m)"]]
         [:div
          {:class "flex items-center mt-4 text-gray-700"}
          (svgs/percent-badge)
          [:h1 {:class "px-2 text-sm"}
-          (h/->percentage effective-rate)]]
+          (tools/->percentage effective-rate)]]
         [:div
          {:class "flex items-center mt-4 text-gray-700"}
          (svgs/dollar)
          [:h1 {:class "px-2 text-sm"}
           (-> net-income
-              h/annual-income->monthly-income
-              h/amount->rands) " (Net income p/m)"]]]]])))
+              tools/annual-income->monthly-income
+              tools/amount->rands) " (Net income p/m)"]]]]])))

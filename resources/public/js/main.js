@@ -1,9 +1,11 @@
 // When plain htmx isn't quite enough, you can stick some custom JS here.
 
-function app() {
+function app(payday) {
     return {
+        payday: payday,
         month: new Date().getMonth(),
         year: new Date().getFullYear(),
+        day: new Date().getDate(),
         DAYS: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         MONTH_NAMES: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         blankdays: [],

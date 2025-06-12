@@ -1,6 +1,6 @@
-(ns com.greed.components.headers
-  (:require [com.greed.components.navs :as navs]
-            [com.greed.components.breadcrumbs :as breadcrumbs]))
+(ns com.greed.ui.components.headers
+  (:require [com.greed.ui.components.navs :as navs]
+            [com.greed.ui.components.breadcrumbs :as breadcrumbs]))
 
 (defn pages [& content] 
   [:header
@@ -14,7 +14,8 @@
   [:header
    {:class "bg-white"}
    [:div 
-    (navs/sidebar ctx)]])
+    (navs/sidebar ctx)
+    (navs/mobile-sidebar ctx)]])
 
 (defn home-heading [& {:keys [breadcrumbs user]
                   :or {breadcrumbs ["None"]}}]

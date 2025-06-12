@@ -1,5 +1,5 @@
-(ns com.greed.components.alerts
-  (:require [com.greed.components.svgs :as svgs]))
+(ns com.greed.ui.components.alerts
+  (:require [com.greed.ui.components.svgs :as svgs]))
 
 
 (defn success [& {:keys [type]

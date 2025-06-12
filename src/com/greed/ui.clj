@@ -1,12 +1,11 @@
 (ns com.greed.ui
-  (:require [cheshire.core :as cheshire]
-            [clojure.java.io :as io]
-            [com.greed.settings :as settings]
+  (:require [rum.core :as rum]
             [com.biffweb :as biff]
-            [ring.middleware.anti-forgery :as csrf]
+            [clojure.java.io :as io]
             [ring.util.response :as ring-response]
-            [com.greed.components.headers :as headers]
-            [rum.core :as rum]))
+            [ring.middleware.anti-forgery :as csrf]
+            [com.greed.settings :as settings]
+            [com.greed.ui.components.headers :as headers]))
 
 (defn static-path [path]
   (if-some [last-modified (some-> (io/resource (str "public" path))
@@ -50,9 +49,11 @@
   (base
    ctx
    [:.flex.flex-col.h-screen
-    [:.flex-none.fixed.top-0.left-0.w-72
+    [:.
+     {:class "flex-none fixed top-0 left-0 w-72"}
      (headers/app ctx)]
-    [:.flex-grow.overflow-auto.p-4.ml-72.bg-gray-50
+    [:.
+     {:class "flex-grow overflow-auto p-4 mt-20 md:mt-0 md:ml-72 md:bg-gray-50"}
      body]]))
 
 (defn on-error [{:keys [status ex] :as ctx}]

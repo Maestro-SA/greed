@@ -1,26 +1,22 @@
 (ns com.greed.app
   (:require [com.biffweb :as biff :refer [q]]
             [com.greed.middleware :as mid]
-            [com.greed.ui :as ui] 
-            [rum.core :as rum]
-            [xtdb.api :as xt]
-            [ring.adapter.jetty9 :as jetty]
-            [cheshire.core :as cheshire]
-            [com.greed.components.forms :as forms]
-            [com.greed.components.cards :as cards]
-            [com.greed.components.alerts :as alerts]
-            [com.greed.components.calendars :as calendars]
-            [com.greed.data.helpers :as d.helpers]
-            [com.greed.components.features :as features]
-            [com.greed.components.stats :as stats]
-            [com.greed.components.headers :as headers]))
+            [com.greed.ui :as ui]
+            [com.greed.data.core :as data]
+            [com.greed.ui.components.stats :as stats]
+            [com.greed.ui.components.forms :as forms]
+            [com.greed.ui.components.cards :as cards]
+            [com.greed.ui.components.alerts :as alerts]
+            [com.greed.ui.components.headers :as headers]
+            [com.greed.ui.components.features :as features]
+            [com.greed.ui.components.calendars :as calendars]))
 
 
 
 (defn app [{:keys [session params] :as ctx}]
   (let [user-id (:uid session)
-        user (d.helpers/get-user ctx user-id)
-        profile (d.helpers/get-profile ctx user-id)
+        user (data/get-user ctx user-id)
+        profile (data/get-profile ctx user-id)
         income (:profile/income profile)]
     (ui/app
      ctx
@@ -54,7 +50,7 @@
    [:div]))
 
 (defn update-user [ctx]
-  (d.helpers/update-user ctx)
+  (data/update-user ctx)
   {:status 303
    :headers {"location" "/app?update=user-updated"}})
 
@@ -67,16 +63,19 @@
     (forms/profile ctx)]))
 
 (defn upsert-profile [ctx]
-  (d.helpers/upsert-profile ctx)
+  (data/upsert-profile ctx)
   {:status 303
    :headers {"location" "/app?update=profile-updated"}})
 
 (defn calendar [{:keys [session biff/db] :as ctx}]
-  (ui/app
-   ctx
-   [:div.container.mx-auto
-    (headers/pages-heading ["Calendar"])
-    (calendars/calendar)]))
+  (let [user-id (:uid session)
+        profile (data/get-profile ctx user-id)
+        payday (:profile/payday profile)]
+    (ui/app
+     ctx
+     [:div.container.mx-auto
+      (headers/pages-heading ["Calendar"])
+      (calendars/calendar payday)])))
 
 (defn tools [{:keys [session biff/db] :as ctx}]
   (ui/app

@@ -1,5 +1,5 @@
-(ns com.greed.components.charts
-  (:require [com.greed.time :as time]))
+(ns com.greed.ui.components.charts
+  (:require [com.greed.tools.time :as time]))
 
 
 (defn revenue []

@@ -1,6 +1,6 @@
-(ns com.greed.components.stats
+(ns com.greed.ui.components.stats
   (:require [com.greed.tools.tax :as tax]
-            [com.greed.tools.helpers :as h]))
+            [com.greed.tools.core :as tools]))
 
 
 (defn tax-stats [& {:keys [income age]}]
@@ -8,7 +8,7 @@
 
         age (or age 18)
 
-        annual-income (h/income->annual-income income)
+        annual-income (tools/income->annual-income income)
 
         {:keys [rebates
                 net-income
@@ -42,21 +42,21 @@
           "Net annual income"]
          [:p
           {:class "text-2xl font-bold text-gray-800"}
-          (h/amount->rands net-income)]]
+          (tools/amount->rands net-income)]]
         [:div
          [:p
           {:class "text-xl font-semibold text-gray-800 sm:text-base"}
           "Tax threshold"]
          [:p
           {:class "text-2xl font-bold text-gray-800"}
-          (h/amount->rands tax-threshold)]]
+          (tools/amount->rands tax-threshold)]]
         [:div
          [:p
           {:class "text-xl font-semibold text-gray-800 sm:text-base"}
           "Tax rebates"]
          [:p
           {:class "text-2xl font-bold text-gray-800"}
-          (h/amount->rands rebates)]]]
+          (tools/amount->rands rebates)]]]
        [:div
         {:class "flex flex-col justify-between p-10"}
         [:div
@@ -72,7 +72,7 @@
           "Effective rate"]
          [:p
           {:class "text-2xl font-bold text-deep-purple-accent-400"}
-          (h/->percentage effective-rate)]]
+          (tools/->percentage effective-rate)]]
         [:div
          [:p
           {:class "text-xl font-semibold text-gray-800 sm:text-base"}
@@ -80,5 +80,5 @@
          [:p
           {:class "text-2xl font-bold text-green-700"}
           (-> net-income
-              h/annual-income->monthly-income
-              h/amount->rands)]]]]]]))
+              tools/annual-income->monthly-income
+              tools/amount->rands)]]]]]]))
