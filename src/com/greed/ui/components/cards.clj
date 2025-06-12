@@ -31,9 +31,9 @@
 
 (defn get-card-type [card-type]
   (case (tools/->keyword card-type)
-                    :visa (svgs/visa)
-                    :mastercard (svgs/mastercard)
-                    (svgs/visa)))
+    :visa (svgs/visa)
+    :mastercard (svgs/mastercard)
+    (svgs/visa)))
 
 (defn get-card-colour [bank]
   (let [card-colour-config (:banking/card-colours c/common-config)
@@ -54,6 +54,10 @@
         expenses (or expenses 150)
 
         balance (- (tools/annual-income->monthly-income net-income) expenses)
+
+        bank (or bank "Bank")
+
+        card-type (or card-type "visa")
 
         card-type (get-card-type card-type)
 

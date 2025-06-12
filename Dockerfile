@@ -25,6 +25,7 @@ COPY src ./src
 COPY dev ./dev
 COPY resources ./resources
 COPY deps.edn .
+COPY config.env .
 
 # construct the application jar
 RUN clj -M:dev uberjar && cp target/jar/app.jar . && rm -r target
