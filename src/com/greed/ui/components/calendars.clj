@@ -36,14 +36,15 @@
          [:div {:class "text-center border-r border-b px-4 pt-2 h-[120px] w-[14.28%]"}]]
         [:template {:x-for "(date, dateIndex) in no_of_days",
                     :key "dateIndex"}
-         [:div {:class "text-center border-r border-b px-4 pt-2 h-[120px] w-[14.28%]"}
+         [:div {:class "text-center border-r border-b px-4 pt-2 h-[60px] sm:h-[120px] w-[14.28%]"}
           [:div {:class "inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100"}
-           [:div {:class "flex flex-col items-center justify-center cursor-pointer text-center leading-none transition ease-in-out duration-100"
+           [:div {:class "flex flex-col items-center justify-center cursor-pointer p-2 text-xs sm:text-md text-center leading-none transition ease-in-out duration-100"
                   :x-bind:class "date === day ? 'bg-blue-500 text-white rounded-full w-full h-full flex items-center justify-center' : ''"}
-            [:span {:x-text "date"}]
-            [:template {:x-if "date === payday"}
-             [:span {:class "mt-2 inline-block px-2 py-0.5 text-sm font-semibold rounded-full bg-gradient-to-r from-green-500 to-cyan-500 text-white"}
-              "Payday"]]]]]]]]]]
+            [:div.m-2
+             [:span {:x-text "date"}]
+             [:template {:x-if "date === payday"}
+              [:span {:class "mt-1 sm:mt-2 inline-block px-1 py-0.5 sm:px-2 text-xs sm:text-sm sm:font-semibold rounded-full bg-gradient-to-r from-green-500 to-cyan-500 text-white"}
+               "Payday"]]]]]]]]]]]
     (comment "Modal")
     [:div
      {:class "fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full",

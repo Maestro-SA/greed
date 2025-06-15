@@ -3,6 +3,7 @@
             [muuntaja.middleware :as muuntaja]
             [ring.middleware.anti-forgery :as csrf]
             [ring.middleware.defaults :as rd]
+            [com.greed.data.core :as data]
             [com.greed.authentication :as auth]))
 
 (defn wrap-redirect-signed-in [handler]
@@ -28,6 +29,21 @@
         (handler ctx)
         {:status 303
          :headers {"location" error-location}}))))
+
+(defn update-user [ctx]
+  (data/update-user ctx)
+  {:status 303
+   :headers {"location" "/app?update=user-updated"}})
+
+(defn upsert-profile [ctx]
+  (data/upsert-profile ctx)
+  {:status 303
+   :headers {"location" "/app?update=profile-updated"}})
+
+(defn upsert-finance-item [ctx]
+  (data/upsert-finance-item ctx)
+  {:status 303
+   :headers {"location" "/app/tools/budget-tracker"}})
 
 (defn logout [{:keys [session]}]
   {:status 303

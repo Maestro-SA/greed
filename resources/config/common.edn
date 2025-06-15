@@ -17,4 +17,6 @@
                         :fnb "from-teal-500 to-teal-800"
                         :nedbank "from-emerald-500 to-green-800"
                         :standard-bank "from-blue-500 to-blue-800"
-                        :default "from-gray-600 to-black"}}
+                        :default "from-gray-600 to-black"}
+
+ :finance/types ["Income" "Expenses" "Savings"]}

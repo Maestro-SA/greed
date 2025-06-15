@@ -51,24 +51,35 @@
      [:div
       {:class "flex flex-col justify-between flex-1 mt-6"}
       [:nav
+       {:x-data "{ currentPath: window.location.pathname }"}
        [:a
-        {:class "flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-md",
+        {:class "flex items-center px-4 py-2 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+         :x-bind:class "currentPath === '/app' ? 'bg-gray-100 text-gray-700' : ''",
          :href "/"}
         (svgs/dashboard)
         [:span {:class "mx-4 font-medium"} "Dashboard"]]
        [:a
         {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+         :x-bind:class "currentPath === '/app/finances' ? 'bg-gray-100 text-gray-700' : ''",
+         :href "/app/finances"}
+        (svgs/credit-card)
+        [:span {:class "mx-4 font-medium"} "Finances"]]
+       [:a
+        {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+         :x-bind:class "currentPath === '/app/calendar' ? 'bg-gray-100 text-gray-700' : ''",
          :href "/app/calendar"}
         (svgs/calendar)
         [:span {:class "mx-4 font-medium"} "Calendar"]]
        [:a
         {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+         :x-bind:class "currentPath === '/app/tools' ? 'bg-gray-100 text-gray-700' : ''",
          :href "/app/tools"}
         (svgs/tools)
         [:span {:class "mx-4 font-medium"} "Tools"]]
        [:hr {:class "my-6 border-gray-200"}]
        [:a
         {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+         :x-bind:class "currentPath === '/app/settings' ? 'bg-gray-100 text-gray-700' : ''"
          :href "/app/settings"}
         (svgs/cog)
         [:span {:class "mx-4 font-medium"} "Settings"]]]
@@ -93,7 +104,7 @@
      {:x-data "{ open: false}"}
      ;; Hamburger button (mobile only)
      [:button
-      {:class "md:hidden fixed top-4 left-4 z-50"
+      {:class "md:hidden fixed top-4 left-4 z-20"
        "@click" "open = true"
        :ariaLabel "Open sidebar"}
       [:span
@@ -102,11 +113,11 @@
      ;; Overlay (mobile only, when sidebar is open)
      [:div
       {:x-show "open"
-       :class "fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden"
+       :class "fixed inset-0 bg-black bg-opacity-40 z-10 md:hidden"
        "@click" "open = false"}]
      ;; Sidebar
      [:aside
-      {:class (str "flex flex-col w-72 h-screen px-4 py-8 overflow-y-auto bg-white border-r z-50 fixed top-0 left-0 transition-transform duration-300"
+      {:class (str "flex flex-col w-72 h-screen px-4 py-8 overflow-y-auto bg-white border-r z-20 fixed top-0 left-0 transition-transform duration-300"
                    " "
                    "md:static md:translate-x-0")
        :x-show "open"
@@ -134,24 +145,35 @@
       [:div
        {:class "flex flex-col justify-between flex-1 mt-6"}
        [:nav
+        {:x-data "{ currentPath: window.location.pathname }"}
         [:a
-         {:class "flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-md",
+         {:class "flex items-center px-4 py-2 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+          :x-bind:class "currentPath === '/app' ? 'bg-gray-100 text-gray-700' : ''",
           :href "/"}
          (svgs/dashboard)
          [:span {:class "mx-4 font-medium"} "Dashboard"]]
         [:a
+        {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+         :x-bind:class "currentPath === '/app/finances' ? 'bg-gray-100 text-gray-700' : ''",
+         :href "/app/finances"}
+        (svgs/credit-card)
+        [:span {:class "mx-4 font-medium"} "Finances"]]
+        [:a
          {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+          :x-bind:class "currentPath === '/app/calendar' ? 'bg-gray-100 text-gray-700' : ''",
           :href "/app/calendar"}
          (svgs/calendar)
          [:span {:class "mx-4 font-medium"} "Calendar"]]
         [:a
          {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+          :x-bind:class "currentPath === '/app/tools' ? 'bg-gray-100 text-gray-700' : ''",
           :href "/app/tools"}
          (svgs/tools)
          [:span {:class "mx-4 font-medium"} "Tools"]]
         [:hr {:class "my-6 border-gray-200"}]
         [:a
          {:class "flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform rounded-md hover:bg-gray-100 hover:text-gray-700",
+          :x-bind:class "currentPath === '/app/settings' ? 'bg-gray-100 text-gray-700' : ''"
           :href "/app/settings"}
          (svgs/cog)
          [:span {:class "mx-4 font-medium"} "Settings"]]]

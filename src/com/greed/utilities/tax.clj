@@ -1,4 +1,4 @@
-(ns com.greed.tools.tax
+(ns com.greed.utilities.tax
   (:require [com.core :as c]))
 
 (defn calculate-income-tax

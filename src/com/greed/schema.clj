@@ -16,10 +16,16 @@
              [:profile/bank           :string]
              [:profile/card-type      :string]
              [:profile/income         :int]
-             [:profile/expenses       :int]
-             [:profile/savings        :int]
              [:profile/age            :int]
-             [:profile/payday         :int]]})
+             [:profile/payday         :int]]
+
+   :finances/id :uuid
+   :finances [:map {:closed true}
+              [:xt/id                  :finances/id]
+              [:finances/user-id       :user/id]
+              [:finances/title         :string]
+              [:finances/type          :keyword]
+              [:finances/amount        :int]]})
 
 (def module
   {:schema schema})

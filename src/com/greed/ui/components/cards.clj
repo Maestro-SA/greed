@@ -1,7 +1,7 @@
 (ns com.greed.ui.components.cards
   (:require [com.core :as c]
-            [com.greed.tools.tax :as tax]
-            [com.greed.tools.core :as tools]
+            [com.greed.utilities.tax :as tax]
+            [com.greed.utilities.core :as tools]
             [com.greed.ui.components.svgs :as svgs]))
 
 
@@ -42,14 +42,8 @@
       (get card-colour-config bank)
       (:default card-colour-config))))
 
-(defn bank-card [& {:keys [bank card-type income expenses age]}]
-  (let [income (or income 500)
-
-        age (or age 18)
-
-        annual-income (tools/income->annual-income income)
-
-        {:keys [net-income]} (tax/calculate-income-tax annual-income age)
+(defn bank-card [& {:keys [bank card-type income-tax-data expenses age]}]
+  (let [{:keys [net-income]} income-tax-data
 
         expenses (or expenses 150)
 
@@ -66,7 +60,7 @@
      {:class "py-4 px-4"}
      [:div
       [:div
-       {:class (str "h-48 w-80 p-6 rounded-xl shadow-md text-white bg-gradient-to-tl " card-colour)}
+       {:class (str "h-52 sm:h-56 sm:w-96 p-6 rounded-xl shadow-md text-white bg-gradient-to-tl " card-colour)}
        [:div
         {:class "h-full flex flex-col justify-between"}
         [:div
@@ -94,59 +88,3 @@
          [:div {:class "text-xs font-semibold tracking-tight"} "balance"]
          [:div {:class "text-2xl font-semibold"}
           (tools/amount->rands balance)]]]]]]))
-
-(defn account-stats [& {:keys [income expenses savings age]}]
-  (let [income (or income 500)
-
-        age (or age 18)
-
-        annual-income (tools/income->annual-income income)
-
-        {:keys [net-income]} (tax/calculate-income-tax annual-income age)
-
-        expenses (or expenses 150)
-
-        savings (or savings 100)]
-    [:div
-     {:class "px-4 py-4"}
-     [:div
-      {:class "sm:grid sm:h-48 sm:grid-flow-row sm:gap-4 sm:grid-cols-3"}
-      [:div
-       {:class "flex flex-col justify-center px-4 py-4 pattern bg-white border border-gray-300 rounded-xl"}
-       [:div
-        [:div
-         [:p
-          {:class "flex items-center justify-end text-green-500 text-md"}
-          [:span {:class "font-bold"} "6%"]
-          (svgs/uptrend)]]
-        [:p
-         {:class "text-3xl font-semibold text-center text-black"}
-         (-> net-income
-              tools/annual-income->monthly-income
-              tools/amount->rands)]
-        [:p {:class "text-lg text-center text-green-800"}
-         "Income"]]]
-      [:div
-       {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern bg-white border border-gray-300 rounded-xl sm:mt-0"}
-       [:div
-        [:div
-         [:p
-          {:class "flex items-center justify-end text-red-500 text-md"}
-          [:span {:class "font-bold"} "6%"]
-          (svgs/downtrend)]]
-        [:p
-         {:class "text-3xl font-semibold text-center text-black"}
-         (tools/amount->rands expenses)]
-        [:p {:class "text-lg text-center text-red-800"} "Expenses"]]]
-      [:div
-       {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern bg-white border border-gray-300 rounded-xl sm:mt-0"}
-       [:div
-        [:div
-         [:p
-          {:class "flex items-center justify-end text-gray-500 text-md"}
-          [:span {:class "font-bold"} "0%"]
-          (svgs/stable)]]
-        [:p
-         {:class "text-3xl font-semibold text-center text-black"}
-         (tools/amount->rands savings)]
-        [:p {:class "text-lg text-center text-gray-800"} "Savings"]]]]]))

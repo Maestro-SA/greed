@@ -1,7 +1,7 @@
 (ns com.greed.data.core
   (:require [com.biffweb :as biff :refer [q]]
             [clojure.tools.logging :as logger]
-            [com.greed.tools.core :as tools]
+            [com.greed.utilities.core :as utilities]
             [com.greed.data.validation :as validation]))
 
 
@@ -29,6 +29,13 @@
               :in [user-id]
               :where [[profile :profile/user-id user-id]]}
             user-id)))
+
+(defn get-finance-items [{:keys [biff/db]} user-id]
+  (q db
+     '{:find (pull finances [*])
+       :in [user-id]
+       :where [[finances :finances/user-id user-id]]}
+     user-id))
 
 (defn upsert-user [{:keys [params] :as ctx}]
   (let [user-id (java.util.UUID/randomUUID)]
@@ -72,12 +79,10 @@
                         :db/op :update
                         :profile/bank (:bank params)
                         :profile/card-type (:card-type params)
-                        :profile/income (tools/->int (:income params))
-                        :profile/expenses (tools/->int (:expenses params))
-                        :profile/savings (tools/->int (:savings params))
-                        :profile/age (tools/->int (:age params))
+                        :profile/income (utilities/->int (:income params))
+                        :profile/age (utilities/->int (:age params))
                         :profile/payday (if valid-payday?
-                                          (tools/->int (:payday params))
+                                          (utilities/->int (:payday params))
                                           1)}]))
       (do
         (logger/info "Creating profile...")
@@ -87,10 +92,24 @@
                         :profile/user-id user-id
                         :profile/bank (:bank params)
                         :profile/card-type (:card-type params)
-                        :profile/income (tools/->int (:income params))
-                        :profile/expenses (tools/->int (:expenses params))
-                        :profile/savings (tools/->int (:savings params))
-                        :profile/age (tools/->int (:age params))
+                        :profile/income (utilities/->int (:income params))
+                        :profile/age (utilities/->int (:age params))
                         :profile/payday (if valid-payday?
-                                          (tools/->int (:payday params))
+                                          (utilities/->int (:payday params))
                                           1)}])))))
+
+(defn upsert-finance-item [{:keys [params] :as ctx}]
+  (let [user-id (get-user-id-from-session ctx)
+        finance-id (java.util.UUID/randomUUID)
+        valid-amount? (validation/valid-amount? (:amount params))]
+    (if valid-amount?
+      (do
+        (logger/info "Upserting finance item...")
+        (biff/submit-tx ctx
+                      [{:db/doc-type :finances
+                        :xt/id finance-id
+                        :finances/user-id user-id
+                        :finances/title (:title params)
+                        :finances/type (utilities/->keyword (:type params))
+                        :finances/amount (utilities/->int (:amount params))}]))
+      (logger/warn "Invalid amount for finance entry"))))

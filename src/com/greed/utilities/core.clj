@@ -1,4 +1,4 @@
-(ns com.greed.tools.core
+(ns com.greed.utilities.core
   (:require [clojure.string :as string]))
 
 
@@ -72,6 +72,17 @@
       (string/replace #"/" "-")
       (string/replace #"_" "-")
       keyword))
+
+(defn double->int
+  "Converts a double to an integer.
+   Parameters:
+   - d: Double to convert
+   Returns integer value, or original value if conversion fails"
+  [d]
+  (try
+    (int d)
+    (catch NullPointerException _
+      nil)))
 
 (comment
 

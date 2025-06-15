@@ -1,50 +1,13 @@
-(ns com.greed.ui.components.features
+(ns com.greed.ui.tools.income-tax-calculator
   (:require [com.greed.ui :as ui]
-            [com.greed.tools.tax :as tax]
-            [com.greed.tools.core :as tools]
+            [com.greed.ui.components.headers :as headers]
             [com.greed.ui.components.svgs :as svgs]
-            [com.greed.ui.components.forms :as forms]
-            [com.greed.ui.components.headers :as headers]))
+            [com.greed.utilities.core :as utilities]
+            [com.greed.utilities.tax :as tax]
+            [com.greed.ui.components.forms :as forms]))
 
 
-(defn tool [& {:keys [title description]
-               :or   {title "Tool Title"
-                      description "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum quam voluptatibus"}}]
-  [:div
-   {:class "p-8 space-y-3 border-2 border-gray-400 rounded-xl"}
-   [:span
-    {:class "inline-block text-orange-500"}
-    (svgs/flame)]
-   [:h1
-    {:class "text-xl font-semibold text-gray-700 capitalize"}
-    title]
-   [:p
-    {:class "text-gray-500"}
-    description]
-   [:button
-    {"@click" "isOpen = true"
-     :class "inline-flex p-2 text-gray-500 capitalize transition-colors duration-300 transform bg-gray-100 rounded-full hover:underline hover:text-orange-500"}
-    (svgs/arrow->)]])
-
-(defn tools []
-  [:section
-   [:div
-    {:class "container px-6 py-10 mx-auto"}
-    [:h1
-     {:class "text-2xl font-semibold text-gray-800 capitalize lg:text-3xl"}
-     "Finance "
-     [:span {:class "underline decoration-blue-500"} "Tools"]]
-    [:p
-     {:class "mt-4 text-gray-500 xl:mt-6"}
-     "Make informed decisions about your finances with our free tools."]
-    [:div
-     {:class "grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-2 xl:grid-cols-3"}
-     (tool
-      :title "Income tax calculator"
-      :description "Calculate your income tax in seconds"
-      :link "/income-tax-calculator")]]])
-
-(defn modal-form []
+(defn income-tax-modal []
   [:div
    {:class "relative flex justify-center"}
    [:div
@@ -67,11 +30,11 @@
       "​"]
      (forms/income-tax-form)]]])
 
-(defn income-tax-feature [{:keys [params] :as ctx}]
+(defn page [{:keys [params] :as ctx}]
   (let [{:keys [income age]} params
-        income (tools/->int income)
-        age (tools/->int age)
-        annual-income (tools/income->annual-income income)
+        income (utilities/->int income)
+        age (utilities/->int age)
+        annual-income (utilities/income->annual-income income)
         {:keys [net-income
                 effective-rate]} (tax/calculate-income-tax annual-income age)]
     (ui/app
@@ -97,16 +60,16 @@
          {:class "flex items-center mt-4 text-gray-700"}
          (svgs/suit-case)
          [:h1 {:class "px-2 text-sm"}
-          (tools/amount->rands income) " (Gross income p/m)"]]
+          (utilities/amount->rands income) " (Gross income p/m)"]]
         [:div
          {:class "flex items-center mt-4 text-gray-700"}
          (svgs/percent-badge)
          [:h1 {:class "px-2 text-sm"}
-          (tools/->percentage effective-rate)]]
+          (utilities/->percentage effective-rate)]]
         [:div
          {:class "flex items-center mt-4 text-gray-700"}
          (svgs/dollar)
          [:h1 {:class "px-2 text-sm"}
           (-> net-income
-              tools/annual-income->monthly-income
-              tools/amount->rands) " (Net income p/m)"]]]]])))
+              utilities/annual-income->monthly-income
+              utilities/amount->rands) " (Net income p/m)"]]]]])))

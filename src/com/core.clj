@@ -28,6 +28,8 @@
 
   (:banking/banks common-config)
 
+  (:finance/types common-config)
+
   (let [annual-income 1000000]
     (->> tax-config
          :tax-brackets

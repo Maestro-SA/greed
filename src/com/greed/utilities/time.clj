@@ -1,4 +1,4 @@
-(ns com.greed.tools.time
+(ns com.greed.utilities.time
   (:import [java.time LocalDate]))
 
 

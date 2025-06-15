@@ -1,22 +1,25 @@
 (ns com.greed.ui.components.forms
-  (:require [com.biffweb :as biff]
+  (:require [clojure.tools.logging :as log]
+            [com.biffweb :as biff]
             [com.core :as c]
-            [com.greed.tools.core :as tools]
+            [com.greed.utilities.core :as tools]
             [com.greed.ui.components.shared :as shared]))
 
 
 (defn on-error [{:keys [params]}]
   (let [config c/common-config]
     (when-some [error (:error params)]
+      (log/error "Error during form submission:" error)
       [:<>
        [:.h-1]
        [:.text-sm.text-red-600
-        (case (tools/->keyword error)
-          :recaptcha (:error/recaptcha config)
-          :invalid-email (:error/invalid-email config)
-          :invalid-credentials (:error/invalid-credentials config)
-          :send-failed (:error/send-failed config)
-          (:error/default config))]])))
+        (when-not (= "not-signed-in" error)
+          (case (tools/->keyword error)
+            :recaptcha (:error/recaptcha config)
+            :invalid-email (:error/invalid-email config)
+            :invalid-credentials (:error/invalid-credentials config)
+            :send-failed (:error/send-failed config)
+            (:error/default config)))]])))
 
 
 (defn sign-in [{:keys [site-key] :as ctx}]
@@ -155,8 +158,6 @@
        (shared/app-select ctx :id "bank" :label "Bank" :options bank-options :required? true)
        (shared/app-select ctx :id "card-type" :label "Card Type" :options card-type-options :required? true)
        (shared/app-input ctx :id "income" :type "number" :label "Income" :required? true)
-       (shared/app-input ctx :id "expenses" :type "number" :label "Expense" :required? true)
-       (shared/app-input ctx :id "savings" :type "number" :label "Savings" :required? true)
        (shared/app-input ctx :id "age" :type "number" :label "Age" :required? true)
        (shared/app-input ctx :id "payday" :type "number" :label "Pay day" :required? true)]
       [:div
@@ -192,3 +193,32 @@
       {:type "submit",
        :class "w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"}
       "Calculate"]])])
+
+(defn finance-item-form []
+  (let [finance-options (:finance/types c/common-config)]
+    [:div
+     {:class "relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"}
+     [:h3
+      {:class "text-lg font-medium leading-6 text-gray-800 capitalize",
+       :id "finance-item-title"}
+      "Finance Item"]
+     [:p
+      {:class "mt-2 text-sm text-gray-500"}
+      "Add a new finance item to your list"]
+     (biff/form
+      {:class "mt-4"
+       :action "/app/tools/budget-tracker/add-finance-item"}
+      (shared/modal-select :id "type" :label "Finance Type" :options finance-options :required? true)
+      (shared/modal-input :id "title" :type "text" :label "Title" :required? true)
+      (shared/modal-input :id "amount" :type "number" :label "Amount" :required? true)
+      [:div
+       {:class "mt-4 sm:flex sm:items-center sm:-mx-2"}
+       [:button
+        {:type "button",
+         "@click" "isOpen = false",
+         :class "w-full px-4 py-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transform border border-gray-200 zrounded-md sm:w-1/2 sm:mx-2 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"}
+        "Cancel"]
+       [:button
+        {:type "submit",
+         :class "w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-gray-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"}
+        "Add"]])]))
