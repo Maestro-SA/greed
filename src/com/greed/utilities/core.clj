@@ -73,19 +73,24 @@
       (string/replace #"_" "-")
       keyword))
 
-(defn double->int
-  "Converts a double to an integer.
+(defn ->string
+  "Converts a keyword to a string.
    Parameters:
-   - d: Double to convert
-   Returns integer value, or original value if conversion fails"
-  [d]
-  (try
-    (int d)
-    (catch NullPointerException _
-      nil)))
+   - k: Keyword to convert
+   Returns string value"
+  [k]
+  (-> k
+      name
+      (string/replace #"-" " ")
+      (string/capitalize)))
+
 
 (comment
 
+  (->int "1234")
+
   (->keyword "Mastercard")
+
+  (->string :standard-bank)
 
   )

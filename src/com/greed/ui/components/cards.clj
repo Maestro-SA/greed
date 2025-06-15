@@ -1,8 +1,7 @@
 (ns com.greed.ui.components.cards
   (:require [com.core :as c]
-            [com.greed.utilities.tax :as tax]
-            [com.greed.utilities.core :as tools]
-            [com.greed.ui.components.svgs :as svgs]))
+            [com.greed.ui.components.svgs :as svgs]
+            [com.greed.utilities.core :as utilities]))
 
 
 (defn testiminial [& {:keys [img title body author]}]
@@ -30,28 +29,29 @@
      author]]])
 
 (defn get-card-type [card-type]
-  (case (tools/->keyword card-type)
+  (case card-type
     :visa (svgs/visa)
     :mastercard (svgs/mastercard)
     (svgs/visa)))
 
 (defn get-card-colour [bank]
-  (let [card-colour-config (:banking/card-colours c/common-config)
-        bank (tools/->keyword bank)]
+  (let [card-colour-config (:banking/card-colours c/common-config)]
     (if (contains? card-colour-config bank)
       (get card-colour-config bank)
       (:default card-colour-config))))
 
-(defn bank-card [& {:keys [bank card-type income-tax-data expenses age]}]
+(defn bank-card [& {:keys [finances income-tax-data expenses]}]
   (let [{:keys [net-income]} income-tax-data
+
+        {:finances/keys [bank card-type]} finances
 
         expenses (or expenses 150)
 
-        balance (- (tools/annual-income->monthly-income net-income) expenses)
+        balance (- (utilities/annual-income->monthly-income net-income) expenses)
 
-        bank (or bank "Bank")
+        bank (or bank :bank)
 
-        card-type (or card-type "visa")
+        card-type (or card-type :visa)
 
         card-type (get-card-type card-type)
 
@@ -67,7 +67,7 @@
          {:class "flex items-start justify-between space-x-4"}
          [:div
           {:class "text-xl font-semibold tracking-tigh"}
-          (or bank "Bank")]
+          (utilities/->string bank)]
          [:div
           {:class "inline-flex flex-col items-center justify-center"}
           card-type]]
@@ -87,4 +87,4 @@
          {:class ""}
          [:div {:class "text-xs font-semibold tracking-tight"} "balance"]
          [:div {:class "text-2xl font-semibold"}
-          (tools/amount->rands balance)]]]]]]))
+          (utilities/amount->rands balance)]]]]]]))

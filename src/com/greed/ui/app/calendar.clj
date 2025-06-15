@@ -7,8 +7,8 @@
 
 (defn page [{:keys [session] :as ctx}]
   (let [user-id (:uid session)
-        profile (data/get-profile ctx user-id)
-        payday (:profile/payday profile)]
+        finances (data/get-finances ctx user-id)
+        payday (:finances/payday finances)]
     (ui/app
      ctx
      [:div.container.mx-auto

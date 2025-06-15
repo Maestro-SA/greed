@@ -1,9 +1,9 @@
 (ns com.greed.ui.components.lists
-  (:require [com.greed.utilities.core :as utilities]
+  (:require [com.greed.ui.components.buttons :as buttons]
             [com.greed.ui.components.forms :as forms]))
 
 
-(defn finance-modal []
+(defn budget-modal []
   [:div
    {:class "relative flex justify-center"}
    [:div
@@ -24,10 +24,10 @@
       {:class "hidden sm:inline-block sm:h-screen sm:align-middle",
        :aria-hidden "true"}
       "​"]
-     (forms/finance-item-form)]]])
+     (forms/budget-item-form)]]])
 
 
-(defn finance-list-item [& {:keys [title amount]}]
+(defn budget-list-item [& {:keys [title amount]}]
   [:div
    {:class "flex cursor-pointer my-1 hover:bg-gray-200 rounded"}
    [:div
@@ -39,11 +39,10 @@
     [:p {:class "text-sm text-gray-800"}
      (str "R" amount)]]])
 
-(defn finance-list [& {:keys [title items]
+(defn budget-list [& {:keys [title items]
                        :or {title "title"
                             items []}}]
   [:div
-   {:x-data "{ isOpen: false }"}
    [:div
     {:class "border-t border-gray-200 p-4 py-8"}
     [:div
@@ -60,16 +59,9 @@
          :class "my-2 w-full text-sm bg-gray-100 text-gray-800 rounded h-10 p-3 focus:outline-none"}]
        [:div
         {:class "w-full"}
-        (for [{:finances/keys [title amount]} items]
-          (finance-list-item
+        (for [{:budget-item/keys [title amount]
+               :or {title "Title"
+                    amount 0}}    items]
+          (budget-list-item
            :title title
-           :amount amount))]]]
-     [:div
-      {:class "sm:flex bg-gray-200 sm:items-center px-2 py-4"}
-      [:div
-       {:class "flex-grow text-right"}
-       [:button
-        {"@click" "isOpen = true"
-         :class "bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded"}
-        "+"]]]]]
-   (finance-modal)])
+           :amount amount))]]]]]])

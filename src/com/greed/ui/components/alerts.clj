@@ -1,5 +1,6 @@
 (ns com.greed.ui.components.alerts
-  (:require [com.greed.ui.components.svgs :as svgs]))
+  (:require [com.core :as c]
+            [com.greed.ui.components.svgs :as svgs]))
 
 
 (defn success [& {:keys [type]
@@ -22,13 +23,12 @@
         "You are signed in!"
         "Your account was created!")]]]])
 
-(defn info [& {:keys [update]
-               :or {update nil}}]
-  (let [_ (println update)
-        message (case (keyword update)
-                  :user-updated "Your user details have been successfully updated."
-                  :prifole-updated "Your profile details have been successfully updated."
-                  "There has been an update.")]
+
+(defn info [& {:keys [alert]
+               :or {alert nil}}]
+  (let [config c/alert-config
+        key (keyword "alert" alert)
+        message (get config key)]
     [:div
      {:class "mx-auto w-full text-white pattern bg-blue-600 rounded-full shadow-xl"}
      [:div

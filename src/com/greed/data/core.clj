@@ -1,6 +1,7 @@
 (ns com.greed.data.core
   (:require [com.biffweb :as biff :refer [q]]
             [clojure.tools.logging :as logger]
+            [com.greed.utilities.tax :as tax]
             [com.greed.utilities.core :as utilities]
             [com.greed.data.validation :as validation]))
 
@@ -23,18 +24,25 @@
               :where [[user :xt/id user-id]]}
             user-id)))
 
-(defn get-profile [{:keys [biff/db]} user-id]
+(defn get-finances [{:keys [biff/db]} user-id]
   (first (q db
-            '{:find (pull profile [*])
+            '{:find (pull finances [*])
               :in [user-id]
-              :where [[profile :profile/user-id user-id]]}
+              :where [[finances :finances/user-id user-id]]}
             user-id)))
 
-(defn get-finance-items [{:keys [biff/db]} user-id]
+(defn get-budget-item [{:keys [biff/db]} user-id]
+  (first (q db
+            '{:find (pull budget-item [*])
+              :in [user-id]
+              :where [[budget-item :budget-item/user-id user-id]]}
+            user-id)))
+
+(defn get-budget-items [{:keys [biff/db]} user-id]
   (q db
-     '{:find (pull finances [*])
+     '{:find (pull budget-item [*])
        :in [user-id]
-       :where [[finances :finances/user-id user-id]]}
+       :where [[budget-item :budget-item/user-id user-id]]}
      user-id))
 
 (defn upsert-user [{:keys [params] :as ctx}]
@@ -43,10 +51,11 @@
     (biff/submit-tx ctx
                     [{:db/doc-type :user
                       :xt/id user-id
+                      :user/email (:email params)
+                      :user/password (:password params)
                       :user/firstname (:firstname params)
                       :user/lastname (:lastname params)
-                      :user/email (:email params)
-                      :user/password (:password params)}])))
+                      :user/age (utilities/->int (:age params))}])))
 
 (defn update-user [{:keys [params] :as ctx}]
   (let [user-id (get-user-id ctx)
@@ -58,58 +67,110 @@
                       [{:db/doc-type :user
                         :xt/id user-id
                         :db/op :update
+                        :user/email (:email params)
+                        :user/password (:password params)
                         :user/firstname (:firstname params)
                         :user/lastname (:lastname params)
-                        :user/email (:email params)
-                        :user/password (:password params)}]))
+                        :user/age (utilities/->int (:age params))}]))
       (logger/info "User not found"))))
 
-(defn upsert-profile [{:keys [params] :as ctx}]
-  (let [user-id (get-user-id-from-session ctx)
-        profile (get-profile ctx user-id)
-        profile-id (or (:xt/id profile)
-                       (java.util.UUID/randomUUID))
-        valid-payday? (validation/valid-payday? (:payday params))]
-    (if profile
-      (do
-        (logger/info "Updating profile...")
-        (biff/submit-tx ctx
-                      [{:db/doc-type :profile
-                        :xt/id profile-id
-                        :db/op :update
-                        :profile/bank (:bank params)
-                        :profile/card-type (:card-type params)
-                        :profile/income (utilities/->int (:income params))
-                        :profile/age (utilities/->int (:age params))
-                        :profile/payday (if valid-payday?
-                                          (utilities/->int (:payday params))
-                                          1)}]))
-      (do
-        (logger/info "Creating profile...")
-        (biff/submit-tx ctx
-                      [{:db/doc-type :profile
-                        :xt/id profile-id
-                        :profile/user-id user-id
-                        :profile/bank (:bank params)
-                        :profile/card-type (:card-type params)
-                        :profile/income (utilities/->int (:income params))
-                        :profile/age (utilities/->int (:age params))
-                        :profile/payday (if valid-payday?
-                                          (utilities/->int (:payday params))
-                                          1)}])))))
 
-(defn upsert-finance-item [{:keys [params] :as ctx}]
+(defn upsert-budget-item [{:keys [params] :as ctx}]
   (let [user-id (get-user-id-from-session ctx)
-        finance-id (java.util.UUID/randomUUID)
-        valid-amount? (validation/valid-amount? (:amount params))]
-    (if valid-amount?
+        budget-item-id (java.util.UUID/randomUUID)]
+    (logger/info "Creating budget item...")
+    (biff/submit-tx ctx
+                    [{:db/doc-type :budget-item
+                      :xt/id budget-item-id
+                      :budget-item/user-id user-id
+                      :budget-item/title (:title params)
+                      :budget-item/type (utilities/->keyword (:type params))
+                      :budget-item/amount (validation/->valid-amount (:amount params))}])))
+
+(defn update-budget-item [{:keys [params] :as ctx}]
+  (let [user-id (get-user-id-from-session ctx)
+        budget-item (get-budget-item ctx user-id)
+        budget-item-id (:xt/id budget-item)]
+    (if budget-item
       (do
-        (logger/info "Upserting finance item...")
+        (logger/info "Updating budget item...")
         (biff/submit-tx ctx
-                      [{:db/doc-type :finances
-                        :xt/id finance-id
-                        :finances/user-id user-id
-                        :finances/title (:title params)
-                        :finances/type (utilities/->keyword (:type params))
-                        :finances/amount (utilities/->int (:amount params))}]))
-      (logger/warn "Invalid amount for finance entry"))))
+                        [{:db/doc-type :budget-item
+                          :xt/id budget-item-id
+                          :db/op :update
+                          :budget-item/title (:title params)
+                          :budget-item/type (utilities/->keyword (:type params))
+                          :budget-item/amount (validation/->valid-amount (:amount params))}]))
+      (logger/info "Budget item not found"))))
+
+(defn delete-budget-item [ctx]
+  (let [user-id (get-user-id-from-session ctx)
+        budget-item (get-budget-item ctx user-id)
+        budget-item-id (:xt/id budget-item)]
+    (if budget-item
+      (do (logger/info "Deleting budget item...")
+          (biff/submit-tx ctx
+                          [{:db/doc-type :budget-item
+                            :xt/id budget-item-id
+                            :db/op :delete}]))
+      (logger/info "Budget item not found"))))
+
+(defn upsert-finances [{:keys [params] :as ctx}]
+  (let [user-id (get-user-id-from-session ctx)
+        {:user/keys [age]
+         :or {age 21}}   (get-user ctx user-id)
+        salary (utilities/->int (:salary params))
+        annual-income (utilities/income->annual-income salary)
+        {:keys [net-income]} (tax/calculate-income-tax annual-income age)]
+    (logger/info "Creating finances...")
+    (biff/submit-tx ctx
+                    [{:db/doc-type :finances
+                      :xt/id (java.util.UUID/randomUUID)
+                      :finances/user-id user-id
+                      :finances/bank (utilities/->keyword (:bank params))
+                      :finances/card-type (utilities/->keyword (:card-type params))
+                      :finances/salary (utilities/->int (:salary params))
+                      :finances/payday (validation/->valid-payday (:payday params))}])
+    (logger/info "Creating budget item...")
+    (biff/submit-tx ctx
+                    [{:db/doc-type :budget-item
+                      :xt/id (java.util.UUID/randomUUID)
+                      :budget-item/user-id user-id
+                      :budget-item/title "Salary"
+                      :budget-item/type :income
+                      :budget-item/amount (-> net-income
+                                              utilities/annual-income->monthly-income
+                                              int)}])))
+
+(defn update-finances [{:keys [params] :as ctx}]
+  (let [user-id (get-user-id-from-session ctx)
+        finances (get-finances ctx user-id)
+        finances-id (:xt/id finances)
+        budget-item (get-budget-item ctx user-id)
+        budget-item-id (:xt/id budget-item)
+        {:user/keys [age]
+         :or {age 21}}   (get-user ctx user-id)
+        salary (utilities/->int (:salary params))
+        annual-income (utilities/income->annual-income salary)
+        {:keys [net-income]} (tax/calculate-income-tax annual-income age)]
+    (if (and finances budget-item)
+      (do (logger/info "Updating finances...")
+          (biff/submit-tx ctx
+                          [{:db/doc-type :finances
+                            :xt/id finances-id
+                            :db/op :update
+                            :finances/bank (utilities/->keyword (:bank params))
+                            :finances/card-type (utilities/->keyword (:card-type params))
+                            :finances/salary (utilities/->int (:salary params))
+                            :finances/payday (validation/->valid-payday (:payday params))}])
+          (logger/info "Updating budget item...")
+          (biff/submit-tx ctx
+                          [{:db/doc-type :budget-item
+                            :xt/id budget-item-id
+                            :db/op :update
+                            :budget-item/title "Salary"
+                            :budget-item/type :income
+                            :budget-item/amount (-> net-income
+                                                    utilities/annual-income->monthly-income
+                                                    int)}]))
+      (logger/info "Finances not found"))))

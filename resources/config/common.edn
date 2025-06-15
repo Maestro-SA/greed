@@ -6,11 +6,17 @@
                          "If the problem persists, try another address.")
  :error/default "There was an error."
 
- :user/fields #{"firstname" "lastname" "email" "password"}
- :profile/fields #{"bank" "income" "expenses" "savings" "age" "payday"}
+ :alert/user-saved "Your user has been successfully saved or updated."
+ :alert/finances-saved "Your finances have been successfully saved or updated."
+ :alert/budget-item-saved "Your budget item has been successfully saved or updated."
+ :alert/budget-item-deleted "Your budget item has been successfully deleted."
 
- :banking/banks ["ABSA" "Capitec" "Discovery Bank" "FNB" "Nedbank" "Standard Bank"]
- :banking/card-types ["Visa" "Mastercard"]
+ :user/fields #{"firstname" "lastname" "age" "email" "password"}
+
+ :finances/fields #{"bank" "card-type" "salary" "payday"}
+
+ :banking/banks #{:absa :capitec :discovery-bank :fnb :nedbank :standard-bank}
+ :banking/card-types #{:visa :mastercard}
  :banking/card-colours {:absa "from-red-500 to-red-800"
                         :capitec "from-gray-600 to-black"
                         :discovery-bank "from-yellow-500 to-amber-800"
@@ -19,4 +25,4 @@
                         :standard-bank "from-blue-500 to-blue-800"
                         :default "from-gray-600 to-black"}
 
- :finance/types ["Income" "Expenses" "Savings"]}
+ :budget-item/types #{:income :expenses :savings}}

@@ -95,6 +95,7 @@
      (biff/recaptcha-callback "submitSignup" "signup")
      (shared/input :id "firstname" :type "text" :label "First Name" :required? true)
      (shared/input :id "lastname" :type "text" :label "Last Name" :required? true)
+     (shared/input :id "age" :type "number" :label "Age" :required? true)
      (shared/input :id "email" :type "email" :label "Email Address" :required? true)
      (shared/input :id "password" :type "password" :label "Password" :required? true)
      [:div
@@ -122,18 +123,19 @@
       :class "mx-2 text-sm font-bold text-blue-500 hover:underline"}
      "Sign in"]]])
 
-(defn account [ctx]
+(defn user [ctx]
   [:section
    {:class "container p-6 mx-auto bg-white rounded-md shadow-md"}
    [:h2
     {:class "text-lg font-semibold text-gray-700 capitalize"}
-    "Account"]
+    "User"]
    (biff/form
      {:action "/app/save-user"}
      [:div
       {:class "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2"}
       (shared/app-input ctx :id "firstname" :type "text" :label "First Name" :required? true)
       (shared/app-input ctx :id "lastname" :type "text" :label "Last Name" :required? true)
+      (shared/app-input ctx :id "age" :type "number" :label "Age" :required? true)
       (shared/app-input ctx :id "email" :type "text" :label "Email" :required? true)
       (shared/app-input ctx :id "password" :type "password" :label "Password" :required? true)]
      [:div
@@ -143,22 +145,21 @@
         :type "submit"}
        "Save"]])])
 
-(defn profile [ctx]
+(defn finances [ctx]
   (let [bank-options (:banking/banks c/common-config)
         card-type-options (:banking/card-types c/common-config)]
     [:section
      {:class "container p-6 mx-auto bg-white rounded-md shadow-md"}
      [:h2
       {:class "text-lg font-semibold text-gray-700 capitalize"}
-      "Profile"]
+      "Finances"]
      (biff/form
-      {:action "/app/save-profile"}
+      {:action "/app/save-finances"}
       [:div
        {:class "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2"}
        (shared/app-select ctx :id "bank" :label "Bank" :options bank-options :required? true)
        (shared/app-select ctx :id "card-type" :label "Card Type" :options card-type-options :required? true)
-       (shared/app-input ctx :id "income" :type "number" :label "Income" :required? true)
-       (shared/app-input ctx :id "age" :type "number" :label "Age" :required? true)
+       (shared/app-input ctx :id "salary" :type "number" :label "Salary" :required? true)
        (shared/app-input ctx :id "payday" :type "number" :label "Pay day" :required? true)]
       [:div
        {:class "flex justify-end mt-6"}
@@ -194,21 +195,21 @@
        :class "w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"}
       "Calculate"]])])
 
-(defn finance-item-form []
-  (let [finance-options (:finance/types c/common-config)]
+(defn budget-item-form []
+  (let [budget-item-options (:budget-item/types c/common-config)]
     [:div
      {:class "relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"}
      [:h3
       {:class "text-lg font-medium leading-6 text-gray-800 capitalize",
-       :id "finance-item-title"}
-      "Finance Item"]
+       :id "budget-item-title"}
+      "Budget Item"]
      [:p
       {:class "mt-2 text-sm text-gray-500"}
-      "Add a new finance item to your list"]
+      "Add a new budget item to your list"]
      (biff/form
       {:class "mt-4"
-       :action "/app/tools/budget-tracker/add-finance-item"}
-      (shared/modal-select :id "type" :label "Finance Type" :options finance-options :required? true)
+       :action "/app/tools/budget-tracker/create-budget-item"}
+      (shared/modal-select :id "type" :label "Budget type" :options budget-item-options :required? true)
       (shared/modal-input :id "title" :type "text" :label "Title" :required? true)
       (shared/modal-input :id "amount" :type "number" :label "Amount" :required? true)
       [:div

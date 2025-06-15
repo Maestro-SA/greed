@@ -21,10 +21,18 @@
 (def common-config
   (read-edn-resource "config/common.edn"))
 
+(def alert-config
+  (->> common-config
+       (filter #(= "alert" (namespace (key %))))
+       (into {})))
+
 (comment
 
   tax-config
   common-config
+  alert-config
+
+  (get alert-config :alert/budget-item-saved)
 
   (:banking/banks common-config)
 

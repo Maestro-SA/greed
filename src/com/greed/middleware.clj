@@ -30,20 +30,42 @@
         {:status 303
          :headers {"location" error-location}}))))
 
-(defn update-user [ctx]
-  (data/update-user ctx)
+(defn save-user [ctx]
+  (let [user-id (data/get-user-id ctx)
+        user (data/get-user ctx user-id)]
+    (if user
+      (data/update-user ctx)
+      (data/upsert-user ctx)))
   {:status 303
-   :headers {"location" "/app?update=user-updated"}})
+   :headers {"location" "/app?alert=user-saved"}})
 
-(defn upsert-profile [ctx]
-  (data/upsert-profile ctx)
+(defn save-finances [ctx]
+  (let [user-id (data/get-user-id-from-session ctx)
+        finances (data/get-finances ctx user-id)]
+    (if finances
+      (data/update-finances ctx)
+      (data/upsert-finances ctx)))
   {:status 303
-   :headers {"location" "/app?update=profile-updated"}})
+   :headers {"location" "/app?alert=finances-saved"}})
 
-(defn upsert-finance-item [ctx]
-  (data/upsert-finance-item ctx)
+(defn create-budget-item [ctx]
+  (data/upsert-budget-item ctx)
   {:status 303
-   :headers {"location" "/app/tools/budget-tracker"}})
+   :headers {"location" "/app/tools/budget-tracker?alert=budget-item-saved"}})
+
+(defn save-budget-item [ctx]
+  (let [user-id (data/get-user-id-from-session ctx)
+        budget-item (data/get-budget-item ctx user-id)]
+    (if budget-item
+      (data/update-budget-item ctx)
+      (data/upsert-budget-item ctx)))
+  {:status 303
+   :headers {"location" "/app/tools/budget-tracker?alert=budget-item-saved"}})
+
+(defn delete-budget-item [ctx]
+  (data/delete-budget-item ctx)
+  {:status 303
+   :headers {"location" "/app/tools/budget-tracker?alert=budget-item-deleted"}})
 
 (defn logout [{:keys [session]}]
   {:status 303

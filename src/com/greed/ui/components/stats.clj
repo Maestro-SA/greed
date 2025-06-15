@@ -3,12 +3,23 @@
             [com.greed.ui.components.svgs :as svgs]))
 
 
-(defn account-stats [& {:keys [income-tax-data expenses savings]}]
-  (let [{:keys [net-income]} income-tax-data
+(defn get-budget-data [budget-items]
+  (let [income-items (filterv #(= (:budget-item/type %) :income) budget-items)
+        expenses-items (filterv #(= (:budget-item/type %) :expenses) budget-items)
+        savings-items (filterv #(= (:budget-item/type %) :savings) budget-items)
 
-        expenses (or expenses 150)
+        total-income (reduce + (map :budget-item/amount income-items))
+        total-expenses (reduce + (map :budget-item/amount expenses-items))
+        total-savings (reduce + (map :budget-item/amount savings-items))]
+    {:total-income total-income
+     :total-expenses total-expenses
+     :total-savings total-savings}))
 
-        savings (or savings 100)]
+
+(defn account-stats [budget-items]
+  (let [{:keys [total-income
+                total-expenses
+                total-savings]} (get-budget-data budget-items)]
     [:div
      {:class "px-4 py-4"}
      [:div
@@ -22,9 +33,7 @@
           (svgs/uptrend)]]
         [:p
          {:class "text-3xl font-semibold text-center text-black"}
-         (-> net-income
-              utilities/annual-income->monthly-income
-              utilities/amount->rands)]
+         (utilities/amount->rands total-income)]
         [:p {:class "text-lg text-center text-green-800"}
          "Income"]]]
       [:div
@@ -36,7 +45,7 @@
           (svgs/downtrend)]]
         [:p
          {:class "text-3xl font-semibold text-center text-black"}
-         (utilities/amount->rands expenses)]
+         (utilities/amount->rands total-expenses)]
         [:p {:class "text-lg text-center text-red-800"} "Expenses"]]]
       [:div
        {:class "flex flex-col justify-center px-4 py-4 mt-4 pattern bg-white border border-gray-300 rounded-xl sm:mt-0"}
@@ -47,11 +56,12 @@
           (svgs/stable)]]
         [:p
          {:class "text-3xl font-semibold text-center text-black"}
-         (utilities/amount->rands savings)]
+         (utilities/amount->rands total-savings)]
         [:p {:class "text-lg text-center text-gray-800"} "Savings"]]]]]))
 
-(defn tax-stats [& {:keys [income-tax-data age]}]
-  (let [{:keys [rebates
+(defn tax-stats [income-tax-data]
+  (let [{:keys [age
+                rebates
                 net-income
                 tax-threshold
                 effective-rate]} income-tax-data]
@@ -125,8 +135,10 @@
               utilities/amount->rands)]]]]]]))
 
 
-(defn expense-tracker-stats [& {:keys [income-tax-data]}]
-  (let [{:keys [net-income]} income-tax-data]
+(defn expense-tracker-stats [budget-items]
+  (let [{:keys [total-income
+                total-expenses
+                total-savings]} (get-budget-data budget-items)]
     [:div
      {:class "px-4 py-4"}
      [:div
@@ -140,9 +152,7 @@
        [:div
         {:class "flex-grow flex flex-col ml-4"}
         [:span {:class "text-xl font-bold"}
-         (-> net-income
-             utilities/annual-income->monthly-income
-             utilities/amount->rands)]
+         (utilities/amount->rands total-income)]
         [:div
          {:class "flex items-center justify-between"}
          [:span {:class "text-gray-500"}
@@ -159,7 +169,8 @@
         (svgs/downtrend)]
        [:div
         {:class "flex-grow flex flex-col ml-4"}
-        [:span {:class "text-xl font-bold"} "211"]
+        [:span {:class "text-xl font-bold"}
+         (utilities/amount->rands total-expenses)]
         [:div
          {:class "flex items-center justify-between"}
          [:span {:class "text-gray-500"}
@@ -176,7 +187,8 @@
         (svgs/banknotes)]
        [:div
         {:class "flex-grow flex flex-col ml-4"}
-        [:span {:class "text-xl font-bold"} "140"]
+        [:span {:class "text-xl font-bold"}
+         (utilities/amount->rands total-savings)]
         [:div
          {:class "flex items-center justify-between"}
          [:span {:class "text-gray-500"}

@@ -1,13 +1,13 @@
 (ns com.greed.app
   (:require [com.greed.middleware :as mid]
             [com.greed.ui.app.tools :as tools]
-            [com.greed.ui.app.profile :as profile]
+            [com.greed.ui.app.account :as account]
             [com.greed.ui.app.settings :as settings]
-            [com.greed.ui.tools.income-tax-calculator :as income-tax-calculator]
-            [com.greed.ui.tools.budget-tracker :as budget-tracker]
             [com.greed.ui.app.finances :as finances]
             [com.greed.ui.app.calendar :as calendar]
-            [com.greed.ui.app.dashboard :as dashboard]))
+            [com.greed.ui.app.dashboard :as dashboard]
+            [com.greed.ui.tools.budget-tracker :as budget-tracker]
+            [com.greed.ui.tools.income-tax-calculator :as income-tax-calculator]))
 
 
 
@@ -21,8 +21,9 @@
               ["/income-tax-calculator" {:post income-tax-calculator/page}]
               ["/budget-tracker"
                ["/" {:get budget-tracker/page}]
-               ["/add-finance-item" {:post mid/upsert-finance-item}]]]
+               ["/create-budget-item" {:post mid/create-budget-item}]
+               ["/delete-budget-item" {:post mid/delete-budget-item}]]]
              ["/settings" {:get settings/page}]
-             ["/profile" {:get profile/page}]
-             ["/save-user" {:post mid/update-user}]
-             ["/save-profile" {:post mid/upsert-profile}]]]})
+             ["/profile" {:get account/page}]
+             ["/save-user" {:post mid/save-user}]
+             ["/save-finances" {:post mid/save-finances}]]]})

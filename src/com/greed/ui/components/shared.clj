@@ -1,6 +1,7 @@
 (ns com.greed.ui.components.shared
   (:require [com.core :as c]
-            [com.greed.data.core :as data]))
+            [com.greed.data.core :as data]
+            [com.greed.utilities.core :as utilities]))
 
 
 (defn determine-placeholder [id user profile]
@@ -9,8 +10,8 @@
       (contains? (:user/fields config) id)
       ((keyword (str "user/" id)) user)
 
-      (contains? (:profile/fields config) id)
-      ((keyword (str "profile/" id)) profile))))
+      (contains? (:finances/fields config) id)
+      ((keyword (str "finances/" id)) profile))))
 
 (defn input [& {:keys [id type label required?]
                 :or {required? false}}]
@@ -30,8 +31,8 @@
   (let [{:keys [session]} ctx
         user-id (:uid session)
         user (data/get-user ctx user-id)
-        profile (data/get-profile ctx user-id)
-        placeholder (determine-placeholder id user profile)]
+        finances (data/get-finances ctx user-id)
+        placeholder (determine-placeholder id user finances)]
    [:div
     [:label
      {:class "text-gray-700",
@@ -64,22 +65,7 @@
        :autocomplete (placeholder user)
        :required required?}
       (for [option options]
-        [:option option])]]))
-
-(defn modal-select [& {:keys [id label options required?]
-                         :or {required? false}}]
-  [:div
-     [:label
-      {:class "text-sm text-gray-700",
-       :for type}
-      label]
-     [:select
-      {:class "block w-full px-4 py-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40",
-       :id id,
-       :name id
-       :required required?}
-      (for [option options]
-        [:option option])]])
+        [:option {:valiue option} (utilities/->string option)])]]))
 
 (defn modal-input [& {:keys [id type label required?]
                       :or {required? false}}]
@@ -96,3 +82,18 @@
       :name id,
       :id id,
       :required required?}]]])
+
+(defn modal-select [& {:keys [id label options required?]
+                         :or {required? false}}]
+  [:div
+     [:label
+      {:class "text-sm text-gray-700",
+       :for type}
+      label]
+     [:select
+      {:class "block w-full px-4 py-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40",
+       :id id,
+       :name id
+       :required required?}
+      (for [option options]
+        [:option {:valiue option} (utilities/->string option)])]])
