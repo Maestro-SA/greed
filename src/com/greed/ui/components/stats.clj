@@ -80,14 +80,8 @@
             :title "Net annual income"
             :value (utilities/amount->rands net-income))
            (tax-stat
-            :title "Tax threshold"
-            :value (utilities/amount->rands tax-threshold))
-           (tax-stat
             :title "Age"
             :value age)
-           (tax-stat
-            :title "Tax rebates"
-            :value (utilities/amount->rands rebates))
            (tax-stat
             :title "Effective rate"
             :value (utilities/->percentage effective-rate))
