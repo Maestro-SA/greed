@@ -14,15 +14,14 @@
 (def module
   {:routes [["/app" {:middleware [mid/wrap-signed-in]}
              ["" {:get dashboard/page}]
-             ["/finances" {:get finances/page}]
+             ["/finances"
+              ["/" {:get finances/page}]
+              ["/create-budget-item" {:post mid/create-budget-item}]
+              ["/delete-budget-item" {:get mid/delete-budget-item}]]
              ["/calendar" {:get calendar/page}]
              ["/tools"
               ["" {:get tools/page}]
-              ["/income-tax-calculator" {:post income-tax-calculator/page}]
-              ["/budget-tracker"
-               ["/" {:get budget-tracker/page}]
-               ["/create-budget-item" {:post mid/create-budget-item}]
-               ["/delete-budget-item" {:post mid/delete-budget-item}]]]
+              ["/income-tax-calculator" {:post income-tax-calculator/page}]]
              ["/settings" {:get settings/page}]
              ["/profile" {:get account/page}]
              ["/save-user" {:post mid/save-user}]

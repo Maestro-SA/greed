@@ -23,12 +23,11 @@
        :breadcrumbs ["Home"]
        :user user)
       [:div
-       {:class "mt-12 grid grid-cols-1 md:grid-cols-3 gap-4"}
-       [:div.col-span-1
+       {:class "flex flex-col lg:items-center lg:flex-row mt-12"}
+       [:div
         (cards/bank-card
          :finances finances
-         :income-tax-data income-tax-data
-         :expenses 0)]
-       [:div.col-span-2
-        (stats/account-stats budget-items)]]
+         :budget-items budget-items)]
+       [:div
+        (stats/savings-stat budget-items)]]
       (stats/tax-stats income-tax-data)])))

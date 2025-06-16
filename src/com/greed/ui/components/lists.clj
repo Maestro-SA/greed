@@ -1,5 +1,6 @@
 (ns com.greed.ui.components.lists
-  (:require [com.greed.ui.components.buttons :as buttons]
+  (:require [com.greed.ui.components.svgs :as svgs]
+            [com.greed.utilities.core :as utilities]
             [com.greed.ui.components.forms :as forms]))
 
 
@@ -27,17 +28,26 @@
      (forms/budget-item-form)]]])
 
 
-(defn budget-list-item [& {:keys [title amount]}]
-  [:div
-   {:class "flex cursor-pointer my-1 hover:bg-gray-200 rounded"}
-   [:div
-    {:class "w-3/5 h-10 py-2 px-1"}
-    [:p {:class "hover:text-blue-800"}
-     title]]
-   [:div
-    {:class "w-2/5 h-10 text-right p-2"}
-    [:p {:class "text-sm text-gray-800"}
-     (str "R" amount)]]])
+(defn budget-list-item [item]
+  (let [{:budget-item/keys [title amount]
+         :or {title "Title"
+              amount 0}}                  item]
+    [:div
+     {:class "grid grid-cols-6 gap-4 py-2 border-b mt-4"}
+     [:div
+      {:class "col-span-3"}
+      [:p {:class "text-gray-800"}
+       title]]
+     [:div
+      {:class "col-span-2"}
+      [:p {:class "font-light text-end text-gray-800"}
+       (utilities/amount->rands amount)]]
+     [:div
+      {:class "col-span-1"}
+      [:a
+       {:href (str "/app/finances/delete-budget-item?budget-item-id=" (:xt/id item))
+        :class "flex justify-center text-gray-500 hover:text-red-600"}
+       (svgs/x)]]]))
 
 (defn budget-list [& {:keys [title items]
                        :or {title "title"
@@ -59,9 +69,5 @@
          :class "my-2 w-full text-sm bg-gray-100 text-gray-800 rounded h-10 p-3 focus:outline-none"}]
        [:div
         {:class "w-full"}
-        (for [{:budget-item/keys [title amount]
-               :or {title "Title"
-                    amount 0}}    items]
-          (budget-list-item
-           :title title
-           :amount amount))]]]]]])
+        (for [item items]
+          (budget-list-item item))]]]]]])

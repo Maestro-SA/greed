@@ -1,5 +1,6 @@
 (ns com.greed.ui.components.cards
   (:require [com.core :as c]
+            [com.greed.ui.core :as c.ui]
             [com.greed.ui.components.svgs :as svgs]
             [com.greed.utilities.core :as utilities]))
 
@@ -40,14 +41,13 @@
       (get card-colour-config bank)
       (:default card-colour-config))))
 
-(defn bank-card [& {:keys [finances income-tax-data expenses]}]
-  (let [{:keys [net-income]} income-tax-data
+(defn bank-card [& {:keys [budget-items finances]}]
+  (let [{:keys [total-income
+                total-expenses]} (c.ui/get-budget-data budget-items)
 
         {:finances/keys [bank card-type]} finances
 
-        expenses (or expenses 150)
-
-        balance (- (utilities/annual-income->monthly-income net-income) expenses)
+        balance (- total-income total-expenses)
 
         bank (or bank :bank)
 

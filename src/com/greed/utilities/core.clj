@@ -84,6 +84,17 @@
       (string/replace #"-" " ")
       (string/capitalize)))
 
+(defn ->uuid
+  "Converts a string to a UUID.
+   Parameters:
+   - s: String to convert
+   Returns UUID value"
+  [s]
+  (try
+    (java.util.UUID/fromString s)
+    (catch IllegalArgumentException _
+      nil)))
+
 
 (comment
 

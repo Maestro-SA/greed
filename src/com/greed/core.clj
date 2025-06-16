@@ -7,6 +7,6 @@
   (let [{:user/keys [age]
          :or {age 21}}    user
         {:finances/keys [salary]
-         :or {salary 25000}}     finances
+         :or {salary 0}}     finances
         annual-income (utilities/income->annual-income salary)]
    (tax/calculate-income-tax annual-income age)))

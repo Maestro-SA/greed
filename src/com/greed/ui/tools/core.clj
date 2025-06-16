@@ -56,8 +56,4 @@
      (modal-tool
       :title "Income tax calculator"
       :description "Calculate your income tax in seconds"
-      :link "/income-tax-calculator")
-     (link-tool
-      :title "Expense tracker"
-      :description "Track your expenses and manage your budget"
-      :link "/app/tools/budget-tracker")]]])
+      :link "/income-tax-calculator")]]])

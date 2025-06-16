@@ -51,7 +51,7 @@
 (defn create-budget-item [ctx]
   (data/upsert-budget-item ctx)
   {:status 303
-   :headers {"location" "/app/tools/budget-tracker?alert=budget-item-saved"}})
+   :headers {"location" "/app/finances?alert=budget-item-saved"}})
 
 (defn save-budget-item [ctx]
   (let [user-id (data/get-user-id-from-session ctx)
@@ -60,12 +60,12 @@
       (data/update-budget-item ctx)
       (data/upsert-budget-item ctx)))
   {:status 303
-   :headers {"location" "/app/tools/budget-tracker?alert=budget-item-saved"}})
+   :headers {"location" "/app/finances?alert=budget-item-saved"}})
 
 (defn delete-budget-item [ctx]
   (data/delete-budget-item ctx)
   {:status 303
-   :headers {"location" "/app/tools/budget-tracker?alert=budget-item-deleted"}})
+   :headers {"location" "/app/finances?alert=budget-item-deleted"}})
 
 (defn logout [{:keys [session]}]
   {:status 303

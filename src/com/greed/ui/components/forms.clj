@@ -208,7 +208,7 @@
       "Add a new budget item to your list"]
      (biff/form
       {:class "mt-4"
-       :action "/app/tools/budget-tracker/create-budget-item"}
+       :action "/app/finances/create-budget-item"}
       (shared/modal-select :id "type" :label "Budget type" :options budget-item-options :required? true)
       (shared/modal-input :id "title" :type "text" :label "Title" :required? true)
       (shared/modal-input :id "amount" :type "number" :label "Amount" :required? true)
