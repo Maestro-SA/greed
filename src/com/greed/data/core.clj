@@ -114,7 +114,6 @@
         finances (get-finances ctx user-id)
         finances-id (:xt/id finances)
         salary-budget-item (get-salary-budget-item ctx user-id)
-        _ (clojure.pprint/pprint salary-budget-item)
         salary-budget-item-id (:xt/id salary-budget-item)
         {:user/keys [age]
          :or {age 21}}   (get-user ctx user-id)
@@ -157,9 +156,11 @@
                       :budget-item/amount (validation/->valid-amount (:amount params))}])))
 
 (defn update-budget-item [{:keys [params] :as ctx}]
-  (let [user-id (get-user-id-from-session ctx)
-        budget-item (get-budget-item ctx user-id)
-        budget-item-id (:xt/id budget-item)]
+  (let [{:keys [budget-item-id]} params
+        _ (println "Updating budget item with ID:" budget-item-id)
+        budget-item-id (utilities/->uuid budget-item-id)
+        {:budget-item/keys [type]
+         :as budget-item} (get-budget-item ctx budget-item-id)]
     (if budget-item
       (do
         (logger/info "Updating budget item...")
@@ -168,7 +169,7 @@
                           :xt/id budget-item-id
                           :db/op :update
                           :budget-item/title (:title params)
-                          :budget-item/type (utilities/->keyword (:type params))
+                          :budget-item/type type
                           :budget-item/amount (validation/->valid-amount (:amount params))}]))
       (logger/info "Budget item not found"))))
 

@@ -200,8 +200,7 @@
     [:div
      {:class "relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"}
      [:h3
-      {:class "text-lg font-medium leading-6 text-gray-800 capitalize",
-       :id "budget-item-title"}
+      {:class "text-lg font-medium leading-6 text-gray-800 capitalize"}
       "Budget Item"]
      [:p
       {:class "mt-2 text-sm text-gray-500"}
@@ -216,10 +215,56 @@
        {:class "mt-4 sm:flex sm:items-center sm:-mx-2"}
        [:button
         {:type "button",
-         "@click" "isOpen = false",
+         "@click" "isAddButtonOpen = false",
          :class "w-full px-4 py-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transform border border-gray-200 zrounded-md sm:w-1/2 sm:mx-2 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"}
         "Cancel"]
        [:button
         {:type "submit",
          :class "w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-gray-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"}
         "Add"]])]))
+
+(defn budget-action-form [item]
+  [:div
+   {:class "relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle"}
+   [:h3
+    {:class "text-lg font-medium leading-6 text-gray-800 capitalize"}
+    "Budget Item"]
+   [:p
+    {:class "mt-2 text-sm text-gray-500"}
+    "Update or delete this budget item"]
+   [:div
+    {:class "mt-2 text-sm text-gray-500"}
+    [:div
+     [:span
+      {:class "text-gray-800"} "Title: "]
+     (:budget-item/title item)]
+    [:div
+     [:span
+      {:class "text-gray-800"} "Type: "]
+     (:budget-item/type item)]
+    [:div
+     [:span
+      {:class "text-gray-800"} "Amount: "]
+     (:budget-item/amount item)]]
+   (biff/form
+    {:class "mt-4"
+     :action (str "/app/finances/update-budget-item?budget-item-id=" (:xt/id item))}
+    (shared/modal-input :id "title" :type "text" :label "Title" :required? true)
+    (shared/modal-input :id "amount" :type "number" :label "Amount" :required? true)
+    [:div
+     {:class "mt-4 sm:flex sm:items-center sm:-mx-2"}
+     [:button
+      {:type "submit",
+       :class "w-full px-4 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-gray-500"}
+      "Update"]
+     [:a
+      {:href (str "/app/finances/delete-budget-item?budget-item-id=" (:xt/id item)),
+       :class "w-full px-4 py-2 mt-3 text-sm text-center font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-red-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-red-500"}
+      "Delete"]]
+    [:div
+     {:class "mt-4 sm:flex sm:items-center sm:-mx-2"}
+     [:button
+      {:type "button",
+       "@click" "isActionModalOpen = false",
+       :class "w-full px-4 py-2 text-sm font-medium tracking-wide text-gray-700 capitalize transition-colors duration-300 transform border border-gray-200 zrounded-md sm:mx-2 hover:bg-gray-100 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-40"}
+      "Cancel"]])])

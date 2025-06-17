@@ -53,12 +53,8 @@
   {:status 303
    :headers {"location" "/app/finances?alert=budget-item-saved"}})
 
-(defn save-budget-item [ctx]
-  (let [user-id (data/get-user-id-from-session ctx)
-        budget-item (data/get-budget-item ctx user-id)]
-    (if budget-item
-      (data/update-budget-item ctx)
-      (data/upsert-budget-item ctx)))
+(defn update-budget-item [ctx]
+  (data/update-budget-item ctx)
   {:status 303
    :headers {"location" "/app/finances?alert=budget-item-saved"}})
 

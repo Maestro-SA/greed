@@ -329,3 +329,40 @@
     {:stroke-linecap "round",
      :stroke-linejoin "round",
      :d "M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"}]])
+
+(defn sort! []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :fill "none",
+    :viewBox "0 0 24 24",
+    :stroke-width "2",
+    :stroke "currentColor",
+    :aria-hidden "true",
+    :class "h-4 w-4"}
+   [:path
+    {:stroke-linecap "round",
+     :stroke-linejoin "round",
+     :d "M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"}]])
+
+(defn action []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :viewBox "0 0 24 24",
+    :fill "currentColor",
+    :aria-hidden "true",
+    :class "h-4 w-4"}
+   [:path
+    {:d "M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"}]])
+
+(defn add []
+  [:svg
+   {:xmlns "http://www.w3.org/2000/svg",
+    :fill "none",
+    :viewBox "0 0 24 24",
+    :stroke-width "1.5",
+    :stroke "currentColor",
+    :class "size-6"}
+   [:path
+    {:stroke-linecap "round",
+     :stroke-linejoin "round",
+     :d "M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"}]])

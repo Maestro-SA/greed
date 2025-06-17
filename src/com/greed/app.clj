@@ -6,7 +6,7 @@
             [com.greed.ui.app.finances :as finances]
             [com.greed.ui.app.calendar :as calendar]
             [com.greed.ui.app.dashboard :as dashboard]
-            [com.greed.ui.tools.budget-tracker :as budget-tracker]
+            [com.greed.ui.components.tables :as tables]
             [com.greed.ui.tools.income-tax-calculator :as income-tax-calculator]))
 
 
@@ -16,7 +16,9 @@
              ["" {:get dashboard/page}]
              ["/finances"
               ["/" {:get finances/page}]
+              ["/add-modal" {:get tables/add-modal}]
               ["/create-budget-item" {:post mid/create-budget-item}]
+              ["/update-budget-item" {:post mid/update-budget-item}]
               ["/delete-budget-item" {:get mid/delete-budget-item}]]
              ["/calendar" {:get calendar/page}]
              ["/tools"
