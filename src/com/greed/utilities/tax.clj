@@ -19,18 +19,18 @@
     (throw (IllegalArgumentException. "Age must be a positive number")))
 
 
-  (let [tax c/tax-config
-        ;; Rebates reduce tax (primary for all, secondary 65+, tertiary 75+). Defaults match SARS 2026.
+  (let [;; All figures from config/tax.edn, read fresh each time via get-tax-config
+        tax (c/get-tax-config)
         rebates-cfg (or (:rebates tax) {})
         thresholds-cfg (or (:thresholds tax) {})
-        primary (get rebates-cfg :primary 17820)
-        secondary (get rebates-cfg :secondary 9765)
-        tertiary (get rebates-cfg :tertiary 3249)
+        primary (get rebates-cfg :primary 0)
+        secondary (get rebates-cfg :secondary 0)
+        tertiary (get rebates-cfg :tertiary 0)
         tax-threshold (cond
                         (>= age 75) (get thresholds-cfg :age-75-plus 0)
                         (>= age 65) (get thresholds-cfg :age-65-plus 0)
                         :else (get thresholds-cfg :under-65 0))
-        ;; Determine which tax bracket applies
+        ;; Determine which tax bracket applies (from config)
         brackets (or (:tax-brackets tax) [])
         applicable-bracket (->> brackets
                                 (filter #(<= (get % :threshold 0) (or annual-income 0)))

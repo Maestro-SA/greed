@@ -15,7 +15,9 @@
     (throw (IllegalArgumentException.
             (str "Resource not found: " resource-path)))))
 
-(def tax-config
+(defn get-tax-config
+  "Reads config/tax.edn from resources. Called each time so config is always current."
+  []
   (read-edn-resource "config/tax.edn"))
 
 (def common-config
@@ -28,7 +30,7 @@
 
 (comment
 
-  tax-config
+  (get-tax-config)
   common-config
   alert-config
 
@@ -39,7 +41,7 @@
   (:finance/types common-config)
 
   (let [annual-income 1000000]
-    (->> tax-config
+    (->> (get-tax-config)
          :tax-brackets
          (filter #(<= (:threshold %) annual-income))
          last))
