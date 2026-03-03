@@ -20,15 +20,15 @@
 
 
   (let [tax c/tax-config
-        ;; Primary, secondary and tertiary rebates for 2024/2025
-        primary-rebate 17235
-        secondary-rebate 9444  ;; For persons 65 and older
-        tertiary-rebate 3145   ;; For persons 75 and older
-        ;; Calculate tax threshold based on age
+        ;; Primary, secondary and tertiary rebates (2026 - see SARS)
+        primary-rebate 17820
+        secondary-rebate 9765   ;; For persons 65 and older
+        tertiary-rebate 3249    ;; For persons 75 and older
+        ;; Tax thresholds based on age (2026 - see SARS)
         tax-threshold (cond
-                        (>= age 75) 165000
-                        (>= age 65) 135000
-                        :else 91250)
+                        (>= age 75) 171300
+                        (>= age 65) 153250
+                        :else 99000)
         ;; Determine which tax bracket applies
         applicable-bracket (->> tax
                                 :tax-brackets
