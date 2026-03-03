@@ -66,8 +66,14 @@
           "text-lg font-light leading-relaxed mt-4 mb-4 text-gray-600"}
          "Know your tax obligations and how to manage your finances."]
         [:p
-         {:class"text-lg font-light leading-relaxed mt-0 mb-4 text-gray-600"}
-         "Taxation is a necessary part of life. It helps fund public services and infrastructure. However, it can also be a burden if not managed properly."]]
+         {:class "text-lg font-light leading-relaxed mt-0 mb-4 text-gray-600"}
+         "Taxation is a necessary part of life. It helps fund public services and infrastructure. However, it can also be a burden if not managed properly."]
+        [:a
+         {:href "https://www.sars.gov.za/tax-rates/income-tax/rates-of-tax-for-individuals/"
+          :target "_blank"
+          :rel "noopener noreferrer"
+          :class "text-sm text-blue-600 hover:text-blue-800 hover:underline"}
+         "Full tax rates and rebates on SARS →"]]
        [:div
         {:class "w-full md:w-1/2 px-4 mr-auto ml-auto"}
         [:div
