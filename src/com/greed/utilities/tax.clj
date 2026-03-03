@@ -1,6 +1,9 @@
 (ns com.greed.utilities.tax
   (:require [com.core :as c]))
 
+(def ^:private default-age-secondary-rebate 65)
+(def ^:private default-age-tertiary-rebate 75)
+
 (defn calculate-income-tax
   "Calculates South African income tax for individuals based on SARS tax rates.
 
@@ -21,15 +24,18 @@
 
   (let [;; All figures from config/tax.edn, read fresh each time via get-tax-config
         tax (c/get-tax-config)
-        rebates-cfg (or (:rebates tax) {})
-        thresholds-cfg (or (:thresholds tax) {})
-        primary (get rebates-cfg :primary 0)
-        secondary (get rebates-cfg :secondary 0)
-        tertiary (get rebates-cfg :tertiary 0)
+        rebates-config (or (:rebates tax) {})
+        thresholds-config (or (:thresholds tax) {})
+        age-bands-config (or (:age-bands tax) {})
+        age-tertiary (get age-bands-config :tertiary-rebate-from default-age-tertiary-rebate)
+        age-secondary (get age-bands-config :secondary-rebate-from default-age-secondary-rebate)
+        primary (get rebates-config :primary 0)
+        secondary (get rebates-config :secondary 0)
+        tertiary (get rebates-config :tertiary 0)
         tax-threshold (cond
-                        (>= age 75) (get thresholds-cfg :age-75-plus 0)
-                        (>= age 65) (get thresholds-cfg :age-65-plus 0)
-                        :else (get thresholds-cfg :under-65 0))
+                        (>= age age-tertiary) (get thresholds-config :age-75-plus 0)
+                        (>= age age-secondary) (get thresholds-config :age-65-plus 0)
+                        :else (get thresholds-config :under-65 0))
         ;; Determine which tax bracket applies (from config)
         brackets (or (:tax-brackets tax) [])
         applicable-bracket (->> brackets
@@ -43,10 +49,10 @@
                     (+ (get applicable-bracket :base-tax 0)
                        (* excess (get applicable-bracket :rate 0)))
                     0)
-        ;; Apply rebates based on age
+        ;; Apply rebates based on age (from config age-bands)
         rebates (cond
-                  (>= age 75) (+ primary secondary tertiary)
-                  (>= age 65) (+ primary secondary)
+                  (>= age age-tertiary) (+ primary secondary tertiary)
+                  (>= age age-secondary) (+ primary secondary)
                   :else primary)
 
         ;; Final tax calculation

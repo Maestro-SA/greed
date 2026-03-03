@@ -15,4 +15,9 @@
  :thresholds
  {:under-65 99000
   :age-65-plus 153250
-  :age-75-plus 171300}}
+  :age-75-plus 171300}
+
+ ;; Ages at which secondary (65+) and tertiary (75+) rebates apply
+ :age-bands
+ {:secondary-rebate-from 65
+  :tertiary-rebate-from 75}}
