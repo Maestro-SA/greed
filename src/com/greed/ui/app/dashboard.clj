@@ -27,7 +27,9 @@
        [:div
         (cards/bank-card
          :finances finances
-         :budget-items budget-items)]
+         :budget-items budget-items
+         :net-monthly-income (when-let [net (:net-income income-tax-data)]
+                               (/ net 12)))]
        [:div
         (stats/savings-stat budget-items)]]
       (stats/tax-stats income-tax-data)])))

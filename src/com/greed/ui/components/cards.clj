@@ -41,13 +41,22 @@
       (get card-colour-config bank)
       (:default card-colour-config))))
 
-(defn bank-card [& {:keys [budget-items finances]}]
-  (let [{:keys [total-income
-                total-expenses]} (c.ui/get-budget-data budget-items)
-
+(defn bank-card [& {:keys [budget-items finances net-monthly-income]}]
+  (let [{:keys [total-income total-expenses]} (c.ui/get-budget-data budget-items)
         {:finances/keys [bank card-type]} finances
-
-        balance (- total-income total-expenses)
+        ;; Salary amount from budget (so we can replace it with accurate net-monthly-income and keep other income items)
+        salary-budget-amount (or (some (fn [item]
+                                          (when (and (= (:budget-item/type item) :income)
+                                                     (= (:budget-item/title item) "Salary"))
+                                            (:budget-item/amount item)))
+                                        (or budget-items []))
+                                 0)
+        other-income (- (or total-income 0) salary-budget-amount)
+        ;; Use calculated net monthly for salary when available; add all other income line items so balance increases when user adds income
+        income (if net-monthly-income
+                 (+ net-monthly-income (max 0 other-income))
+                 (or total-income 0))
+        balance (- income total-expenses)
 
         bank (or bank :bank)
 
