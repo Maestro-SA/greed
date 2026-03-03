@@ -20,33 +20,36 @@
 
 
   (let [tax c/tax-config
-        ;; Primary, secondary and tertiary rebates (2026 - see SARS)
-        primary-rebate 17820
-        secondary-rebate 9765   ;; For persons 65 and older
-        tertiary-rebate 3249    ;; For persons 75 and older
-        ;; Tax thresholds based on age (2026 - see SARS)
+        rebates-cfg (or (:rebates tax) {})
+        thresholds-cfg (or (:thresholds tax) {})
+        primary (get rebates-cfg :primary 0)
+        secondary (get rebates-cfg :secondary 0)
+        tertiary (get rebates-cfg :tertiary 0)
         tax-threshold (cond
-                        (>= age 75) 171300
-                        (>= age 65) 153250
-                        :else 99000)
+                        (>= age 75) (get thresholds-cfg :age-75-plus 0)
+                        (>= age 65) (get thresholds-cfg :age-65-plus 0)
+                        :else (get thresholds-cfg :under-65 0))
         ;; Determine which tax bracket applies
-        applicable-bracket (->> tax
-                                :tax-brackets
-                                (filter #(<= (:threshold %) annual-income))
+        brackets (or (:tax-brackets tax) [])
+        applicable-bracket (->> brackets
+                                (filter #(<= (get % :threshold 0) (or annual-income 0)))
                                 last)
-        #_(last (filter #(<= (:threshold %) annual-income) tax-brackets))
-
-        ;; Calculate gross tax
-        excess (- annual-income (:threshold applicable-bracket))
-        gross-tax (+ (:base-tax applicable-bracket) (* excess (:rate applicable-bracket)))
+        ;; Calculate gross tax (guard when no bracket or missing config)
+        excess (if applicable-bracket
+                 (- (or annual-income 0) (get applicable-bracket :threshold 0))
+                 0)
+        gross-tax (if applicable-bracket
+                    (+ (get applicable-bracket :base-tax 0)
+                       (* excess (get applicable-bracket :rate 0)))
+                    0)
         ;; Apply rebates based on age
         rebates (cond
-                  (>= age 75) (+ primary-rebate secondary-rebate tertiary-rebate)
-                  (>= age 65) (+ primary-rebate secondary-rebate)
-                  :else primary-rebate)
+                  (>= age 75) (+ primary secondary tertiary)
+                  (>= age 65) (+ primary secondary)
+                  :else primary)
 
         ;; Final tax calculation
-        net-tax (max 0 (- gross-tax rebates))]
+        net-tax (max 0 (- gross-tax (or rebates 0)))]
 
     ;; Return detailed tax calculation
     {:annual-income annual-income

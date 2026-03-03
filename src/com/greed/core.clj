@@ -5,8 +5,9 @@
 
 (defn get-income-tax-data [user finances]
   (let [{:user/keys [age]
-         :or {age 21}}    user
+         :or {age 21}} (or user {})
         {:finances/keys [salary]
-         :or {salary 0}}     finances
-        annual-income (utilities/income->annual-income salary)]
-   (tax/calculate-income-tax annual-income age)))
+         :or {salary 0}} (or finances {})
+        salary-num (when (number? salary) salary)
+        annual-income (utilities/income->annual-income (or salary-num 0))]
+    (tax/calculate-income-tax annual-income (or age 21))))

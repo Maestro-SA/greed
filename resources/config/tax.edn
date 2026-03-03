@@ -5,4 +5,14 @@
   {:threshold 530200   :rate 0.36 :base-tax 125599}
   {:threshold 695800   :rate 0.39 :base-tax 185215}
   {:threshold 887000   :rate 0.41 :base-tax 259783}
-  {:threshold 1878600  :rate 0.45 :base-tax 666339}]}
+  {:threshold 1878600  :rate 0.45 :base-tax 666339}]
+
+ :rebates
+ {:primary 17820
+  :secondary 9765   ;; 65 and older
+  :tertiary 3249}   ;; 75 and older
+
+ :thresholds
+ {:under-65 99000
+  :age-65-plus 153250
+  :age-75-plus 171300}}
