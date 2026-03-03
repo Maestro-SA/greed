@@ -35,11 +35,10 @@
       value]]]])
 
 (defn tax-stats [income-tax-data]
-  (let [{:keys [age
-                rebates
+  (let [{:keys [net-tax
                 net-income
-                tax-threshold
-                effective-rate]} income-tax-data]
+                effective-rate]} income-tax-data
+        monthly-tax (/ (or net-tax 0) 12)]
     [:section
      {:class "bg-gray-100 -mt-24 rounded-xl"}
      [:div
@@ -86,8 +85,8 @@
             :title "Net annual income"
             :value (utilities/amount->rands net-income))
            (tax-stat
-            :title "Age"
-            :value age)
+            :title "Estimated monthly tax"
+            :value (utilities/amount->rands (or monthly-tax 0)))
            (tax-stat
             :title "Effective rate"
             :value (utilities/->percentage effective-rate))
