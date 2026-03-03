@@ -20,11 +20,12 @@
 
 
   (let [tax c/tax-config
+        ;; Rebates reduce tax (primary for all, secondary 65+, tertiary 75+). Defaults match SARS 2026.
         rebates-cfg (or (:rebates tax) {})
         thresholds-cfg (or (:thresholds tax) {})
-        primary (get rebates-cfg :primary 0)
-        secondary (get rebates-cfg :secondary 0)
-        tertiary (get rebates-cfg :tertiary 0)
+        primary (get rebates-cfg :primary 17820)
+        secondary (get rebates-cfg :secondary 9765)
+        tertiary (get rebates-cfg :tertiary 3249)
         tax-threshold (cond
                         (>= age 75) (get thresholds-cfg :age-75-plus 0)
                         (>= age 65) (get thresholds-cfg :age-65-plus 0)

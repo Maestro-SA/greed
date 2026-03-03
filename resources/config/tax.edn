@@ -9,8 +9,8 @@
 
  :rebates
  {:primary 17820
-  :secondary 9765   ;; 65 and older
-  :tertiary 3249}   ;; 75 and older
+  :secondary 9765
+  :tertiary 3249}
 
  :thresholds
  {:under-65 99000
