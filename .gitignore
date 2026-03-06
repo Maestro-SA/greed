@@ -15,3 +15,4 @@
 .portal/
 .shadow-cljs/
 /.DS_Store
+/greed-app-key.pem

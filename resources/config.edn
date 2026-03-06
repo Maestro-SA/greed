@@ -35,7 +35,7 @@
  :biff.system-properties/user.timezone                 "UTC"
  :biff.system-properties/clojure.tools.logging.factory "clojure.tools.logging.impl/slf4j-factory"
 
- :biff.tasks/server                 #biff/env DOMAIN
+ :biff.tasks/server                 #or [#biff/env "DEPLOY_HOST" #biff/env "DOMAIN"]
  :biff.tasks/main-ns                com.greed
  :biff.tasks/on-soft-deploy         "\"(com.greed/on-save @com.greed/system)\""
  :biff.tasks/generate-assets-fn     com.greed/generate-assets!
@@ -59,6 +59,6 @@
  ;; :biff.tasks/git-deploy-cmd ["git" "push" "prod" "main:master"]
  :biff.tasks/git-deploy-cmd ["git" "push" "prod" "master"]
 
- ;; Uncomment this line if you have any ssh-related problems:
- ;; :biff.tasks/skip-ssh-agent true
+ ;; Skip ssh-agent (avoids "Error connecting to agent" on Windows when ssh-agent isn't running)
+ :biff.tasks/skip-ssh-agent true
  }

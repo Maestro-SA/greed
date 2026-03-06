@@ -2,6 +2,8 @@
 
 This guide walks through hosting your Biff app (with XTDB) on Oracle Cloud Always Free. The app and XTDB run on one VM; XTDB uses the default **standalone** topology and stores data under `storage/xtdb`.
 
+**If Oracle won’t let you sign up,** use **[DEPLOY-FREE-ALTERNATIVES.md](DEPLOY-FREE-ALTERNATIVES.md)** for DigitalOcean (recommended), Google Cloud, or AWS.
+
 ---
 
 ## 1. Oracle Cloud setup

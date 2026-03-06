@@ -8,16 +8,23 @@
             [com.greed.ui.components.headers :as headers]))
 
 
+(defn salary-set? [finances]
+  (let [salary (get finances :finances/salary)]
+    (and (some? salary) (pos? (long (or salary 0))))))
+
 
 (defn page [{:keys [session params] :as ctx}]
   (let [user-id (:uid session)
         user (data/get-user ctx user-id)
         finances (data/get-finances ctx user-id)
         income-tax-data (c.greed/get-income-tax-data user finances)
-        budget-items (data/get-budget-items ctx user-id)]
+        budget-items (data/get-budget-items ctx user-id)
+        show-salary-prompt (not (salary-set? finances))]
     (ui/app
      ctx
      [:div.container.mx-auto
+      {:x-data (str "{ showSalaryPrompt: " (boolean show-salary-prompt) " }")}
+      (when show-salary-prompt (alerts/salary-prompt-modal))
       (when (:alert params) (alerts/info params))
       (headers/home-heading
        :breadcrumbs ["Home"]
