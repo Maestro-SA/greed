@@ -13,7 +13,7 @@
      [:span {:class "w-1.5 h-1.5 rounded-full bg-emerald-400"}]
      [:p {:class "text-xs font-semibold uppercase tracking-[0.18em] text-emerald-400"} "A note from Greed"]]
     [:p {:class "mt-5 text-base font-medium text-zinc-100 leading-relaxed"}
-     "Money is private — and so is your ambition. Greed exists to take every part of your financial life off the messy back of your mind and put it in one clear place: salary, tax, spending, savings and the dates that matter."]
+     "Money is private, and so is your ambition. Greed exists to take every part of your financial life off the messy back of your mind and put it in one clear place: salary, tax, spending, savings and the dates that matter."]
     [:p {:class "mt-4 text-sm text-zinc-400 leading-relaxed"}
      "No judgment, no jargon, no instant-wealth promises. Just a system that lets you feel what you earn and build control, one decision at a time."]
     [:div {:class "flex items-center gap-4 mt-8"}

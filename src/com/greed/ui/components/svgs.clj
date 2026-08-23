@@ -5,7 +5,7 @@
    {:xmlns "http://www.w3.org/2000/svg",
     :fill "none",
     :viewBox "0 0 24 24",
-    :stroke-width "1.8",
+    :stroke-width "1.5",
     :stroke "currentColor",
     :class "size-6"}
    [:path
@@ -31,7 +31,7 @@
    {:xmlns "http://www.w3.org/2000/svg",
     :fill "none",
     :viewBox "0 0 24 24",
-    :stroke-width "1.5",
+    :stroke-width "1.8",
     :stroke "currentColor",
     :class "w-5 h-5"}
    [:path
@@ -49,7 +49,7 @@
     {:d
      "M17 20V18C17 15.7909 15.2091 14 13 14H6C3.79086 14 2 15.7909 2 18V20M22 20V18C22 16.1362 20.7252 14.5722 19 14.126M15 6.87398C16.7252 7.32028 18 8.88418 18 10.75C18 12.6158 16.7252 14.1797 15 14.626M13.5 6.5C13.5 8.70914 11.7091 10.5 9.5 10.5C7.29086 10.5 5.5 8.70914 5.5 6.5C5.5 4.29086 7.29086 2.5 9.5 2.5C11.7091 2.5 13.5 4.29086 13.5 6.5Z",
      :stroke "currentColor",
-     :stroke-width "2",
+     :stroke-width "1.8",
      :stroke-linecap "round",
      :stroke-linejoin "round"}]])
 
@@ -68,7 +68,7 @@
    {:viewBox "0 0 24 24",
     :fill "none",
     :stroke "currentColor",
-    :stroke-width "1.75",
+    :stroke-width "1.5",
     :stroke-linecap "round",
     :class "w-5 h-5"}
    [:path {:d "M8 16.5a6 6 0 0 1 0-9"}]
@@ -84,7 +84,7 @@
    [:path
     {:d "M6 18L18 6M6 6L18 18",
      :stroke "currentColor",
-     :stroke-width "2",
+     :stroke-width "1.8",
      :stroke-linecap "round",
      :stroke-linejoin "round"}]])
 
@@ -97,7 +97,7 @@
    [:path
     {:d "M5 13l4 4L19 7",
      :stroke "currentColor",
-     :stroke-width "2",
+     :stroke-width "1.5",
      :stroke-linecap "round",
      :stroke-linejoin "round"}]])
 
@@ -325,7 +325,7 @@
    {:xmlns "http://www.w3.org/2000/svg",
     :fill "none",
     :viewBox "0 0 24 24",
-    :stroke-width "1.8",
+    :stroke-width "1.5",
     :stroke "currentColor",
     :class "size-6"}
    [:path

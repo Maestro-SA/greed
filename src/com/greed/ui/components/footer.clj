@@ -11,8 +11,8 @@
      [:div
       [:a {:href "/" :class "inline-block"}
        [:span {:class "text-3xl font-giza font-bold text-zinc-900 leading-none"} "greed."]]
-      [:p {:class "mt-3 text-sm text-zinc-400 max-w-xs leading-relaxed"}
-       "Making personal finance simple, transparent, and empowering for every South African."]]
+       [:p {:class "mt-3 text-sm text-zinc-400 max-w-xs leading-relaxed"}
+        "Salary, tax, spending and savings in one calm place, built for South Africans."]]
      [:div {:class "sm:justify-self-center mt-4 sm:mt-0"}
       [:p {:class "text-sm font-semibold text-zinc-900 mb-3"} "Explore"]
       [:nav {:class "flex flex-col gap-2.5"}

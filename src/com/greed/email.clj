@@ -66,7 +66,7 @@
             [:p [:a {:href app-url :target "_blank"} "Build your plan now."]]
             [:p "If you have any questions, just reply to this email or reach us at "
              "support@mygreed.co.za."]
-            [:p "— The " settings/app-name " team"]]])
+            [:p "The " settings/app-name " team"]]])
    :text (str "Hi " firstname ",\n\n"
               "Welcome to " settings/app-name ". Your money is about to make a lot more sense.\n\n"
               "Here's what you can do next:\n"
@@ -76,7 +76,7 @@
               "Build your plan now: " app-url "\n\n"
               "If you have any questions, just reply to this email or reach us at "
               "support@mygreed.co.za.\n\n"
-              "— The " settings/app-name " team")})
+              "The " settings/app-name " team")})
 
 (defn password-reset [{:keys [to url]}]
   {:to [{:email to}]

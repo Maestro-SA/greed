@@ -39,9 +39,9 @@
     (tools/panel-heading "Understanding your results")
     [:div {:class "divide-y divide-zinc-100 border-t border-zinc-100"}
      (tools/glossary-item "Gross tax" "The raw tax calculated from the SARS brackets before any rebates are applied.")
-     (tools/glossary-item "Rebates" "A fixed annual credit that reduces your tax bill. Under-65s get the primary rebate (R17,820); the 65–74 tier adds a secondary rebate and the 75+ tier a tertiary one.")
+     (tools/glossary-item "Rebates" "A fixed annual credit that reduces your tax bill. Under-65s get the primary rebate (R17,820); the 65-74 tier adds a secondary rebate and the 75+ tier a tertiary one.")
      (tools/glossary-item "Effective tax rate" "The percentage of your total income that goes to tax after rebates. This is lower than your marginal rate (the rate on your top bracket) because lower portions of income are taxed at lower rates.")
-     (tools/glossary-item "Net income" "Your take-home pay after income tax. Note: UIF and medical aid contributions are not deducted here — this is purely the income tax effect.")])
+     (tools/glossary-item "Net income" "Your take-home pay after income tax. Note: UIF and medical aid contributions are not deducted here. This is purely the income tax effect.")])
 
    (tools/notice
     "This calculator does not account for medical aid credits, retirement annuity deductions, or travel allowances. Use the "
@@ -54,7 +54,7 @@
    [:div {:class "relative mt-1"}
     [:span {:class "absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-medium text-zinc-400"} "R"]
     [:input {:id "income" :name "income" :type "number" :min "0" :step "any"
-             :class "block w-full pl-8 pr-3 py-3 text-lg font-semibold tabular-nums text-zinc-900 placeholder-zinc-400 bg-white border border-zinc-200 rounded-xl transition-colors duration-150 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+              :class "block w-full pl-8 pr-3 py-3 text-lg font-semibold tabular-nums text-zinc-900 placeholder-zinc-400 bg-white border border-zinc-200 rounded-lg transition-colors duration-150 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
              :placeholder "0" :value (or value "")}]]])
 
 (defn- tier-field [selected]
@@ -72,8 +72,8 @@
              :class "relative z-10 cursor-pointer rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors active:scale-[0.97] text-zinc-500 hover:text-zinc-700 peer-focus-visible/1:ring-2 peer-focus-visible/1:ring-emerald-500/50 peer-checked/1:text-zinc-900"}
      "Under 65"]
     [:label {:for "rebate-tier-2"
-             :class "relative z-10 cursor-pointer rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors active:scale-[0.97] text-zinc-500 hover:text-zinc-700 peer-focus-visible/2:ring-2 peer-focus-visible/2:ring-emerald-500/50 peer-checked/2:text-zinc-900"}
-     "65–74"]
+              :class "relative z-10 cursor-pointer rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors active:scale-[0.97] text-zinc-500 hover:text-zinc-700 peer-focus-visible/2:ring-2 peer-focus-visible/2:ring-emerald-500/50 peer-checked/2:text-zinc-900"}
+     "65-74"]
     [:label {:for "rebate-tier-3"
              :class "relative z-10 cursor-pointer rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors active:scale-[0.97] text-zinc-500 hover:text-zinc-700 peer-focus-visible/3:ring-2 peer-focus-visible/3:ring-emerald-500/50 peer-checked/3:text-zinc-900"}
      "75+"]
@@ -87,10 +87,13 @@
      (tools/panel-heading "Calculate your income tax")
      [:div {:class "px-5 pb-6 sm:px-6"}
       (biff/form
-       {:hx-post     "/app/tax/income-tax-calculator"
-        :hx-target   "#tax-result"
-        :hx-swap     "outerHTML"
-        :hx-trigger  "submit"}
+       {:hx-post         "/app/tax/income-tax-calculator"
+        :hx-target       "#tax-result"
+        :hx-swap         "outerHTML"
+        :hx-trigger      "submit"
+        :hx-disabled-elt "find button[type='submit']"
+        :_ "on htmx:beforeRequest add .opacity-50 to #tax-result
+on htmx:afterRequest remove .opacity-50 from #tax-result"}
        [:div {:class "space-y-5"}
         (salary-field (:income params))
         (tier-field selected)]
@@ -143,10 +146,10 @@
         status        (if (pos? net-tax)
                         (str "You keep " (utilities/amount->rands net-monthly)
                              " of your " (utilities/amount->rands income)
-                             " monthly gross — " (int (Math/round effective-rate)) "c of every rand goes to SARS.")
+                             " monthly gross: " (int (Math/round effective-rate)) "c of every rand goes to SARS.")
                         (str "You keep " (utilities/amount->rands net-monthly)
                              " of your " (utilities/amount->rands income)
-                             " monthly gross — no income tax this year."))]
+                             " monthly gross: no income tax this year."))]
     (if (not (pos? income))
       [:div#tax-result
        (tools/panel

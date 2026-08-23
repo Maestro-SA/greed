@@ -42,19 +42,19 @@
   [:div {:class "space-y-2.5"}
    [:div {:class "flex items-center justify-between text-sm"}
     [:span {:class "text-zinc-500"} "Take-home"]
-    [:span {:class "font-semibold text-zinc-900 tabular-nums"} "R 28,000"]]
+    [:span {:class "font-semibold text-zinc-900 tabular-nums"} "R28,000"]]
    [:div {:class "flex items-center justify-between text-sm"}
     [:span {:class "text-zinc-500"} "Spending"]
-    [:span {:class "font-semibold text-zinc-900 tabular-nums"} "R 16,200"]]
+    [:span {:class "font-semibold text-zinc-900 tabular-nums"} "R16,200"]]
    [:div {:class "flex items-center justify-between text-sm"}
     [:span {:class "text-zinc-500"} "Saved"]
-    [:span {:class "font-semibold text-emerald-600 tabular-nums"} "R 4,800"]]])
+    [:span {:class "font-semibold text-emerald-600 tabular-nums"} "R4,800"]]])
 
 (defn- goals-visual []
   [:<>
    [:div {:class "flex items-end justify-between"}
-    [:span {:class "text-sm font-semibold text-zinc-900 tabular-nums"} "R 42,000"]
-    [:span {:class "text-xs text-zinc-400 tabular-nums"} "of R 60,000"]]
+    [:span {:class "text-sm font-semibold text-zinc-900 tabular-nums"} "R42,000"]
+    [:span {:class "text-xs text-zinc-400 tabular-nums"} "of R60,000"]]
    [:div {:class "mt-2 h-2 w-full overflow-hidden rounded-full bg-zinc-100"}
     [:div {:class "h-full rounded-full bg-emerald-500" :style {:width "70%"}}]]
    [:div {:class "mt-2 text-xs font-medium text-emerald-600 tabular-nums"} "70% funded"]])
@@ -105,7 +105,7 @@
         "Take control of your "
         [:span {:class "text-emerald-600"} "finances."]]
        [:p {:class "mt-4 text-lg text-zinc-500 leading-relaxed"}
-        "Greed brings your salary, tax, spending and savings into one clear place — so you always know what you earn, what SARS takes, and what you keep."]
+        "Greed brings your salary, tax, spending and savings into one clear place, so you always know what you earn, what SARS takes, and what you keep."]
        [:div {:class "flex flex-wrap gap-3 mt-8"}
         (if signed-in?
           (shared/btn :variant :dark :size :lg :href "/app" "Go to dashboard")
@@ -114,9 +114,7 @@
            (shared/btn :variant :outline :size :lg :href "/signin" :class "hover:border-zinc-500" "Sign in")])]
        [:div {:class "flex items-center gap-6 mt-10"}
         (trust-stat "SARS" "Tax calculator")
-        [:div {:class "w-px h-8 bg-zinc-200"}]
         (trust-stat "100%" "Free to use")
-        [:div {:class "w-px h-8 bg-zinc-200"}]
         (trust-stat "ZAR" "South African Rand")]]
       [:div {:class "flex-1 flex justify-center lg:justify-end"}
        (cards/note-from-greed)]]
@@ -135,7 +133,7 @@
         :icon (svgs/percent-badge)
         :badge "2026/27 Year"
         :title "Income Tax Calculator"
-        :description "Enter your monthly salary and age to instantly see your gross tax, rebates, effective rate, and take-home pay — no sign-up required."
+        :description "Enter your monthly salary and age to instantly see your gross tax, rebates, effective rate, and take-home pay. No sign-up required."
         :detail ["SARS 2026/27 tax brackets"
                  "Primary, secondary and tertiary rebates"
                  "Effective vs. marginal rate breakdown"
@@ -150,7 +148,7 @@
         :description "Simulate your full SARS tax return with all common deductions. See whether you are owed a refund or have tax to pay before you file."
         :detail ["Medical aid tax credits (MTC)"
                  "Retirement annuity (RA) deductions"
-                 "Travel allowance — logbook or 80% rule"
+                 "Travel allowance (logbook or 80% rule)"
                  "Out-of-pocket medical expenses (s6B)"
                  "Auto assessment from your salary"]
         :cta-label "Simulate your return"
@@ -160,7 +158,7 @@
         :icon (svgs/gift)
         :badge "2026/27 Year"
         :title "Bonus Tax Calculator"
-        :description "See how much PAYE comes off a bonus or 13th cheque, and what actually lands in your account — taxed correctly at your marginal rate."
+        :description "See how much PAYE comes off a bonus or 13th cheque, and what actually lands in your account, taxed correctly at your marginal rate."
         :detail ["Marginal-rate bonus tax"
                  "Compares your tax with and without the bonus"
                  "Net take-home on your bonus"
@@ -176,12 +174,12 @@
        "More than a "
        [:span {:class "text-emerald-600"} "calculator."]]
       [:p {:class "max-w-xl mt-3 text-zinc-500"}
-       "Create a free account to track your whole financial picture — your salary and medical aid flow in automatically."]]
+       "Create a free account to track your whole financial picture: your salary and medical aid flow in automatically."]]
      [:div {:class "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"}
-      (feature-card
-       :icon (svgs/credit-card)
-       :title "Finances"
-       :description "Income, expenses and savings in one budget — so every rand has a job."
+       (feature-card
+        :icon (svgs/credit-card)
+        :title "Finances"
+        :description "Income, expenses and savings in one budget, so every rand has a job."
        :href app-href
        :visual (finances-visual)
        :class "reveal-1")
@@ -216,7 +214,7 @@
         [:h2 {:class "text-3xl font-bold text-white tracking-tight text-balance lg:text-4xl"}
          "Your money should " [:span {:class "text-emerald-500"} "make sense."]]
         [:p {:class "max-w-xl mx-auto mt-4 text-lg text-zinc-400"}
-         "Know what you earn, what SARS takes, what's left over and what you can build next — all in one calm, private place."]
+         "Know what you earn, what SARS takes, what's left over and what you can build next, all in one calm, private place."]
         [:a {:href (if signed-in? "/app" "/signup")
              :class "inline-block px-8 py-3.5 mt-8 text-sm font-semibold text-emerald-700 bg-white rounded-xl transition-colors hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:bg-emerald-100 active:scale-[0.97]"}
          (if signed-in? "Go to dashboard" "Get started for free")]]]]]))

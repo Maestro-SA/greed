@@ -21,7 +21,7 @@
     [:div {:class "flex flex-wrap gap-1"}
      (for [role (sort roles)]
        (badge (name role) "bg-blue-50 text-blue-800"))]
-    [:span {:class "text-xs text-zinc-400"} "—"]))
+    [:span {:class "text-xs text-zinc-400"} "-"]))
 
 (defn- field [& {:keys [id name label type value required?]}]
   [:div
@@ -82,7 +82,7 @@
 
 (defn- password-cell [user]
   (if (data/hashed-password? (:user/password user))
-    [:span {:class "text-xs text-zinc-400"} "—"]
+    [:span {:class "text-xs text-zinc-400"} "-"]
     [:div {:class "flex items-center gap-2"}
      (badge "Not hashed" "bg-amber-50 text-amber-800")
      (biff/form {:action "/app/admin/users/hash-password" :class "flex"}
@@ -95,7 +95,7 @@
   (when (pos? unhashed-count)
     [:div {:class "flex items-center gap-3 px-4 py-3 text-amber-800 bg-amber-50 border border-amber-200 rounded-xl"}
      [:svg {:class "flex-shrink-0 w-5 h-5" :fill "none" :stroke "currentColor" :viewBox "0 0 24 24"}
-      [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "2"
+      [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "1.8"
               :d "M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"}]]
      [:p {:class "text-sm font-medium"}
       (str unhashed-count " account" (when (> unhashed-count 1) "s")

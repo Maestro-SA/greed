@@ -47,7 +47,7 @@
             "  add .greed-alert-out\n"
             "  wait 200ms\n"
             "  hide #success-alert")
-    :class "flex items-center w-full max-w-sm overflow-hidden rounded-xl bg-white ring-1 ring-emerald-200 shadow-card greed-alert-in"}
+    :class "flex items-center w-full max-w-sm overflow-hidden rounded-2xl bg-white ring-1 ring-emerald-200 shadow-card greed-alert-in"}
    [:div
     {:class "flex items-center justify-center w-12 bg-emerald-600 text-white"}
     (svgs/success)]

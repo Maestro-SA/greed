@@ -25,7 +25,7 @@
       [:p {:class "truncate text-sm font-medium text-zinc-800"} title]
       (when protected?
         [:span {:class "mt-0.5 inline-flex items-center text-[10px] font-medium text-zinc-400 uppercase tracking-wide"
-                :title "Managed automatically — edit in Settings"}
+                :title "Managed automatically. Edit in Settings"}
          "Auto"])]
      [:p {:class "flex-shrink-0 text-sm font-semibold text-zinc-900 tabular-nums"}
       (utilities/amount->rands amount)]

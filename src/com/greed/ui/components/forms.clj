@@ -236,7 +236,7 @@ on htmx:afterRequest remove .opacity-50 from #account-type-field"})
                     (shared/app-input ctx :id "salary" :type "number" :label "Monthly Gross Salary" :required? true
                                       :prefix "R" :hint "Your salary before any deductions")
                     (shared/app-input ctx :id "payday" :type "number" :label "Pay Day" :required? true
-                                      :hint "Day of the month you receive your salary (1–31)")]]
+                                      :hint "Day of the month you receive your salary (1-31)")]]
 
                   [:div {:class "flex justify-end pt-5 mt-5 border-t border-zinc-100"}
                    (shared/btn :variant :dark :type "submit"

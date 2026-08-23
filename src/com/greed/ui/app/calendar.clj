@@ -22,7 +22,13 @@
      [:div {:class "space-y-7"}
       (headers/pages-heading ["Calendar"])
       (stats/calendar-hero payday events)
-      [:div {:class "grid grid-cols-1 gap-4 lg:grid-cols-3 lg:items-start"}
+      [:div {:class "grid grid-cols-1 gap-4 lg:grid-cols-3 lg:items-start"
+             ;; Lives here rather than on the nav buttons: those are inside
+             ;; #calendar-grid and die with each swap, so they could never
+             ;; hear their own afterRequest to un-dim. Bubbled events from
+             ;; whichever button fired keep this wrapper alive.
+             :_ "on htmx:beforeRequest from #calendar-grid add .opacity-50 to #calendar-grid
+on htmx:afterRequest remove .opacity-50 from #calendar-grid"}
        [:div {:class "lg:col-span-2"} (calendars/calendar year month payday events)]
        [:div {:class "lg:col-span-1 space-y-4"}
         (calendars/todos-panel ctx events)

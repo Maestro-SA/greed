@@ -44,7 +44,7 @@
          (legend-row "bg-indigo-400" "Savings" savings (utilities/pct-label sav-pct) nil)
          (legend-row "bg-zinc-300" (if overspend? "Overspend" "Unallocated")
            (Math/abs (long leftover))
-           (if overspend? "—" (utilities/pct-label rem-pct))
+           (if overspend? "-" (utilities/pct-label rem-pct))
            (when overspend? "text-rose-600"))]]
        [:p {:class "text-center py-6 text-sm text-zinc-400"}
         "Add your "
@@ -99,7 +99,7 @@
      [:div {:class "space-y-7"}
       (headers/pages-heading ["Insights"])
       [:p {:class "text-sm text-zinc-500"}
-       "A monthly read on your money — where it comes from, where it goes, and what's left over."]
+       "A monthly read on your money: where it comes from, where it goes, and what's left over."]
       (if (empty? budget-items)
         (empty-state)
         [:<>

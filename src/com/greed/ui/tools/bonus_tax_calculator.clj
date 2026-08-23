@@ -35,7 +35,7 @@
 (defn- tier-label [tier]
   (case tier
     "under-65" "Under 65"
-    "65-74"    "65–74"
+    "65-74"    "65-74"
     "75-plus"  "75+"
     "Under 65"))
 
@@ -58,10 +58,13 @@
            " and age " [:span {:class "font-medium text-zinc-700"} age]
            " (" (tier-label tier) " tier). Pick a bonus size to calculate instantly:"]
           (biff/form
-           {:hx-post    "/app/tax/bonus-tax-calculator"
-            :hx-target  "#bonus-result"
-            :hx-swap    "outerHTML"
-            :hx-trigger "submit"}
+           {:hx-post         "/app/tax/bonus-tax-calculator"
+            :hx-target       "#bonus-result"
+            :hx-swap         "outerHTML"
+            :hx-trigger      "submit"
+            :hx-disabled-elt "find button"
+            :_ "on htmx:beforeRequest add .opacity-50 to #bonus-result
+on htmx:afterRequest remove .opacity-50 from #bonus-result"}
            [:input {:type "hidden" :name "mode" :value "auto"}]
            [:div {:class "mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4"}
             (for [{:keys [mult title subtitle]} bonus-options]
@@ -91,7 +94,7 @@
     (tools/panel-heading "How this tool works")
     [:div {:class "px-5 pb-5 sm:px-6"}
      [:p {:class "text-sm text-zinc-500 leading-relaxed"}
-      "A bonus (or 13th cheque) is taxed at your marginal rate — the rate on your top slice of income. This calculator works out the tax by comparing your annual tax with and without the bonus; the difference is the PAYE withheld from the bonus."]
+      "A bonus (or 13th cheque) is taxed at your marginal rate, the rate on your top slice of income. This calculator works out the tax by comparing your annual tax with and without the bonus; the difference is the PAYE withheld from the bonus."]
      [:p {:class "mt-2 text-sm text-zinc-500 leading-relaxed"}
       "Use Auto Assessment to see your bonus tax at 0.5× to 1.25× of your saved salary, or enter a custom salary, bonus amount and rebate tier below to model a what-if scenario, then click Calculate. The result shows the tax on the bonus and what you'll actually take home."]])
 
@@ -114,7 +117,7 @@
    [:div {:class "relative mt-1"}
     [:span {:class "absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-medium text-zinc-400"} "R"]
     [:input {:id id :name id :type "number" :min "0" :step "any"
-             :class (str "block w-full pl-8 pr-3 bg-white border border-zinc-200 rounded-xl transition-colors duration-150 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 "
+              :class (str "block w-full pl-8 pr-3 bg-white border border-zinc-200 rounded-lg transition-colors duration-150 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 "
                          (if lg?
                            "py-3 text-lg font-semibold tabular-nums text-zinc-900 placeholder-zinc-400"
                            "py-2 text-sm font-medium text-zinc-700 placeholder-zinc-400"))
@@ -135,8 +138,8 @@
              :class "relative z-10 cursor-pointer rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors active:scale-[0.97] text-zinc-500 hover:text-zinc-700 peer-focus-visible/1:ring-2 peer-focus-visible/1:ring-emerald-500/50 peer-checked/1:text-zinc-900"}
      "Under 65"]
     [:label {:for "rebate-tier-2"
-             :class "relative z-10 cursor-pointer rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors active:scale-[0.97] text-zinc-500 hover:text-zinc-700 peer-focus-visible/2:ring-2 peer-focus-visible/2:ring-emerald-500/50 peer-checked/2:text-zinc-900"}
-     "65–74"]
+              :class "relative z-10 cursor-pointer rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors active:scale-[0.97] text-zinc-500 hover:text-zinc-700 peer-focus-visible/2:ring-2 peer-focus-visible/2:ring-emerald-500/50 peer-checked/2:text-zinc-900"}
+     "65-74"]
     [:label {:for "rebate-tier-3"
              :class "relative z-10 cursor-pointer rounded-lg px-3 py-2 text-center text-sm font-medium transition-colors active:scale-[0.97] text-zinc-500 hover:text-zinc-700 peer-focus-visible/3:ring-2 peer-focus-visible/3:ring-emerald-500/50 peer-checked/3:text-zinc-900"}
      "75+"]
@@ -150,16 +153,19 @@
      (tools/panel-heading "Calculate your bonus tax")
      [:div {:class "px-5 pb-6 sm:px-6"}
       (biff/form
-       {:hx-post     "/app/tax/bonus-tax-calculator"
-        :hx-target   "#bonus-result"
-        :hx-swap     "outerHTML"
-        :hx-trigger  "submit"}
+       {:hx-post         "/app/tax/bonus-tax-calculator"
+        :hx-target       "#bonus-result"
+        :hx-swap         "outerHTML"
+        :hx-trigger      "submit"
+        :hx-disabled-elt "find button[type='submit']"
+        :_ "on htmx:beforeRequest add .opacity-50 to #bonus-result
+on htmx:afterRequest remove .opacity-50 from #bonus-result"}
        [:div {:class "space-y-5"}
         (amount-field {:id "income" :label "Monthly gross salary" :lg? true
-                       :hint "Your regular salary before the bonus — for custom scenarios. Leave it to Auto Assessment above for your saved salary."
+                       :hint "Your regular salary before the bonus (for custom scenarios). Leave it to Auto Assessment above for your saved salary."
                        :value (:income params)})
         (amount-field {:id "bonus" :label "Bonus amount"
-                       :hint "The once-off bonus or 13th cheque — type a custom amount"
+                       :hint "The once-off bonus or 13th cheque (type a custom amount)"
                        :value (:bonus params)})
         (tier-field selected)]
        [:div {:class "mt-6 flex items-center justify-end"}
@@ -230,9 +236,9 @@
         status        (str (if (pos? bonus-tax)
                              (str "You'll take home " (utilities/amount->rands net-bonus)
                                   " of your " (utilities/amount->rands bonus)
-                                  " bonus — the whole bonus is taxed at your marginal rate, so you pay " (utilities/pct-label eff-rate) ".")
+                                  " bonus. The whole bonus is taxed at your marginal rate, so you pay " (utilities/pct-label eff-rate) ".")
                              (str "You'll take home " (utilities/amount->rands net-bonus)
-                                  " of your " (utilities/amount->rands bonus) " bonus — no extra tax on this bonus."))
+                                  " of your " (utilities/amount->rands bonus) " bonus: no extra tax on this bonus."))
                            " Together with your regular salary, " (utilities/amount->rands month-total)
                            " lands in your bank account this month.")]
     (if (not (pos? bonus))

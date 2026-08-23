@@ -25,23 +25,22 @@
      ;; Hero
      [:div {:class "py-16 lg:py-24"}
       [:div {:class "text-center max-w-2xl mx-auto"}
-       (badge "Contact us")
        [:h1 {:class "text-4xl font-bold text-zinc-900 leading-[1.08] tracking-tight text-balance lg:text-5xl"}
         "Talk to us " [:span {:class "text-emerald-600"} "directly."]]
        [:p {:class "mt-6 text-lg text-zinc-500 leading-relaxed"}
-        "We're a small team and we read every message ourselves. Ask about your account, your tax, or anything else — we'll help you find the right answer."]]]
+        "We're a small team and we read every message ourselves. Ask about your account, your tax, or anything else. We'll help you find the right answer."]]]
 
      ;; Contact channels
      [:div {:class "pb-20 lg:pb-28"}
       [:div {:class "grid grid-cols-1 gap-6 max-w-4xl mx-auto md:grid-cols-3"}
        (contact-tile :icon (svgs/envelope)
                      :title "Email us"
-                     :description "support@mygreed.co.za — the fastest way to reach us. We reply personally."
+                     :description "support@mygreed.co.za, the fastest way to reach us. We reply personally."
                      :href "mailto:support@mygreed.co.za"
                      :class "reveal-1")
        (contact-tile :icon (svgs/instagram)
                      :title "Instagram"
-                     :description "@greed_za — follow along and send us a message."
+                     :description "@greed_za, follow along and send us a message."
                      :href "https://www.instagram.com/greed_za/"
                      :class "reveal-2")
        (contact-tile :icon (svgs/users)
@@ -63,7 +62,7 @@
                     "Budgets, goals and the calendar"
                     "Privacy, your data, or deleting your account"
                     "Feedback, feature ideas, and bug reports"
-                    "Anything else on your mind — just ask."]]
+                     "Anything else on your mind? Just ask."]]
           [:div {:class "flex items-start gap-2.5 text-sm text-zinc-600"}
            [:span {:class "mt-0.5 flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600"}
             [:svg {:class "size-3" :fill "none" :stroke "currentColor" :viewBox "0 0 24 24" :stroke-width "3"}
@@ -83,7 +82,7 @@
         [:div {:class "flex flex-wrap justify-center gap-3 mt-8"}
          [:a {:href (if signed-in? "/app" "/signup")
               :class "inline-block px-8 py-3.5 text-sm font-semibold text-emerald-700 bg-white rounded-xl transition-colors hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:bg-emerald-100 active:scale-[0.97]"}
-          (if signed-in? "Go to dashboard" "Create a free plan")]
+          (if signed-in? "Go to dashboard" "Get started for free")]
          (shared/btn :variant :emerald-ghost :size :lg
                      :href "mailto:support@mygreed.co.za"
                      "Email us")]]]]]))

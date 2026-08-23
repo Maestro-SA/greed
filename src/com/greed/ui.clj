@@ -20,16 +20,21 @@
   (apply
    biff/base-html
    (-> ctx
-       (merge #:base{:title settings/app-name
-                     :lang "en-US"
-                     :icon "/img/g.png"
-                     :description (str settings/app-name " Description")
-                     :image "/img/g.png"})
+        (merge #:base{:title settings/app-name
+                      :lang "en-US"
+                      :icon "/img/g.png"
+                      :description (str settings/app-name
+                                        " brings your salary, tax, spending and savings into one clear place,"
+                                        " so you always know what you earn, what SARS takes, and what you keep.")
+                      :image "/img/g.png"})
        (update :base/head (fn [head]
                             (concat
-                             (cond-> [[:link {:rel "preconnect" :href "https://fonts.googleapis.com"}]
-                                      [:link {:rel "preconnect" :href "https://fonts.gstatic.com" :crossorigin ""}]
-                                      [:link {:href "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" :rel "stylesheet"}]
+                             (cond-> [[:style "/* Self-hosted Inter (variable, latin subset). Kept inline rather
+than in tailwind.css so it ships with the markup and never depends on a
+CSS rebuild. */"
+                                       "@font-face { font-family: 'Inter'; src: url('/font/InterVariable.woff2') format('woff2');"
+                                       "font-weight: 100 900; font-style: normal; font-display: swap; }"
+                                       "@supports (height: 100dvh) { html .min-h-screen { min-height: 100dvh; } }"]
                                       [:link {:rel "stylesheet" :href (static-path "/css/main.css")}]
                                       [:script {:src (static-path "/js/main.js")}]
                                       [:script {:src "https://unpkg.com/htmx.org@2.0.10/dist/htmx.min.js"}]

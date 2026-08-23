@@ -61,7 +61,7 @@
                 :_ public-menu-toggle-actions
                 :class "sm:hidden p-2 -mr-1 text-zinc-500 hover:text-zinc-900 rounded-lg hover:bg-zinc-100 transition-colors active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-500/70"}
        [:svg {:class "w-5 h-5" :fill "none" :stroke "currentColor" :viewBox "0 0 24 24"}
-        [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "2"
+        [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "1.8"
                 :d "M4 6h16M4 12h16M4 18h16"}]]]]
      [:div {:id "public-nav-menu"
             :class "sm:hidden absolute right-0 top-full z-50 mt-2 w-48 origin-top-right rounded-xl bg-white py-1.5 shadow-lg ring-1 ring-zinc-200/70 opacity-0 scale-95 -translate-y-1 pointer-events-none transition duration-150 ease-out [&[open]]:opacity-100 [&[open]]:scale-100 [&[open]]:translate-y-0 [&[open]]:pointer-events-auto"}
@@ -206,7 +206,7 @@
                 :_ drawer-toggle-actions
                 :class "p-2 text-zinc-400 hover:text-white rounded-lg hover:bg-zinc-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-400"}
        [:svg {:class "w-5 h-5" :fill "none" :stroke "currentColor" :viewBox "0 0 24 24"}
-        [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "2"
+        [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "1.8"
                 :d "M4 6h16M4 12h16M4 18h16"}]]]]
      [:div {:id "mobile-drawer-overlay"
             :_ drawer-close-actions
@@ -223,7 +223,7 @@
                  :_ drawer-close-actions
                  :class "p-2 text-zinc-400 hover:text-white rounded-lg hover:bg-zinc-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-400"}
         [:svg {:class "w-5 h-5" :fill "none" :stroke "currentColor" :viewBox "0 0 24 24"}
-         [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "2"
+         [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "1.8"
                  :d "M6 18L18 6M6 6l12 12"}]]]]
       [:div {:class "flex flex-col flex-1 px-3 py-5 overflow-y-auto"}
        [:p {:class "px-3 mb-2 text-xs font-semibold text-zinc-500 uppercase tracking-wider"} "More"]

@@ -60,8 +60,8 @@
     (into [:div
            {:class (str/join " "
                              [(case variant
-                                :light "bg-white border border-zinc-200/70 rounded-xl shadow-card"
-                                :soft "bg-gradient-to-br from-white via-white to-emerald-50/80 border border-zinc-200/70 rounded-xl shadow-card"
+                                :light "bg-white border border-zinc-200/70 rounded-2xl shadow-card"
+                                :soft "bg-gradient-to-br from-white via-white to-emerald-50/80 border border-zinc-200/70 rounded-2xl shadow-card"
                                 :dark "bg-zinc-900 border border-zinc-800 rounded-2xl shadow-card-md")
                               class])}]
           body)))

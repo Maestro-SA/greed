@@ -2,15 +2,9 @@
 
 (def last-updated "2 August 2026")
 
-(defn- badge [label]
-  [:div {:class "inline-flex items-center gap-2 px-3 py-1.5 mb-4 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full"}
-   [:span {:class "w-1.5 h-1.5 bg-emerald-500 rounded-full"}]
-   label])
-
-(defn- page-header [label title intro]
+(defn- page-header [title intro]
   [:div {:class "py-16 lg:py-20"}
    [:div {:class "max-w-3xl mx-auto"}
-    (badge label)
     [:h1 {:class "text-4xl font-bold text-zinc-900 leading-tight tracking-tight lg:text-5xl"} title]
     [:p {:class "mt-4 text-zinc-500 leading-relaxed"} intro]
     [:p {:class "mt-3 text-sm text-zinc-400"} "Last updated " [:span {:class "font-medium text-zinc-500"} last-updated]]]])
@@ -32,7 +26,6 @@
 (defn privacy-page [_]
   (legal-page
    (page-header
-    "Privacy Policy"
     "How we handle your information."
     "A short, plain-language summary of what Greed knows about you, what we do with it, and the choices you have.")
    (section
@@ -53,7 +46,7 @@
       "Your budget items, goals, and savings amounts."
       "Tax details such as medical aid contributions and retirement annuity contributions."
       "Any calendar events you add.")]
-    [:p "This information belongs to you. It's stored so we can calculate your numbers and show you your plan — not so we can profile you."])
+    [:p "This information belongs to you. It's stored so we can calculate your numbers and show you your plan, not so we can profile you."])
    (section
     "How we keep it secure"
     [:p "Your data is stored safely, your account is protected, and access is limited to what's needed to keep the service running. Your password is never stored in readable form, and only you (and the team operating the service, where necessary) can see the information in your account."])
@@ -65,7 +58,7 @@
     [:p "We don't sell, rent, or share your personal or financial information with third parties for marketing. We only disclose information where we're legally required to, or where a provider we use needs it to operate the service for you."])
    (section
     "Deleting your data"
-    [:p "You can stop using Greed at any time. If you want your account and its information removed, ask us and we'll take care of it — just contact us using the details below."])
+    [:p "You can stop using Greed at any time. If you want your account and its information removed, ask us and we'll take care of it. Just contact us using the details below."])
    (section
     "Changes to this policy"
     [:p "If we change how we handle your data, we'll update this page and the date above. We'll always be upfront about it."])
@@ -78,7 +71,6 @@
 (defn terms-page [_]
   (legal-page
    (page-header
-    "Terms & Conditions"
     "The rules of using Greed."
     "What you agree to when you create an account and use the service.")
    (section

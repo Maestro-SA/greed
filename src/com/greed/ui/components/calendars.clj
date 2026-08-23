@@ -41,6 +41,7 @@
      (biff/form {:hx-post    "/app/calendar/delete-event"
                  :hx-target  "#calendar-events"
                  :hx-swap    "outerHTML"
+                 :hx-disabled-elt "find button[type='submit']"
                  :class      "flex flex-shrink-0"}
                 [:input {:type "hidden" :name "event-id" :value (str id)}]
                 [:button {:type    "submit"
@@ -76,6 +77,7 @@
      (biff/form {:hx-post   "/app/calendar/delete-event"
                  :hx-target "#todos-panel"
                  :hx-swap   "outerHTML"
+                 :hx-disabled-elt "find button[type='submit']"
                  :class     "flex flex-shrink-0"}
                 [:input {:type "hidden" :name "event-id" :value (str id)}]
                 [:button {:type       "submit"
@@ -114,6 +116,7 @@
       (biff/form {:hx-post   "/app/calendar/create-event"
                   :hx-target "#todos-panel"
                   :hx-swap   "outerHTML"
+                  :hx-disabled-elt "find button[type='submit']"
                   :class     "space-y-2.5"}
                  [:input {:type        "text"
                           :name        "title"
@@ -159,6 +162,7 @@
       (biff/form {:hx-post    "/app/calendar/create-event"
                   :hx-target  "#calendar-events"
                   :hx-swap    "outerHTML"
+                  :hx-disabled-elt "find button[type='submit']"
                   :class      "space-y-2.5"}
                  [:input {:type        "text"
                           :name        "title"
@@ -221,6 +225,7 @@
                     :hx-get   (str "/app/calendar/grid?month=" today-month "&year=" today-year)
                     :hx-target "#calendar-grid"
                     :hx-swap  "outerHTML"
+                    :hx-disabled-elt "this"
                     :class    "px-2.5 h-7 text-xs font-medium text-emerald-600 border border-emerald-200 rounded-lg hover:bg-emerald-50 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"}
            "Today"])
         ;; Navigation
@@ -231,6 +236,7 @@
                    :hx-get   (str "/app/calendar/grid?month=" pm "&year=" py)
                    :hx-target "#calendar-grid"
                    :hx-swap  "outerHTML"}
+                   :hx-disabled-elt "this"
           [:svg {:class "w-3.5 h-3.5" :fill "none" :stroke "currentColor" :viewBox "0 0 24 24"}
            [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "2.5" :d "M15 19l-7-7 7-7"}]]]
          [:button {:type     "button"
@@ -239,6 +245,7 @@
                    :hx-get   (str "/app/calendar/grid?month=" nm "&year=" ny)
                    :hx-target "#calendar-grid"
                    :hx-swap  "outerHTML"}
+                   :hx-disabled-elt "this"
           [:svg {:class "w-3.5 h-3.5" :fill "none" :stroke "currentColor" :viewBox "0 0 24 24"}
            [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "2.5" :d "M9 5l7 7-7 7"}]]]]]]
       ;; ── Day-of-week headers ─────────────────────────────────────────────────

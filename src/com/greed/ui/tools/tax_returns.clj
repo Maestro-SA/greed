@@ -35,10 +35,10 @@
 
    (tools/panel
     (tools/panel-heading "Where to find each value"
-                         :description "Your employer must issue an IRP5 by 31 May each year. Log in to eFiling — it is usually pre-populated there.")
+                         :description "Your employer must issue an IRP5 by 31 May each year. Log in to eFiling. It is usually pre-populated there.")
     [:div {:class "divide-y divide-zinc-100 border-t border-zinc-100"}
      (info-item "3699 / 3601" "Gross Annual Income"
-                "Source code 3699 (or 3601 for regular employment income) on your IRP5. Exclude any travel allowance — enter that separately below.")
+                "Source code 3699 (or 3601 for regular employment income) on your IRP5. Exclude any travel allowance and enter that separately below.")
      (info-item "4102" "Total PAYE Paid to SARS"
                 "Source code 4102 on your IRP5. This is the total PAYE your employer deducted and paid to SARS on your behalf during the tax year.")
      (info-item "4005 / MedCert" "Medical Aid Contributions"
@@ -48,16 +48,16 @@
      (info-item "4006 / RA Cert" "Retirement Annuity Contributions"
                 "Source code 4006 on your IRP5 for employer-contributed pension, or your RA fund's annual contribution statement for personal RA contributions. Enter the annual total.")
      (info-item "3701" "Travel Allowance"
-                "Source code 3701 on your IRP5. Enter the full allowance — the simulator applies the correct taxable portion (80% without a logbook, 20% with one).")
+                "Source code 3701 on your IRP5. Enter the full allowance: the simulator applies the correct taxable portion (80% without a logbook, 20% with one).")
      (info-item "Med Receipts" "Out-of-pocket Medical Expenses"
                 "Medical costs you paid directly that were not covered or reimbursed by your medical aid. Keep all receipts. Applies the Section 6B additional medical credit.")])
 
    (tools/panel
     (tools/panel-heading "Medical aid & tax credits"
-                         :description "Medical aid gives you two potential tax benefits — leave both fields at 0 if you are not on medical aid.")
+                         :description "Medical aid gives you two potential tax benefits (leave both fields at 0 if you are not on medical aid).")
     [:div {:class "divide-y divide-zinc-100 border-t border-zinc-100"}
      (tools/glossary-item "Medical Aid Tax Credit (MTC)"
-                          "SARS gives every medical aid member a fixed monthly credit that reduces your tax bill directly — it is not a deduction from income. For 2026: "
+                          "SARS gives every medical aid member a fixed monthly credit that reduces your tax bill directly, not a deduction from income. For 2026: "
                           [:span {:class "font-medium text-zinc-700"} "R364/month"]
                           " for yourself and your first dependant, "
                           [:span {:class "font-medium text-zinc-700"} "R246/month"]
@@ -176,10 +176,13 @@
     [:p {:class "text-sm text-zinc-500 mb-5"}
      "Enter figures from your IRP5, then click Simulate Return to estimate your SARS refund or amount owed."]
     (biff/form
-     {:hx-post    "/app/tax/tax-returns"
-      :hx-target  "#tax-result"
-      :hx-swap    "outerHTML"
-      :hx-trigger "submit"}
+     {:hx-post         "/app/tax/tax-returns"
+      :hx-target       "#tax-result"
+      :hx-swap         "outerHTML"
+      :hx-trigger      "submit"
+      :hx-disabled-elt "find button[type='submit']"
+      :_ "on htmx:beforeRequest add .opacity-50 to #tax-result
+on htmx:afterRequest remove .opacity-50 from #tax-result"}
      (tools/form-section "Income & PAYE"
                          (field "annual-income" "Gross Annual Income (R)" "number" "Exclude travel allowance" true (:annual-income params))
                          (field "age" "Age" "number" nil true (:age params))
@@ -234,11 +237,11 @@
         :headline (utilities/whole->rands difference)
         :suffix (if refund? "refund" "owed to SARS")
         :tone (if refund? "text-emerald-600" "text-rose-600")
-        :status (if refund?
-                  (str "You paid " (utilities/amount->rands paye-paid) " in PAYE against "
-                       (utilities/amount->rands final-tax) " of tax — SARS owes you this back.")
-                  (str "You paid " (utilities/amount->rands paye-paid) " in PAYE against "
-                       (utilities/amount->rands final-tax) " of tax — you still owe this to SARS."))
+         :status (if refund?
+                   (str "You paid " (utilities/amount->rands paye-paid) " in PAYE against "
+                        (utilities/amount->rands final-tax) " of tax. SARS owes you this back.")
+                   (str "You paid " (utilities/amount->rands paye-paid) " in PAYE against "
+                        (utilities/amount->rands final-tax) " of tax. You still owe this to SARS."))
         :substats [(tools/hero-substat "Gross income" (utilities/amount->rands total-income))
                    (tools/hero-substat "Net tax payable" (utilities/amount->rands final-tax))
                    (tools/hero-substat "PAYE paid" (utilities/amount->rands paye-paid))])
