@@ -73,11 +73,11 @@
         [:div {:class "rounded-xl bg-zinc-50 p-5 ring-1 ring-zinc-200/50"}
          [:p {:class "text-xs font-semibold text-zinc-500 uppercase tracking-wider"} "Where your money goes"]
          [:div {:class "mt-3 flex h-2.5 w-full overflow-hidden rounded-full bg-zinc-200/70"}
-          [:div {:class "h-full rounded-full bg-rose-400 greed-bar-grow"
+          [:div {:class "h-full rounded-l-full bg-rose-400"
                  :style {:width (str (min 100.0 (max 0.0 expenses-share)) "%")}}]
-          [:div {:class "h-full rounded-full bg-indigo-500 greed-bar-grow"
+          [:div {:class "h-full bg-indigo-500"
                  :style {:width (str (min 100.0 (max 0.0 savings-share)) "%")}}]
-          [:div {:class "h-full rounded-full bg-emerald-300 greed-bar-grow"
+          [:div {:class "h-full rounded-r-full bg-emerald-300"
                  :style {:width (str (min 100.0 (max 0.0 leftover-share)) "%")}}]]
          (when (and pd prev-pd)
            [:div {:class "mt-4 border-t border-zinc-100 pt-4"}

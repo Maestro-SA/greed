@@ -63,13 +63,13 @@
   [:<>
    [:div {:class "flex h-2.5 w-full overflow-hidden rounded-full"}
     [:div {:class "h-full bg-rose-400" :style {:width "58%"}}]
-    [:div {:class "h-full bg-emerald-500" :style {:width "14%"}}]
+    [:div {:class "h-full bg-indigo-400" :style {:width "14%"}}]
     [:div {:class "h-full bg-zinc-200" :style {:width "28%"}}]]
    [:div {:class "mt-3 flex items-center gap-4 text-xs text-zinc-400"}
     [:span {:class "flex items-center gap-1.5"}
      [:span {:class "h-1.5 w-1.5 rounded-full bg-rose-400"}] "Spending"]
     [:span {:class "flex items-center gap-1.5"}
-     [:span {:class "h-1.5 w-1.5 rounded-full bg-emerald-500"}] "Saved"]
+     [:span {:class "h-1.5 w-1.5 rounded-full bg-indigo-400"}] "Saved"]
     [:span {:class "flex items-center gap-1.5"}
      [:span {:class "h-1.5 w-1.5 rounded-full bg-zinc-300"}] "Left"]]])
 
