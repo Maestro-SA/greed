@@ -31,9 +31,6 @@
       [:a {:href "/about"
            :class "hidden sm:inline-block whitespace-nowrap px-2 sm:px-3 py-1.5 text-xs sm:text-sm font-medium text-zinc-600 hover:text-zinc-900 rounded-lg hover:bg-zinc-100 transition-colors active:scale-[0.97]"}
        "About"]
-      [:a {:href "/team"
-           :class "hidden sm:inline-block whitespace-nowrap px-2 sm:px-3 py-1.5 text-xs sm:text-sm font-medium text-zinc-600 hover:text-zinc-900 rounded-lg hover:bg-zinc-100 transition-colors active:scale-[0.97]"}
-       "Team"]
       [:a {:href "/contact"
            :class "hidden sm:inline-block whitespace-nowrap px-2 sm:px-3 py-1.5 text-xs sm:text-sm font-medium text-zinc-600 hover:text-zinc-900 rounded-lg hover:bg-zinc-100 transition-colors active:scale-[0.97]"}
        "Contact"]
@@ -49,7 +46,7 @@
               :class "whitespace-nowrap px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 transition-colors active:scale-[0.97]"}
           "Sign Up"]])
       ;; Mobile-only entry point to the links that collapse above (About,
-      ;; Team, Contact). Keeps every page reachable from the header itself
+      ;; Contact). Keeps every page reachable from the header itself
       ;; instead of relying on the footer. Sign In/Sign Up stay visible on
       ;; the top nav at every width, so they're not repeated here.
       [:button {:id "public-nav-toggle"
@@ -66,7 +63,6 @@
      [:div {:id "public-nav-menu"
             :class "sm:hidden absolute right-0 top-full z-50 mt-2 w-48 origin-top-right rounded-xl bg-white py-1.5 shadow-lg ring-1 ring-zinc-200/70 opacity-0 scale-95 -translate-y-1 pointer-events-none transition duration-150 ease-out [&[open]]:opacity-100 [&[open]]:scale-100 [&[open]]:translate-y-0 [&[open]]:pointer-events-auto"}
       [:a {:href "/about" :class "block px-4 py-2.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 transition-colors active:scale-[0.98]"} "About"]
-      [:a {:href "/team" :class "block px-4 py-2.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 transition-colors active:scale-[0.98]"} "Team"]
       [:a {:href "/contact" :class "block px-4 py-2.5 text-sm font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 transition-colors active:scale-[0.98]"} "Contact"]]]))
 
 (defn- link-active? [uri href]
