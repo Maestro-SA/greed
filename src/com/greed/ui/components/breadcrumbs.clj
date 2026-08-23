@@ -18,7 +18,7 @@
    and never links. A Home icon leads back to the app root."
   [crumbs]
   (let [last? (dec (count crumbs))]
-    [:nav {:class "flex items-center gap-1.5 text-sm text-zinc-400"
+    [:nav {:class "flex items-center gap-1.5 text-sm text-zinc-500"
            :aria-label "Breadcrumb"}
      [:a {:href "/app"
           :class "flex items-center transition hover:text-zinc-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 active:text-zinc-700 active:scale-[0.97]"

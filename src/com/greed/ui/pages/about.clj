@@ -8,7 +8,7 @@
    label])
 
 (defn- value-card [icon title description class]
-  [:div {:class (str "reveal p-8 bg-white ring-1 ring-zinc-200/70 rounded-2xl shadow-card transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5 hover:ring-zinc-300/70 " class)}
+  [:div {:class (str "reveal p-8 bg-white ring-1 ring-zinc-200/70 rounded-2xl shadow-card transition duration-200 hover:shadow-card-hover hover:-translate-y-0.5 hover:ring-zinc-300/70 " class)}
    [:div {:class "flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 ring-1 ring-emerald-600/10"}
     icon]
    [:h3 {:class "mt-5 text-lg font-semibold text-zinc-900 tracking-tight"} title]
@@ -73,7 +73,7 @@
        [:div {:class "relative text-center"}
         [:h2 {:class "text-3xl font-bold text-white tracking-tight text-balance lg:text-4xl"}
          "Built by people who " [:span {:class "text-emerald-500"} "refuse to settle."]]
-        [:p {:class "max-w-xl mx-auto mt-4 text-lg text-zinc-400"}
+        [:p {:class "max-w-xl mx-auto mt-4 text-lg text-zinc-500"}
          "Greed was started by a small South African team who got tired of guessing their way through tax, budgets and payday. We built the tool we wished we had: one that keeps your money clear, honest and yours."]
         [:div {:class "flex flex-wrap justify-center gap-3 mt-8"}
          [:a {:href "/team"

@@ -9,7 +9,7 @@
 
 (defn- contact-tile [& {:keys [icon title description href class]}]
   [:a {:href href
-       :class (str "reveal group flex flex-col p-8 bg-white ring-1 ring-zinc-200/70 rounded-2xl shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-hover hover:ring-zinc-300/70 active:scale-[0.98] " class)}
+       :class (str "reveal group flex flex-col p-8 bg-white ring-1 ring-zinc-200/70 rounded-2xl shadow-card transition duration-200 hover:-translate-y-0.5 hover:shadow-card-hover hover:ring-zinc-300/70 active:scale-[0.98] " class)}
    [:div {:class "flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 ring-1 ring-emerald-600/10 transition-transform duration-200 group-hover:scale-105"}
     icon]
    [:h3 {:class "mt-5 text-lg font-semibold text-zinc-900 tracking-tight group-hover:text-emerald-600 transition-colors"} title]
@@ -77,7 +77,7 @@
        [:div {:class "relative text-center"}
         [:h2 {:class "text-3xl font-bold text-white tracking-tight text-balance lg:text-4xl"}
          "See what your money " [:span {:class "text-emerald-500"} "can do."]]
-        [:p {:class "max-w-xl mx-auto mt-4 text-lg text-zinc-400"}
+        [:p {:class "max-w-xl mx-auto mt-4 text-lg text-zinc-500"}
          "Create a free account and know what you earn, what you owe, and where it's all going."]
         [:div {:class "flex flex-wrap justify-center gap-3 mt-8"}
          [:a {:href (if signed-in? "/app" "/signup")

@@ -51,7 +51,7 @@
         [:div {:class "mb-3 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50"}
          [:span {:class "text-emerald-500"} (svgs/wallet)]]
         [:p {:class "text-sm font-medium text-zinc-500"} "No budget yet"]
-        [:p {:class "mt-1 text-xs text-zinc-400"} "Add your income, expenses and savings to plan this month."]
+        [:p {:class "mt-1 text-xs text-zinc-500"} "Add your income, expenses and savings to plan this month."]
         (shared/btn :variant :primary :size :md :class "mt-5"
                     :attrs {"_" (shared/open-actions "budget-add-income-modal")}
                     (svgs/plus {:class "w-4 h-4"})
@@ -83,7 +83,7 @@
            [:div {:class "mt-4 border-t border-zinc-100 pt-4"}
             [:div {:class "flex items-center justify-between gap-3"}
              [:p {:class "text-xs font-semibold text-zinc-500 uppercase tracking-wider"} "Pay period"]
-             [:p {:class "text-xs font-medium text-zinc-400 tabular-nums"}
+             [:p {:class "text-xs font-medium text-zinc-500 tabular-nums"}
               (str "Day " elapsed " of " period-len)]]
             [:div {:class "mt-2 h-1.5 w-full overflow-hidden rounded-full bg-zinc-200/70"}
              [:div {:class (str "h-full rounded-full " (if overspend? "bg-rose-400" "bg-emerald-400"))
@@ -120,17 +120,17 @@
         remaining  (when pd (long (.between ChronoUnit/DAYS today pd)))]
     [:div {:class "p-6 bg-white ring-1 ring-zinc-200/70 rounded-2xl shadow-card"}
      [:h3 {:class "text-sm font-semibold text-zinc-900 tracking-tight"} "Savings pace"]
-     [:p {:class "mt-0.5 mb-5 text-xs text-zinc-400 leading-relaxed"}
+     [:p {:class "mt-0.5 mb-5 text-xs text-zinc-500 leading-relaxed"}
       "How your savings rate stacks up against a healthy benchmark, and where payday sits."]
      (cond
        (not (pos? income))
-       [:p {:class "text-center py-6 text-sm text-zinc-400"}
+       [:p {:class "text-center py-6 text-sm text-zinc-500"}
         "Add your "
         [:a {:href "/app/finances" :class "font-medium text-emerald-600 hover:underline"} "income"]
         " in Finances to see your pace."]
        (nil? pd)
        [:div {:class "text-center py-6"}
-        [:p {:class "text-sm text-zinc-400"} "Set your payday in Finances to anchor your pace."]
+        [:p {:class "text-sm text-zinc-500"} "Set your payday in Finances to anchor your pace."]
         (shared/btn :variant :outline :size :md :class "mt-4" :href "/app/finances" "Set payday")]
        :else
        [:<>
@@ -138,7 +138,7 @@
           [:div
            [:div {:class "flex items-center justify-between gap-3"}
             [:p {:class "text-[11px] font-medium text-zinc-500 uppercase tracking-wider"} "Pay period"]
-            [:p {:class "text-xs font-medium text-zinc-400 tabular-nums"}
+            [:p {:class "text-xs font-medium text-zinc-500 tabular-nums"}
              (str "Day " elapsed " of " period-len)]]
            [:div {:class "mt-2 h-1.5 w-full overflow-hidden rounded-full bg-zinc-100"}
             [:div {:class "h-full rounded-full bg-emerald-400"
@@ -155,12 +155,12 @@
            [:div {:class "overflow-hidden h-1.5 w-full bg-zinc-100 rounded-full"}
             [:div {:class "h-full rounded-full bg-emerald-400"
                    :style {:width (str (min 100.0 (double (* 100.0 (/ (max rate 0.0) 20.0)))) "%")}}]]
-           [:p {:class "mt-1.5 text-xs text-zinc-400 leading-relaxed"}
+           [:p {:class "mt-1.5 text-xs text-zinc-500 leading-relaxed"}
             (if on-target?
               "Past the 20% benchmark: savings are compounding nicely."
               (str (Math/abs (- 20 rate-num)) "% from the 20% savings benchmark."))]]
-          [:p {:class "mt-3 text-xs text-zinc-400 leading-relaxed"} "Nothing set aside yet this month."])
-        [:p {:class "mt-3 text-xs text-zinc-400 leading-relaxed"}
+          [:p {:class "mt-3 text-xs text-zinc-500 leading-relaxed"} "Nothing set aside yet this month."])
+        [:p {:class "mt-3 text-xs text-zinc-500 leading-relaxed"}
          (if (pos? remaining)
            (str "Payday in " remaining " day" (when (not= 1 remaining) "s") ".")
            "Payday is today.")]])]))
@@ -170,7 +170,7 @@
    Internal links get a chevron; external links get an underline on hover."
   [title & {:keys [href link-label external?]}]
   [:div {:class "flex items-center justify-between mb-3"}
-   [:h2 {:class "text-xs font-semibold text-zinc-400 uppercase tracking-wider"} title]
+   [:h2 {:class "text-xs font-semibold text-zinc-500 uppercase tracking-wider"} title]
    (when href
      (if external?
        [:a {:href href :target "_blank" :rel "noopener noreferrer"
@@ -202,7 +202,7 @@
   [& {:keys [label href icon icon-cls value value-cls reading reveal children]}]
   [:a
    {:href href
-    :class (str "group relative flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-zinc-200/70 shadow-card p-5 transition-all duration-150 ease-out hover:ring-zinc-300 hover:shadow-card-hover active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/70 focus-visible:ring-offset-2 "
+    :class (str "group relative flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-zinc-200/70 shadow-card p-5 transition duration-150 ease-out hover:ring-zinc-300 hover:shadow-card-hover active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/70 focus-visible:ring-offset-2 "
                 (or reveal ""))}
    [:div {:class "pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent"}]
    [:div {:class "flex items-center justify-between"}
@@ -210,14 +210,14 @@
      (when icon
        [:span {:class (str "flex h-9 w-9 items-center justify-center rounded-xl " (or icon-cls "bg-zinc-50 text-zinc-500"))}
         icon])
-     [:p {:class "text-[11px] font-semibold text-zinc-400 uppercase tracking-wider"} label]]
-    [:span {:class "flex items-center gap-1 text-xs font-medium text-zinc-400 transition-colors duration-150 ease-out group-hover:text-emerald-600"}
+     [:p {:class "text-[11px] font-semibold text-zinc-500 uppercase tracking-wider"} label]]
+    [:span {:class "flex items-center gap-1 text-xs font-medium text-zinc-500 transition-colors duration-150 ease-out group-hover:text-emerald-600"}
      "View"
      (svgs/->next {:class "-translate-x-0.5 size-3.5 transition-transform duration-150 ease-out group-hover:translate-x-0 group-hover:text-emerald-600"})]]
    [:p {:class (str "mt-4 text-3xl font-bold leading-none tracking-tight tabular-nums " (or value-cls "text-zinc-900"))}
     value]
    (when reading
-     [:p {:class "mt-1.5 text-xs text-zinc-400 text-wrap"} reading])
+     [:p {:class "mt-1.5 text-xs text-zinc-500 text-wrap"} reading])
    (when (seq children)
      [:div {:class "mt-4 border-t border-zinc-100"} children])])
 
@@ -251,11 +251,11 @@
        [:div {:class "flex items-start justify-between gap-3 px-5 pt-5 pb-4 sm:px-6"}
         [:div {:class "min-w-0"}
          [:h3 {:class "text-sm font-semibold text-zinc-900 tracking-tight"} "Your tax bracket"]
-         [:p {:class "mt-0.5 text-xs text-zinc-400 leading-relaxed"}
+         [:p {:class "mt-0.5 text-xs text-zinc-500 leading-relaxed"}
           "Income is taxed in slices. Your marginal rate applies only to the portion above the bracket threshold."]]
         [:div {:class "flex-shrink-0 text-right"}
          [:p {:class "text-2xl font-bold text-zinc-900 leading-none tracking-tight tabular-nums"} (utilities/pct-label marginal-rate)]
-         [:p {:class "mt-1 text-[11px] text-zinc-400 uppercase tracking-wider"} "Marginal rate"]]]
+         [:p {:class "mt-1 text-[11px] text-zinc-500 uppercase tracking-wider"} "Marginal rate"]]]
        (when (and next-threshold progress)
          [:div {:class "px-5 pb-4 sm:px-6"}
           [:div {:class "overflow-hidden h-2 w-full bg-zinc-100 rounded-full"}
@@ -329,7 +329,7 @@
        [:div {:class "mb-3 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50"}
         [:span {:class "text-emerald-500"} (svgs/percent-badge)]]
        [:p {:class "text-sm font-medium text-zinc-500"} "No salary yet"]
-       [:p {:class "mt-1 text-xs text-zinc-400"} "Add your salary in Settings to see your annual tax picture."]
+       [:p {:class "mt-1 text-xs text-zinc-500"} "Add your salary in Settings to see your annual tax picture."]
        (shared/btn :variant :primary :size :md :class "mt-5" :href "/app/settings" "Add your salary"))
       (hero-panel
        {:inner-class "flex flex-col"}
@@ -382,14 +382,14 @@
         [:div {:class "mx-auto mb-3 flex items-center justify-center w-10 h-10 rounded-full bg-emerald-50"}
          [:span {:class "text-emerald-500"} (svgs/percent-badge)]]
         [:p {:class "text-sm font-medium text-zinc-500"} "Sharpen your estimate"]
-        [:p {:class "mt-0.5 max-w-xs text-xs text-zinc-400"}
+        [:p {:class "mt-0.5 max-w-xs text-xs text-zinc-500"}
          "Add your medical aid and retirement annuity details. Greed applies them to your annual tax picture automatically."]
         (shared/btn :variant :outline :size :md :class "mt-4" :href "/app/settings" "Add details")]
        [:div
         [:div {:class "flex items-center justify-between gap-3 px-5 pt-5 sm:px-6"}
          [:h3 {:class "text-sm font-semibold text-zinc-900 tracking-tight"} "Your deductions"]
          [:span {:class "flex-shrink-0 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700 ring-1 ring-emerald-600/15"} "Applied"]]
-        [:p {:class "mt-0.5 px-5 text-xs text-zinc-400 leading-relaxed sm:px-6"}
+        [:p {:class "mt-0.5 px-5 text-xs text-zinc-500 leading-relaxed sm:px-6"}
          "These lower your taxable income, and what SARS keeps."]
         [:div {:class "mt-4 border-t border-zinc-100 divide-y divide-zinc-100"}
          (when (pos? ra-ded)
@@ -451,7 +451,7 @@
                                  (get upcoming-type-dot (or type :general) "bg-violet-400"))}]
              [:div {:class "min-w-0 flex-1"}
               [:p {:class "truncate text-xs font-medium text-zinc-700"} title]]
-             [:span {:class "flex-shrink-0 text-xs text-zinc-400 tabular-nums"}
+             [:span {:class "flex-shrink-0 text-xs text-zinc-500 tabular-nums"}
               (u.time/relative-date (u.time/days-until today d))]]))])
       (summary-card
        :label "Upcoming"
@@ -489,7 +489,7 @@
             [:div {:class "py-2.5"}
              [:div {:class "flex items-center justify-between gap-3"}
               [:p {:class "min-w-0 truncate text-xs font-medium text-zinc-700"} title],
-              [:span {:class "flex-shrink-0 text-xs text-zinc-400 tabular-nums"}
+              [:span {:class "flex-shrink-0 text-xs text-zinc-500 tabular-nums"}
                (str (utilities/whole->rands (or saved 0)) " / " (utilities/whole->rands (or target 0)))]],
              [:div {:class "mt-1.5 flex h-1.5 w-full overflow-hidden rounded-full bg-zinc-100"}
               [:div {:class (str "h-full rounded-full " (if complete? "bg-emerald-500" "bg-emerald-400"))
@@ -608,7 +608,7 @@
     [:div {:class "min-w-0"}
      [:h3 {:class "text-sm font-semibold text-zinc-900 tracking-tight"} title]
      (when subtitle
-       [:p {:class "mt-0.5 text-xs text-zinc-400 leading-relaxed"} subtitle])]
+       [:p {:class "mt-0.5 text-xs text-zinc-500 leading-relaxed"} subtitle])]
     (when href
       [:a {:href href
            :class "group -my-1.5 -mx-2 inline-flex items-center gap-1 rounded-md px-2 py-2 text-xs font-medium text-emerald-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/70 focus-visible:ring-offset-2 active:text-emerald-800 active:scale-[0.97]"}
@@ -624,7 +624,7 @@
    [:div {:class "mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-emerald-50"}
     [:span {:class "text-emerald-500"} icon]]
    [:p {:class "text-sm font-medium text-zinc-500"} title]
-   [:p {:class "mt-1 max-w-xs text-xs text-zinc-400 leading-relaxed"} body]
+   [:p {:class "mt-1 max-w-xs text-xs text-zinc-500 leading-relaxed"} body]
    (shared/btn :variant :outline :size :md :class "mt-5" :href href btn-label)])
 
 (defn- legend-row
@@ -635,7 +635,7 @@
    [:span {:class "min-w-0 flex-1 text-sm text-zinc-600 truncate"} label]
    [:span {:class (str "flex-shrink-0 text-sm font-semibold tabular-nums " (or amount-cls "text-zinc-900"))}
     (utilities/whole->rands amount)]
-   [:span {:class "flex-shrink-0 w-10 text-right text-xs text-zinc-400 tabular-nums"} pct]])
+   [:span {:class "flex-shrink-0 w-10 text-right text-xs text-zinc-500 tabular-nums"} pct]])
 
 (defn cashflow-donut
   "Dashboard chart: this month's income split as a donut — expenses, savings
@@ -675,7 +675,7 @@
            [:p {:class (str "text-2xl font-bold leading-none tracking-tight tabular-nums "
                             (if overspend? "text-rose-600" "text-zinc-900"))}
             (utilities/whole->rands (Math/abs (double leftover)))]
-           [:p {:class "mt-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-400"}
+           [:p {:class "mt-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-500"}
             (if overspend? "over budget" "left to plan")]]]
          [:div {:class "w-full"}
           (when overspend?
@@ -727,7 +727,7 @@
                                   (pos? rate-num) "text-amber-600"
                                   :else "text-zinc-900"))}
             (utilities/pct-label rate)]
-           [:p {:class "mt-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-400"}
+           [:p {:class "mt-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-500"}
             "of income saved"]]]
          [:div {:class "mt-5 w-full border-t border-zinc-100 pt-4"}
           (cond
@@ -742,7 +742,7 @@
             [:p {:class "text-xs leading-relaxed text-zinc-500"}
              "Nothing set aside yet. Every contribution compounds."])
           [:div {:class "mt-2.5 flex items-center justify-between"}
-           [:p {:class "text-xs text-zinc-400"} "Saved this month"]
+           [:p {:class "text-xs text-zinc-500"} "Saved this month"]
            [:p {:class "text-xs font-semibold text-zinc-900 tabular-nums"}
             (utilities/whole->rands savings)]]]]]))))
 
@@ -784,7 +784,7 @@
   [:div {:class "mt-4 flex items-baseline gap-2.5 sm:mt-5"}
    [:p {:class "text-4xl sm:text-5xl font-bold text-zinc-900 leading-none tracking-[-0.04em] tabular-nums"}
     value]
-   [:span {:class "text-sm font-medium text-zinc-400"} suffix]])
+   [:span {:class "text-sm font-medium text-zinc-500"} suffix]])
 
 (defn- hero-status
   "One-line reading of the headline, below it. Tone defaults to zinc; pass an
@@ -833,7 +833,7 @@
        [:div {:class "mb-3 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50"}
         [:span {:class "text-emerald-500"} (svgs/wallet)]]
        [:p {:class "text-sm font-medium text-zinc-500"} "No income yet"]
-       [:p {:class "mt-1 text-xs text-zinc-400"} "Add your income in Finances to see your month at a glance."]
+       [:p {:class "mt-1 text-xs text-zinc-500"} "Add your income in Finances to see your month at a glance."]
        (shared/btn :variant :primary :size :md :class "mt-5" :href "/app/finances" "Add your income"))
       (hero-panel
        {:class "h-full" :inner-class "flex flex-col h-full"}
@@ -855,7 +855,7 @@
             [:p {:class (str "text-xl font-bold leading-none tracking-tight tabular-nums "
                              (if overspend? "text-rose-600" "text-zinc-900"))}
              (str "Day " elapsed)]
-            [:p {:class "mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-400"}
+            [:p {:class "mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-500"}
              (str "of " period-len)]]])]
        [:div {:class "flex-1"}]
        (hero-stats-row

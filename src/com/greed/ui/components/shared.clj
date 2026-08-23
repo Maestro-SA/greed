@@ -74,7 +74,7 @@
 (defn section-label
   "Uppercase micro heading used to label sections and groups."
   [& content]
-  [:p {:class "text-xs font-semibold text-zinc-400 uppercase tracking-wider"} content])
+  [:p {:class "text-xs font-semibold text-zinc-500 uppercase tracking-wider"} content])
 
 (defn base-input-class []
   "block w-full px-3 py-2 text-sm text-zinc-700 placeholder-zinc-400 bg-white border border-zinc-200 rounded-lg transition-colors duration-150 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500")
@@ -109,7 +109,7 @@
        (form-label id label))
      (if prefix
        [:div {:class "relative flex items-center"}
-        [:div {:class "absolute left-3 pointer-events-none select-none text-sm font-medium text-zinc-400"} prefix]
+        [:div {:class "absolute left-3 pointer-events-none select-none text-sm font-medium text-zinc-500"} prefix]
         [:input {:class "block w-full pl-7 pr-3 py-2 text-sm text-zinc-700 placeholder-zinc-400 bg-white border border-zinc-200 rounded-lg transition-colors duration-150 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                  :id id :name id :type type
                  :value (str current-val)
@@ -119,7 +119,7 @@
                 :value (str current-val)
                 :required required?}])
      (when hint
-       [:p {:class "mt-1 text-xs text-zinc-400"} hint])]))
+       [:p {:class "mt-1 text-xs text-zinc-500"} hint])]))
 
 (defn labeled-input
   "Label + input + optional hint, with an explicit :value — unlike app-input,
@@ -131,13 +131,13 @@
    (form-label id label)
    (if prefix
      [:div {:class "relative flex items-center"}
-      [:div {:class "absolute left-3 pointer-events-none select-none text-sm font-medium text-zinc-400"} prefix]
+      [:div {:class "absolute left-3 pointer-events-none select-none text-sm font-medium text-zinc-500"} prefix]
       [:input {:class "block w-full pl-7 pr-3 py-2 text-sm text-zinc-700 placeholder-zinc-400 bg-white border border-zinc-200 rounded-lg transition-colors duration-150 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                :id id :name id :type type :value value :required required? :min min}]]
      [:input {:class (base-input-class)
               :id id :name id :type type :value value :required required? :min min}])
    (when hint
-     [:p {:class "mt-1 text-xs text-zinc-400"} hint])])
+     [:p {:class "mt-1 text-xs text-zinc-500"} hint])])
 
 (defn app-select [ctx & {:keys [id label options required? hint attrs]
                          :or {required? false}}]
@@ -156,7 +156,7 @@
                    (= option current-val) (assoc :selected true))
          (utilities/->string option)])]
      (when hint
-       [:p {:class "mt-1 text-xs text-zinc-400"} hint])]))
+       [:p {:class "mt-1 text-xs text-zinc-500"} hint])]))
 
 (defn app-account-type-select [& {:keys [id label required? hint options selected]
                                   :or {required? false}}]
@@ -171,7 +171,7 @@
                  (= option selected) (assoc :selected true))
        option])]
    (when hint
-     [:p {:class "mt-1 text-xs text-zinc-400"} hint])])
+     [:p {:class "mt-1 text-xs text-zinc-500"} hint])])
 
 (defn- modal-exit-sequence
   "Shared exit choreography: stage the CSS `.greed-modal-out` state, wait for

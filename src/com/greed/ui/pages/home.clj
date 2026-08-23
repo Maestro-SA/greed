@@ -14,11 +14,11 @@
 (defn- trust-stat [value label]
   [:div
    [:p {:class "text-xl font-bold text-zinc-900"} value]
-   [:p {:class "mt-0.5 text-xs text-zinc-400"} label]])
+   [:p {:class "mt-0.5 text-xs text-zinc-500"} label]])
 
 (defn- tool-card [& {:keys [icon badge title description detail cta-label cta-href class]}]
   [:a {:href cta-href
-       :class (str "reveal group flex flex-col p-8 bg-white ring-1 ring-zinc-200/70 rounded-2xl shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-hover hover:ring-zinc-300/70 active:scale-[0.98] " class)}
+       :class (str "reveal group flex flex-col p-8 bg-white ring-1 ring-zinc-200/70 rounded-2xl shadow-card transition duration-200 hover:-translate-y-0.5 hover:shadow-card-hover hover:ring-zinc-300/70 active:scale-[0.98] " class)}
    [:div {:class "mb-5 flex items-start justify-between"}
     [:div {:class "flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 ring-1 ring-emerald-600/10 transition-transform duration-200 group-hover:scale-105"}
      icon]
@@ -54,7 +54,7 @@
   [:<>
    [:div {:class "flex items-end justify-between"}
     [:span {:class "text-sm font-semibold text-zinc-900 tabular-nums"} "R42,000"]
-    [:span {:class "text-xs text-zinc-400 tabular-nums"} "of R60,000"]]
+    [:span {:class "text-xs text-zinc-500 tabular-nums"} "of R60,000"]]
    [:div {:class "mt-2 h-2 w-full overflow-hidden rounded-full bg-zinc-100"}
     [:div {:class "h-full rounded-full bg-emerald-500" :style {:width "70%"}}]]
    [:div {:class "mt-2 text-xs font-medium text-emerald-600 tabular-nums"} "70% funded"]])
@@ -65,7 +65,7 @@
     [:div {:class "h-full bg-rose-400" :style {:width "58%"}}]
     [:div {:class "h-full bg-indigo-400" :style {:width "14%"}}]
     [:div {:class "h-full bg-zinc-200" :style {:width "28%"}}]]
-   [:div {:class "mt-3 flex items-center gap-4 text-xs text-zinc-400"}
+   [:div {:class "mt-3 flex items-center gap-4 text-xs text-zinc-500"}
     [:span {:class "flex items-center gap-1.5"}
      [:span {:class "h-1.5 w-1.5 rounded-full bg-rose-400"}] "Spending"]
     [:span {:class "flex items-center gap-1.5"}
@@ -84,7 +84,7 @@
 
 (defn- feature-card [& {:keys [icon title description href visual class]}]
   [:a {:href href
-       :class (str "reveal group flex flex-col p-6 bg-white ring-1 ring-zinc-200/70 rounded-2xl shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-hover hover:ring-zinc-300/70 active:scale-[0.98] " class)}
+       :class (str "reveal group flex flex-col p-6 bg-white ring-1 ring-zinc-200/70 rounded-2xl shadow-card transition duration-200 hover:-translate-y-0.5 hover:shadow-card-hover hover:ring-zinc-300/70 active:scale-[0.98] " class)}
    [:div {:class "flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 ring-1 ring-emerald-600/10 transition-transform duration-200 group-hover:scale-105"}
     icon]
    [:h3 {:class "mt-4 text-base font-semibold text-zinc-900 tracking-tight group-hover:text-emerald-600 transition-colors"} title]
@@ -213,7 +213,7 @@
        [:div {:class "relative text-center max-w-2xl mx-auto"}
         [:h2 {:class "text-3xl font-bold text-white tracking-tight text-balance lg:text-4xl"}
          "Your money should " [:span {:class "text-emerald-500"} "make sense."]]
-        [:p {:class "max-w-xl mx-auto mt-4 text-lg text-zinc-400"}
+        [:p {:class "max-w-xl mx-auto mt-4 text-lg text-zinc-500"}
          "Know what you earn, what SARS takes, what's left over and what you can build next, all in one calm, private place."]
         [:a {:href (if signed-in? "/app" "/signup")
              :class "inline-block px-8 py-3.5 mt-8 text-sm font-semibold text-emerald-700 bg-white rounded-xl transition-colors hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:bg-emerald-100 active:scale-[0.97]"}

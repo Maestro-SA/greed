@@ -52,7 +52,7 @@
   [:div
    [:label {:for "income" :class "block text-sm font-medium text-zinc-700 mb-1"} "Monthly gross salary"]
    [:div {:class "relative mt-1"}
-    [:span {:class "absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-medium text-zinc-400"} "R"]
+    [:span {:class "absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-medium text-zinc-500"} "R"]
     [:input {:id "income" :name "income" :type "number" :min "0" :step "any"
               :class "block w-full pl-8 pr-3 py-3 text-lg font-semibold tabular-nums text-zinc-900 placeholder-zinc-400 bg-white border border-zinc-200 rounded-lg transition-colors duration-150 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
              :placeholder "0" :value (or value "")}]]])
@@ -60,7 +60,7 @@
 (defn- tier-field [selected]
   [:div
    [:label {:class "block text-sm font-medium text-zinc-700 mb-1"} "Your rebate tier"]
-   [:p {:class "text-xs text-zinc-400 mb-2"} "Age 65+ and 75+ earn extra annual rebates."]
+   [:p {:class "text-xs text-zinc-500 mb-2"} "Age 65+ and 75+ earn extra annual rebates."]
    [:div {:class "relative grid grid-cols-3 gap-1 rounded-xl bg-zinc-100 p-1"}
     [:input {:type "radio" :name "rebate-tier" :value "under-65" :id "rebate-tier-1"
              :class "sr-only peer peer/1" :checked (= selected "under-65")}]
@@ -157,7 +157,7 @@ on htmx:afterRequest remove .opacity-50 from #tax-result"}
          [:div {:class "mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50"}
           [:span {:class "text-emerald-500"} (svgs/percent-badge)]]
          [:p {:class "text-sm font-medium text-zinc-500"} "Enter your salary to see your take-home pay"]
-         [:p {:class "mt-1 max-w-xs text-xs text-zinc-400"} "Enter your salary and click Calculate to see your take-home pay."]])]
+         [:p {:class "mt-1 max-w-xs text-xs text-zinc-500"} "Enter your salary and click Calculate to see your take-home pay."]])]
       [:div#tax-result {:class "space-y-4"}
        (tools/result-hero
         :eyebrow "Your take-home pay"

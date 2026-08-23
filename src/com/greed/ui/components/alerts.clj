@@ -66,7 +66,7 @@
               "  add .greed-alert-out to #success-alert\n"
               "  wait 200ms\n"
               "  hide #success-alert")
-      :class "flex-shrink-0 self-start p-1 -m-1 rounded-md text-zinc-400 transition hover:text-zinc-600 hover:bg-zinc-100 active:scale-[0.9]"}
+      :class "flex-shrink-0 self-start p-1 -m-1 rounded-md text-zinc-500 transition hover:text-zinc-600 hover:bg-zinc-100 active:scale-[0.9]"}
      (svgs/close)]]])
 
 (defn info

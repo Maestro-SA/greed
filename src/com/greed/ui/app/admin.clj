@@ -21,7 +21,7 @@
     [:div {:class "flex flex-wrap gap-1"}
      (for [role (sort roles)]
        (badge (name role) "bg-blue-50 text-blue-800"))]
-    [:span {:class "text-xs text-zinc-400"} "-"]))
+    [:span {:class "text-xs text-zinc-500"} "-"]))
 
 (defn- field [& {:keys [id name label type value required?]}]
   [:div
@@ -37,10 +37,10 @@
    (if self?
      [:<>
       [:select {:disabled true
-                :class "block w-full px-3 py-2 text-sm text-zinc-400 bg-zinc-50 border border-zinc-200 rounded-lg"}
+                :class "block w-full px-3 py-2 text-sm text-zinc-500 bg-zinc-50 border border-zinc-200 rounded-lg"}
        [:option "Admin"]]
       [:input {:type "hidden" :name "role" :value "admin"}]
-      [:p {:class "mt-1 text-xs text-zinc-400"} "You can't change your own role here."]]
+      [:p {:class "mt-1 text-xs text-zinc-500"} "You can't change your own role here."]]
      [:select {:name "role"
                :class "block w-full px-3 py-2 text-sm text-zinc-700 bg-white border border-zinc-200 rounded-lg hover:border-zinc-300 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:border-zinc-400"}
       [:option (cond-> {:value "user"} (= current-role :user) (assoc :selected true)) "User"]
@@ -56,7 +56,7 @@
                    [:div {:class "flex items-center justify-between mb-4"}
                     [:h3 {:class "text-base font-semibold text-zinc-900"} "Edit user"]
                     [:button {:type "button" :title "Close" :aria-label "Close"
-                              :class "flex items-center justify-center w-7 h-7 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 active:text-zinc-700 active:bg-zinc-200"
+                              :class "flex items-center justify-center w-7 h-7 text-zinc-500 hover:text-zinc-600 hover:bg-zinc-100 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 active:text-zinc-700 active:bg-zinc-200"
                               :_ (shared/close-actions modal-id)}
                      (svgs/close {:class "w-4 h-4"})]]
                    (biff/form
@@ -82,7 +82,7 @@
 
 (defn- password-cell [user]
   (if (data/hashed-password? (:user/password user))
-    [:span {:class "text-xs text-zinc-400"} "-"]
+    [:span {:class "text-xs text-zinc-500"} "-"]
     [:div {:class "flex items-center gap-2"}
      (badge "Not hashed" "bg-amber-50 text-amber-800")
      (biff/form {:action "/app/admin/users/hash-password" :class "flex"}
@@ -107,7 +107,7 @@
   (let [id (str (:xt/id user))]
     [:div {:class "flex items-center justify-end gap-1"}
      [:button {:type "button" :title "Edit"
-               :class "p-1.5 text-zinc-400 rounded-md transition-colors hover:text-zinc-700 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 active:text-zinc-700 active:bg-zinc-200"
+               :class "p-1.5 text-zinc-500 rounded-md transition-colors hover:text-zinc-700 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 active:text-zinc-700 active:bg-zinc-200"
                :_ (shared/open-actions (str "user-edit-" id))}
       [:svg {:class "w-4 h-4" :fill "none" :stroke "currentColor" :viewBox "0 0 24 24"}
        [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "2"
@@ -123,7 +123,7 @@
                   [:button {:type "submit" :title "Delete"
                             :data-confirm (str "Delete " (:user/email user)
                                                " and all of their data? This cannot be undone.")
-                            :class "p-1.5 text-zinc-400 rounded-md transition-colors hover:text-rose-500 hover:bg-rose-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2 active:text-rose-600 active:bg-rose-100"}
+                            :class "p-1.5 text-zinc-500 rounded-md transition-colors hover:text-rose-500 hover:bg-rose-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2 active:text-rose-600 active:bg-rose-100"}
                    [:svg {:class "w-4 h-4" :fill "none" :stroke "currentColor" :viewBox "0 0 24 24"}
                     [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "2"
                             :d "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"}]]]))]))
@@ -133,18 +133,18 @@
    [:div {:class "flex items-center justify-between px-4 py-3 border-b border-zinc-100"}
     [:span {:class "px-2.5 py-1 text-xs font-semibold text-zinc-600 uppercase tracking-wide bg-zinc-100 rounded-full"}
      "All users"]
-    [:span {:class "text-xs font-medium text-zinc-400 tabular-nums"}
+    [:span {:class "text-xs font-medium text-zinc-500 tabular-nums"}
      (str (count users) (if (= 1 (count users)) " user" " users"))]]
    [:div {:class "overflow-x-auto min-w-0"}
     [:table {:class "w-full min-w-[720px]"}
      [:thead
       [:tr {:class "border-b border-zinc-100"}
-       [:th {:class "sticky left-0 z-20 text-left px-4 py-2.5 text-[11px] font-semibold text-zinc-400 uppercase tracking-wider bg-white"} "Name"]
-       [:th {:class "text-left px-4 py-2.5 text-[11px] font-semibold text-zinc-400 uppercase tracking-wider"} "Email"]
-       [:th {:class "text-left px-4 py-2.5 text-[11px] font-semibold text-zinc-400 uppercase tracking-wider"} "Age"]
-       [:th {:class "text-left px-4 py-2.5 text-[11px] font-semibold text-zinc-400 uppercase tracking-wider"} "Status"]
-       [:th {:class "text-left px-4 py-2.5 text-[11px] font-semibold text-zinc-400 uppercase tracking-wider"} "Roles"]
-       [:th {:class "text-left px-4 py-2.5 text-[11px] font-semibold text-zinc-400 uppercase tracking-wider"} "Password"]
+       [:th {:class "sticky left-0 z-20 text-left px-4 py-2.5 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider bg-white"} "Name"]
+       [:th {:class "text-left px-4 py-2.5 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider"} "Email"]
+       [:th {:class "text-left px-4 py-2.5 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider"} "Age"]
+       [:th {:class "text-left px-4 py-2.5 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider"} "Status"]
+       [:th {:class "text-left px-4 py-2.5 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider"} "Roles"]
+       [:th {:class "text-left px-4 py-2.5 text-[11px] font-semibold text-zinc-500 uppercase tracking-wider"} "Password"]
        [:th {:class "w-20 px-4 py-2.5"}]]]
      [:tbody {:class "divide-y divide-zinc-100"}
       (for [{:user/keys [firstname lastname email age active roles] :as user} (sort-by :user/email users)]

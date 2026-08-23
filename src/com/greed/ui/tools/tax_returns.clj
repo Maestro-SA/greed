@@ -76,7 +76,7 @@
   [:div {:class "rounded-xl bg-zinc-50 p-4 ring-1 ring-zinc-200/50"}
    [:p {:class "text-[11px] font-medium text-zinc-500 uppercase tracking-wider"} label]
    [:p {:class "mt-1 text-lg font-bold text-zinc-900 tabular-nums"} value]
-   (when sub [:p {:class "mt-0.5 text-xs text-zinc-400"} sub])])
+   (when sub [:p {:class "mt-0.5 text-xs text-zinc-500"} sub])])
 
 (defn- auto-assessment-card [ctx]
   (let [user-id    (data/get-user-id-from-session ctx)
@@ -135,7 +135,7 @@
              "Your employer should withhold approximately "
              [:span {:class "font-semibold text-zinc-900"} (utilities/amount->rands monthly-tax) "/month"]
              " in PAYE."]
-            [:p {:class "text-xs text-zinc-400 mt-1"}
+            [:p {:class "text-xs text-zinc-500 mt-1"}
              "Effective tax rate: " (utilities/pct-label effective-rate) "."
              (when-not has-profile?
                " Add your medical aid and RA details in Settings for a more accurate estimate.")]]]]))
@@ -144,7 +144,7 @@
         [:div {:class "mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-50"}
          [:span {:class "text-emerald-500"} (svgs/wallet)]]
         [:p {:class "text-sm font-medium text-zinc-500"} "No salary data yet"]
-        [:p {:class "mt-1 max-w-xs text-xs text-zinc-400"}
+        [:p {:class "mt-1 max-w-xs text-xs text-zinc-500"}
          "Add your salary in "
          [:a {:href "/app/finances/" :class "font-medium text-emerald-600 hover:underline"} "Finances"]
          " or "
@@ -154,7 +154,7 @@
 (defn- field [id label type & [hint required? value]]
   [:div
    [:label {:for id :class "block text-sm font-medium text-zinc-700 mb-1"} label]
-   (when hint [:p {:class "text-xs text-zinc-400 mb-1"} hint])
+   (when hint [:p {:class "text-xs text-zinc-500 mb-1"} hint])
    [:input {:id id :name id :type type :min "0" :step "any"
             :class (shared/base-input-class)
             :required (boolean required?)
@@ -229,7 +229,7 @@ on htmx:afterRequest remove .opacity-50 from #tax-result"}
          [:div {:class "mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50"}
           [:span {:class "text-emerald-500"} (svgs/wallet)]]
          [:p {:class "text-sm font-medium text-zinc-500"} "Enter your IRP5 details to estimate your return"]
-         [:p {:class "mt-1 max-w-xs text-xs text-zinc-400"} "Fill in the form and click Simulate Return to see your refund or amount owed."]])]
+         [:p {:class "mt-1 max-w-xs text-xs text-zinc-500"} "Fill in the form and click Simulate Return to see your refund or amount owed."]])]
       [:div#tax-result {:class "space-y-4"}
        (tools/result-hero
         :eyebrow "Your 2026 tax return"
@@ -272,7 +272,7 @@ on htmx:afterRequest remove .opacity-50 from #tax-result"}
          [:span {:class (str "text-lg font-bold tabular-nums " (if refund? "text-emerald-700" "text-rose-700"))}
           (utilities/amount->rands difference)]]
         [:div {:class "px-5 py-4 sm:px-6"}
-         [:p {:class "text-xs text-zinc-400"}
+         [:p {:class "text-xs text-zinc-500"}
           "This is an estimate only. Consult a tax practitioner for advice."]])])))
 
 (defn- page-template [ctx params]

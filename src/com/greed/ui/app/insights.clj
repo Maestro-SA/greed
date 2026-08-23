@@ -13,7 +13,7 @@
    [:span {:class "min-w-0 flex-1 text-sm text-zinc-600 truncate"} label]
    [:span {:class (str "flex-shrink-0 text-sm font-semibold tabular-nums " (or amount-cls "text-zinc-900"))}
     (utilities/amount->rands amount)]
-   [:span {:class "flex-shrink-0 w-10 text-right text-xs text-zinc-400 tabular-nums"} pct]])
+   [:span {:class "flex-shrink-0 w-10 text-right text-xs text-zinc-500 tabular-nums"} pct]])
 
 (defn- allocation-card
   "A single stacked bar makes the part/whole split of one Rand instantly
@@ -25,7 +25,7 @@
         rem-pct (or (utilities/pct-share leftover income) 0)]
     [:div {:class "p-6 bg-white ring-1 ring-zinc-200/70 rounded-2xl shadow-card"}
      [:h3 {:class "text-sm font-semibold text-zinc-900 tracking-tight"} "Where your income goes"]
-     [:p {:class "mt-0.5 mb-5 text-xs text-zinc-400 leading-relaxed"}
+     [:p {:class "mt-0.5 mb-5 text-xs text-zinc-500 leading-relaxed"}
       "How each Rand of income is split across spending, savings, and what's left over."]
      (if (pos? income)
        [:<>
@@ -46,7 +46,7 @@
            (Math/abs (long leftover))
            (if overspend? "-" (utilities/pct-label rem-pct))
            (when overspend? "text-rose-600"))]]
-       [:p {:class "text-center py-6 text-sm text-zinc-400"}
+       [:p {:class "text-center py-6 text-sm text-zinc-500"}
         "Add your "
         [:a {:href "/app/finances" :class "font-medium text-emerald-600 hover:underline"} "income"]
         " in Finances to see this breakdown."])]))
@@ -54,7 +54,7 @@
 (defn- expense-breakdown-card [expense-items total-expenses]
   [:div {:class "p-6 bg-white ring-1 ring-zinc-200/70 rounded-2xl shadow-card"}
    [:h3 {:class "text-sm font-semibold text-zinc-900 tracking-tight"} "Expense breakdown"]
-   [:p {:class "mt-0.5 mb-5 text-xs text-zinc-400 leading-relaxed"}
+   [:p {:class "mt-0.5 mb-5 text-xs text-zinc-500 leading-relaxed"}
     "Each expense as a share of your total monthly spending."]
    (if (seq expense-items)
      [:div {:class "divide-y divide-zinc-100"}
@@ -71,7 +71,7 @@
                     :style {:width (str (int p) "%")}}]]
             [:span {:class "flex-shrink-0 w-10 text-right text-xs font-medium text-rose-500 tabular-nums"}
              (utilities/pct-label p)]]]))]
-     [:p {:class "text-center py-6 text-sm text-zinc-400"}
+     [:p {:class "text-center py-6 text-sm text-zinc-500"}
       "No expenses yet. Add them in "
       [:a {:href "/app/finances" :class "font-medium text-emerald-600 hover:underline"} "Finances"]
       "."])])
@@ -81,7 +81,7 @@
    [:div {:class "mx-auto mb-3 flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50"}
     [:span {:class "text-emerald-500"} (svgs/wallet)]]
    [:p {:class "text-sm font-medium text-zinc-600"} "No budget yet"]
-   [:p {:class "mt-1 text-xs text-zinc-400"} "Add your income and expenses to see where your money goes."]
+   [:p {:class "mt-1 text-xs text-zinc-500"} "Add your income and expenses to see where your money goes."]
    (shared/btn :variant :primary :size :md :class "mt-5" :href "/app/finances" "Add your budget")])
 
 (defn page [{:keys [session] :as ctx}]

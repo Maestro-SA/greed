@@ -181,7 +181,7 @@
                   [:input {:class "block w-full px-3 py-2 text-sm text-zinc-700 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 placeholder-zinc-400 transition-colors duration-150"
                            :id "password" :name "password" :type "password"
                            :placeholder "Leave blank to keep your current password"}]
-                  [:p {:class "text-xs text-zinc-400 mt-1"} "Only enter a new password if you want to change it."]]]
+                  [:p {:class "text-xs text-zinc-500 mt-1"} "Only enter a new password if you want to change it."]]]
                 [:div {:class "flex justify-end mt-5"}
                  (shared/btn :variant :dark :type "submit"
                              "Save changes")])))
@@ -208,13 +208,13 @@
     (shared/card {:class "p-6"}
                  [:div {:class "mb-6"}
                   [:h2 {:class "text-base font-semibold text-zinc-900 tracking-tight"} "Financial Details"]
-                  [:p {:class "text-sm text-zinc-400 mt-0.5"} "Personalises your dashboard, bank card, and tax estimates."]]
+                  [:p {:class "text-sm text-zinc-500 mt-0.5"} "Personalises your dashboard, bank card, and tax estimates."]]
                  (biff/form
                   {:action "/app/save-finances"}
 
       ;; Banking
                   [:div
-                   [:p {:class "text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3"} "Banking"]
+                   [:p {:class "text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3"} "Banking"]
                    [:div {:class "grid grid-cols-1 gap-4 sm:grid-cols-2"}
                     (shared/app-select ctx :id "bank" :label "Bank" :options bank-options :required? true
                                        :hint "Your primary banking institution"
@@ -231,7 +231,7 @@ on htmx:afterRequest remove .opacity-50 from #account-type-field"})
 
       ;; Income
                   [:div {:class "border-t border-zinc-100 pt-5 mt-5"}
-                   [:p {:class "text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3"} "Income"]
+                   [:p {:class "text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3"} "Income"]
                    [:div {:class "grid grid-cols-1 gap-4 sm:grid-cols-2"}
                     (shared/app-input ctx :id "salary" :type "number" :label "Monthly Gross Salary" :required? true
                                       :prefix "R" :hint "Your salary before any deductions")
@@ -249,15 +249,15 @@ on htmx:afterRequest remove .opacity-50 from #account-type-field"})
     (shared/card {:class "p-6"}
                  [:div {:class "mb-6"}
                   [:h2 {:class "text-base font-semibold text-zinc-900 tracking-tight"} "Tax Assessment Profile"]
-                  [:p {:class "text-sm text-zinc-400 mt-0.5"}
+                  [:p {:class "text-sm text-zinc-500 mt-0.5"}
                    "Stored and used automatically in your tax return auto assessment."]]
                  (biff/form
                   {:action "/app/save-tax-profile"}
 
       ;; Medical Aid
                   [:div
-                   [:p {:class "text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3"} "Medical Aid"]
-                   [:p {:class "text-xs text-zinc-400 mb-4 leading-relaxed"}
+                   [:p {:class "text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3"} "Medical Aid"]
+                   [:p {:class "text-xs text-zinc-500 mb-4 leading-relaxed"}
                     "Leave these at 0 if you are not on medical aid. Credits are applied automatically (R364/month for you + first dependant, R246/month for each additional)."]
                    [:div {:class "grid grid-cols-1 gap-4 sm:grid-cols-2"}
                     (shared/labeled-input :id "medical-monthly" :type "number" :label "Monthly Contributions"
@@ -269,8 +269,8 @@ on htmx:afterRequest remove .opacity-50 from #account-type-field"})
 
       ;; Retirement
                   [:div {:class "border-t border-zinc-100 pt-5 mt-5"}
-                   [:p {:class "text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3"} "Retirement Annuity"]
-                   [:p {:class "text-xs text-zinc-400 mb-4 leading-relaxed"}
+                   [:p {:class "text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3"} "Retirement Annuity"]
+                   [:p {:class "text-xs text-zinc-500 mb-4 leading-relaxed"}
                     "RA contributions reduce your taxable income. The deduction is capped at 27.5% of your income or R350,000, whichever is lower."]
                    [:div {:class "grid grid-cols-1 gap-4 sm:grid-cols-2"}
                     (shared/labeled-input :id "ra-annual" :type "number" :label "Annual RA Contributions"
@@ -317,8 +317,8 @@ on htmx:afterRequest remove .opacity-50 from #account-type-field"})
   [:div {:class "bg-white rounded-xl border border-zinc-200/70 shadow-card-md p-6 w-full max-w-sm"}
    [:h3 {:class "text-base font-semibold text-zinc-900 tracking-tight"} "Edit Budget Item"]
    [:div {:class "mt-3 p-3 bg-zinc-50 rounded-lg text-sm text-zinc-600 mb-4"}
-    [:div {:class "flex justify-between"} [:span {:class "text-zinc-400"} "Title"] (:budget-item/title item)]
-    [:div {:class "flex justify-between mt-1"} [:span {:class "text-zinc-400"} "Amount"] (str "R" (:budget-item/amount item))]]
+    [:div {:class "flex justify-between"} [:span {:class "text-zinc-500"} "Title"] (:budget-item/title item)]
+    [:div {:class "flex justify-between mt-1"} [:span {:class "text-zinc-500"} "Amount"] (str "R" (:budget-item/amount item))]]
    (biff/form
     {:class "mt-2" :action (str "/app/finances/update-budget-item?budget-item-id=" (:xt/id item))}
     (shared/modal-input :id "title" :type "text" :label "New Title" :required? true)

@@ -14,7 +14,7 @@
      [:p {:class "text-xs font-semibold uppercase tracking-[0.18em] text-emerald-400"} "A note from Greed"]]
     [:p {:class "mt-5 text-base font-medium text-zinc-100 leading-relaxed"}
      "Money is private, and so is your ambition. Greed exists to take every part of your financial life off the messy back of your mind and put it in one clear place: salary, tax, spending, savings and the dates that matter."]
-    [:p {:class "mt-4 text-sm text-zinc-400 leading-relaxed"}
+    [:p {:class "mt-4 text-sm text-zinc-500 leading-relaxed"}
      "No judgment, no jargon, no instant-wealth promises. Just a system that lets you feel what you earn and build control, one decision at a time."]
     [:div {:class "flex items-center gap-4 mt-8"}
      [:div {:class "h-px w-10 bg-emerald-500"}]
@@ -42,13 +42,13 @@
      [:div {:class "hidden absolute -top-16 -left-16 h-56 w-56 rounded-full bg-white/[0.06] blur-3xl lg:block"}]
      [:div {:class "relative"}
       [:div {:class "flex items-start justify-between"}
-       [:span {:class "text-zinc-400 lg:rounded-[5px] lg:bg-gradient-to-br lg:from-emerald-300/25 lg:via-emerald-500/15 lg:to-emerald-800/20 lg:p-1 lg:text-emerald-200/90 lg:ring-1 lg:ring-white/10"} (svgs/card-chip)]
-       [:span {:class "text-zinc-400 lg:text-zinc-300"} (svgs/contactless)]]
+       [:span {:class "text-zinc-500 lg:rounded-[5px] lg:bg-gradient-to-br lg:from-emerald-300/25 lg:via-emerald-500/15 lg:to-emerald-800/20 lg:p-1 lg:text-emerald-200/90 lg:ring-1 lg:ring-white/10"} (svgs/card-chip)]
+       [:span {:class "text-zinc-500 lg:text-zinc-300"} (svgs/contactless)]]
       [:div {:class "mt-4"}
        (if bank
          [:<>
           [:p {:class "text-xs font-semibold uppercase tracking-widest text-zinc-500 lg:text-zinc-300"} (utilities/->string bank)]
-          [:p {:class "mt-0.5 text-xs text-zinc-400 lg:text-zinc-500"} (or account-type "Debit Card")]]
+          [:p {:class "mt-0.5 text-xs text-zinc-500 lg:text-zinc-500"} (or account-type "Debit Card")]]
          [:a {:href "/app/settings"
               :class "inline-flex items-center gap-1 rounded-sm text-xs font-medium text-emerald-600 transition hover:text-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-500/70 active:scale-[0.97] lg:text-zinc-400 lg:hover:text-zinc-200"}
           "Add your bank"
@@ -59,7 +59,7 @@
          [:span {:class "text-sm tracking-[0.2em] text-zinc-300 lg:text-zinc-500"} "••••"])
        [:span {:class "text-sm font-mono tracking-[0.2em] text-zinc-500 lg:text-zinc-300"} last-four]]
       [:div {:class "mt-4 flex items-baseline justify-between gap-4"}
-       [:p {:class "text-xs uppercase tracking-wider text-zinc-400 lg:text-zinc-500"} "Balance"]
+       [:p {:class "text-xs uppercase tracking-wider text-zinc-500 lg:text-zinc-500"} "Balance"]
        [:p {:class (str "text-2xl font-bold tracking-tight tabular-nums lg:text-3xl "
                         (if (neg? balance) "text-rose-600 lg:text-rose-400" "text-zinc-900 lg:text-white"))}
         (utilities/amount->rands balance)]]]]))

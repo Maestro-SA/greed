@@ -16,7 +16,7 @@
    [:div {:class "min-w-0"}
     [:h3 {:class "text-sm font-semibold text-zinc-900 tracking-tight"} title]
     (when description
-      [:p {:class "mt-0.5 text-xs text-zinc-400 leading-relaxed"} description])]
+      [:p {:class "mt-0.5 text-xs text-zinc-500 leading-relaxed"} description])]
    (when badge badge)])
 
 (defn result-hero
@@ -38,7 +38,7 @@
       [:div {:class "mt-5 flex items-baseline gap-2.5 sm:mt-6"}
        [:p {:class (str "text-4xl sm:text-5xl font-bold leading-none tracking-[-0.04em] tabular-nums " tone)}
         headline]
-       [:span {:class "text-sm font-medium text-zinc-400"} suffix]]
+       [:span {:class "text-sm font-medium text-zinc-500"} suffix]]
       [:p {:class "mt-3 text-sm text-zinc-500"} status]
       (when body body)
       (into [:div {:class "grid grid-cols-3 gap-4 pt-5 mt-6 border-t border-zinc-100"}]
@@ -130,7 +130,7 @@
 
 (defn- tool-card [& {:keys [title description link badge icon]}]
   [:a {:href link
-       :class "group flex flex-col rounded-2xl bg-white p-6 ring-1 ring-zinc-200/70 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-hover hover:ring-zinc-300/70"}
+       :class "group flex flex-col rounded-2xl bg-white p-6 ring-1 ring-zinc-200/70 shadow-card transition duration-200 hover:-translate-y-0.5 hover:shadow-card-hover hover:ring-zinc-300/70"}
    [:div {:class "mb-4 flex items-start justify-between"}
     [:div {:class "flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 ring-1 ring-emerald-600/10 transition-transform duration-200 group-hover:scale-105"}
      icon]
@@ -138,7 +138,7 @@
       [:span {:class "text-xs font-medium text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full"} badge])]
    [:h3 {:class "text-sm font-semibold text-zinc-900 tracking-tight group-hover:text-emerald-600 transition-colors"} title]
    [:p {:class "mt-1 flex-1 text-sm text-zinc-500 leading-relaxed"} description]
-   [:div {:class "mt-4 flex items-center gap-1 text-xs font-medium text-zinc-400 group-hover:text-emerald-600 transition-colors"}
+   [:div {:class "mt-4 flex items-center gap-1 text-xs font-medium text-zinc-500 group-hover:text-emerald-600 transition-colors"}
     "Open tool"
     (svgs/->next {:class "size-3.5 -translate-x-0.5 transition-transform group-hover:translate-x-0"})]])
 

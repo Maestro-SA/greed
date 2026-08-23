@@ -24,13 +24,13 @@
      [:div {:class "min-w-0 flex-1"}
       [:p {:class "truncate text-sm font-medium text-zinc-800"} title]
       (when protected?
-        [:span {:class "mt-0.5 inline-flex items-center text-[10px] font-medium text-zinc-400 uppercase tracking-wide"
+        [:span {:class "mt-0.5 inline-flex items-center text-[10px] font-medium text-zinc-500 uppercase tracking-wide"
                 :title "Managed automatically. Edit in Settings"}
          "Auto"])]
      [:p {:class "flex-shrink-0 text-sm font-semibold text-zinc-900 tabular-nums"}
       (utilities/amount->rands amount)]
      (when-not protected?
-       [:button {:class "inline-flex flex-shrink-0 items-center justify-center w-8 h-8 -mr-1.5 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 md:opacity-0 md:group-hover:opacity-100 focus-visible:opacity-100"
+       [:button {:class "inline-flex flex-shrink-0 items-center justify-center w-8 h-8 -mr-1.5 text-zinc-500 hover:text-zinc-600 hover:bg-zinc-100 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 md:opacity-0 md:group-hover:opacity-100 focus-visible:opacity-100"
                  :type "button"
                  :aria-label (str "Edit " title)
                  :_ (shared/open-actions action-modal-id)}
@@ -63,7 +63,7 @@
        [:span {:class "w-5 h-5 [&_svg]:w-full [&_svg]:h-full"} icon]]
       [:div {:class "min-w-0 flex-1"}
        [:p {:class "text-sm font-semibold text-zinc-900"} label]
-       [:p {:class "text-xs text-zinc-400"} (str count (if (= 1 count) " item" " items"))]]
+       [:p {:class "text-xs text-zinc-500"} (str count (if (= 1 count) " item" " items"))]]
       (shared/btn :variant :outline :size :sm
                   :attrs {"_" (shared/open-actions (str "budget-add-" title "-modal"))}
                   (svgs/plus {:class "w-3.5 h-3.5"})
@@ -76,7 +76,7 @@
         [:div {:class "mb-3 flex items-center justify-center w-10 h-10 rounded-full bg-zinc-50"}
          [:span {:class "text-zinc-300"} icon]]
         [:p {:class "text-sm font-medium text-zinc-500"} "Nothing here yet"]
-        [:p {:class "mt-0.5 text-xs text-zinc-400"} (str "Add your first " title " item")]])
+        [:p {:class "mt-0.5 text-xs text-zinc-500"} (str "Add your first " title " item")]])
      (for [item items]
        (budget-row-modal :item item :protected-titles protected-titles))
      (shared/modal (str "budget-add-" title "-modal")

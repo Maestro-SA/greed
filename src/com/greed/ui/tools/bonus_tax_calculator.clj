@@ -73,15 +73,15 @@ on htmx:afterRequest remove .opacity-50 from #bonus-result"}
                           :type "submit"
                           :attrs {:name "mult" :value (str mult)}
                           [:span {:class "text-base font-semibold text-zinc-900"} title]
-                          [:span {:class "text-[11px] font-medium text-zinc-400"} subtitle]))])
-          [:p {:class "mt-3 text-xs text-zinc-400"}
+                          [:span {:class "text-[11px] font-medium text-zinc-500"} subtitle]))])
+          [:p {:class "mt-3 text-xs text-zinc-500"}
            "Uses the salary saved in Finances and your age in Settings."]]))
       (tools/panel
        [:div {:class "flex flex-col items-center justify-center px-6 py-12 text-center"}
         [:div {:class "mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-50"}
          [:span {:class "text-emerald-500"} (svgs/wallet)]]
         [:p {:class "text-sm font-medium text-zinc-500"} "No salary data yet"]
-        [:p {:class "mt-1 max-w-xs text-xs text-zinc-400"}
+        [:p {:class "mt-1 max-w-xs text-xs text-zinc-500"}
          "Add your salary in "
          [:a {:href "/app/finances/" :class "font-medium text-emerald-600 hover:underline"} "Finances"]
          " or your age in "
@@ -113,9 +113,9 @@ on htmx:afterRequest remove .opacity-50 from #bonus-result"}
 (defn- amount-field [{:keys [id label hint value lg?]}]
   [:div
    [:label {:for id :class "block text-sm font-medium text-zinc-700 mb-1"} label]
-   [:p {:class "text-xs text-zinc-400 mb-1"} hint]
+   [:p {:class "text-xs text-zinc-500 mb-1"} hint]
    [:div {:class "relative mt-1"}
-    [:span {:class "absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-medium text-zinc-400"} "R"]
+    [:span {:class "absolute left-3.5 top-1/2 -translate-y-1/2 text-sm font-medium text-zinc-500"} "R"]
     [:input {:id id :name id :type "number" :min "0" :step "any"
               :class (str "block w-full pl-8 pr-3 bg-white border border-zinc-200 rounded-lg transition-colors duration-150 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 "
                          (if lg?
@@ -126,7 +126,7 @@ on htmx:afterRequest remove .opacity-50 from #bonus-result"}
 (defn- tier-field [selected]
   [:div
    [:label {:class "block text-sm font-medium text-zinc-700 mb-1"} "Your rebate tier"]
-   [:p {:class "text-xs text-zinc-400 mb-2"} "Age 65+ and 75+ earn extra annual rebates."]
+   [:p {:class "text-xs text-zinc-500 mb-2"} "Age 65+ and 75+ earn extra annual rebates."]
    [:div {:class "relative grid grid-cols-3 gap-1 rounded-xl bg-zinc-100 p-1"}
     [:input {:type "radio" :name "rebate-tier" :value "under-65" :id "rebate-tier-1"
              :class "sr-only peer peer/1" :checked (= selected "under-65")}]
@@ -248,7 +248,7 @@ on htmx:afterRequest remove .opacity-50 from #bonus-result"}
          [:div {:class "mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50"}
           [:span {:class "text-emerald-500"} (svgs/gift)]]
          [:p {:class "text-sm font-medium text-zinc-500"} "Enter a bonus amount to see what you'll take home"]
-         [:p {:class "mt-1 max-w-xs text-xs text-zinc-400"} "Pick a quick option above or type a bonus amount, then click Calculate to see your net bonus."]])]
+         [:p {:class "mt-1 max-w-xs text-xs text-zinc-500"} "Pick a quick option above or type a bonus amount, then click Calculate to see your net bonus."]])]
       [:div#bonus-result {:class "space-y-4"}
        (tools/result-hero
         :eyebrow "Net bonus"
