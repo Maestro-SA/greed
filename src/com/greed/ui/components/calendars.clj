@@ -235,8 +235,8 @@
                    :class    "w-8 h-8 flex items-center justify-center rounded-lg text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
                    :hx-get   (str "/app/calendar/grid?month=" pm "&year=" py)
                    :hx-target "#calendar-grid"
-                   :hx-swap  "outerHTML"}
-                   :hx-disabled-elt "this"
+                   :hx-swap  "outerHTML"
+                   :hx-disabled-elt "this"}
           [:svg {:class "w-3.5 h-3.5" :fill "none" :stroke "currentColor" :viewBox "0 0 24 24"}
            [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "2.5" :d "M15 19l-7-7 7-7"}]]]
          [:button {:type     "button"
@@ -244,8 +244,8 @@
                    :class    "w-8 h-8 flex items-center justify-center rounded-lg text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2"
                    :hx-get   (str "/app/calendar/grid?month=" nm "&year=" ny)
                    :hx-target "#calendar-grid"
-                   :hx-swap  "outerHTML"}
-                   :hx-disabled-elt "this"
+                   :hx-swap  "outerHTML"
+                   :hx-disabled-elt "this"}
           [:svg {:class "w-3.5 h-3.5" :fill "none" :stroke "currentColor" :viewBox "0 0 24 24"}
            [:path {:stroke-linecap "round" :stroke-linejoin "round" :stroke-width "2.5" :d "M9 5l7 7-7 7"}]]]]]]
       ;; ── Day-of-week headers ─────────────────────────────────────────────────
